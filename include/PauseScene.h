@@ -1,0 +1,27 @@
+#pragma once
+#include "Scene.h"
+#include "SFML/Graphics.hpp"
+#include "SFML/Window.hpp"
+#include "Button.h"
+#include "SceneType.h"
+#include <vector>
+
+class PauseScene : public Scene
+{
+public:
+    PauseScene(sf::RenderWindow *);
+    ~PauseScene();
+
+    void handleEvents();
+    SceneType handleInput();
+    void update(sf::Time);
+    void draw();
+
+    std::vector<Button>& getButtons();
+
+private:
+    void createButtons();
+
+    sf::RenderWindow *m_window;
+    std::vector<Button> m_buttons;
+};
