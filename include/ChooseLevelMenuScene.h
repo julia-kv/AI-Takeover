@@ -12,7 +12,7 @@ public:
     ChooseLevelMenuScene(sf::RenderWindow *, SceneManager *);
     ~ChooseLevelMenuScene();
 
-    void handleEvents();
+    void handleEvents(const sf::Event& event);
     SceneType handleInput();
     void update(sf::Time);
     void draw();

@@ -1,18 +1,31 @@
 #include "GameplayScene.h"
 
-GameplayScene::GameplayScene(sf::RenderWindow *w, const std::string &fn) : m_window(w), m_level(Level(w, fn))
+GameplayScene::GameplayScene(sf::RenderWindow *w, const std::string &fn) : m_window(w), m_level(w, fn)
 {
+    std::cout << "GameplayScene ctor(sf::RenderWindow *w, const std::string &fn)\n";
 }
 
-GameplayScene::~GameplayScene() {}
+GameplayScene::~GameplayScene()
+{
+    std::cout << "GameplayScene dtor\n";
+}
 
-void GameplayScene::handleEvents() {}
+void GameplayScene::handleEvents(const sf::Event& event)
+{
+    m_level.handleEvents(event);
+}
 
 SceneType GameplayScene::handleInput()
 {
-    return SceneType::GAMEPLAY;
+    return m_level.handleInput();
 }
 
-void GameplayScene::update(sf::Time dt) {}
+void GameplayScene::update(sf::Time dt)
+{
+    m_level.update(dt);
+}
 
-void GameplayScene::draw() {}
+void GameplayScene::draw()
+{
+    m_level.draw();
+}

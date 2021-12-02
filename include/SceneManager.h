@@ -11,15 +11,17 @@ public:
     SceneManager(sf::RenderWindow *);
     ~SceneManager();
 
-    void handleEvents();
+    void handleEvents(const sf::Event& event);
     void handleInput();
     void update(sf::Time);
     void draw();
 
     void setLevelFile(const std::string &);
 
+    void switchTo(SceneType scene_to_switch);
+
 private:
-    std::array<Scene *,4> m_scenes;
+    std::array<std::unique_ptr<Scene>,4> m_scenes;
     sf::RenderWindow *m_window;
     SceneType m_curScene;
     std::string m_levelFile;

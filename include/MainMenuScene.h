@@ -12,7 +12,7 @@ public:
     MainMenuScene(sf::RenderWindow *);
     ~MainMenuScene();
 
-    void handleEvents();
+    void handleEvents(const sf::Event& event);
     SceneType handleInput();
     void update(sf::Time);
     void draw();
@@ -24,4 +24,5 @@ private:
 
     sf::RenderWindow *m_window;
     std::vector<Button> m_buttons;
+    sf::Font m_font;
 };

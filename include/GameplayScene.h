@@ -11,7 +11,7 @@ public:
     GameplayScene(sf::RenderWindow *, const std::string &);
     ~GameplayScene();
 
-    void handleEvents();
+    void handleEvents(const sf::Event& event);
     SceneType handleInput();
     void update(sf::Time);
     void draw();

@@ -16,7 +16,7 @@ public:
     Level(sf::RenderWindow *, const std::string &);
     ~Level();
 
-    void handleEvents();
+    void handleEvents(const sf::Event& event);
     SceneType handleInput();
     void update(sf::Time);
     void draw();
