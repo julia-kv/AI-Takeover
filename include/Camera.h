@@ -5,14 +5,43 @@
 
 class Camera
 {
+    float tile_size = 40.0f;
+
 public:
-    Camera(){};
-    ~Camera(){};
-    sf::Vector2f getCenter()
+    Camera(sf::RenderWindow *w, Hero *h, Map *m) : m_window(w),
+                                                   m_hero(h),
+                                                   m_map(m)
     {
-        return m_center;
+    }
+
+    ~Camera()
+    {
+    }
+
+    void update()
+    {
+        sf::View view = m_window->getView();
+        float x_pos = m_hero->getPosition().x + tile_size / 2;
+        x_pos = std::max(x_pos, (float)m_window->getSize().x / 2);
+        x_pos = std::min(x_pos, (float)m_map->getSize().x * tile_size - (float)m_window->getSize().x / 2);
+        view.setCenter(x_pos, 300.0f);
+        m_window->setView(view);
+
+        /* std::cout << "Hero position : " << m_window->mapCoordsToPixel(m_hero->getPosition()).x
+                  << ", " << m_window->mapCoordsToPixel(m_hero->getPosition()).y << '\n';
+
+        std::cout << "Window size: " << m_window->getSize().x << " , " << m_window->getSize().y << '\n'; */
+    }
+
+    void event_resized(const sf::Event &event)
+    {
+        sf::View view = m_window->getView();
+        view.setSize(event.size.width, event.size.height);
+        m_window->setView(view);
     }
 
 private:
-    sf::Vector2f m_center;
+    sf::RenderWindow *m_window;
+    Hero *m_hero;
+    Map *m_map;
 };

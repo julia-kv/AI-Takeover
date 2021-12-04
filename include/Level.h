@@ -9,6 +9,7 @@
 #include "SFML/Window.hpp"
 #include <vector>
 #include <string>
+#include "Background.h"
 
 class Level
 {
@@ -29,6 +30,7 @@ public:
 
 private:
     void readLevelFile(const std::string &);
+    void check_hero_state();
 
     sf::RenderWindow *m_window;
     Map m_map;
@@ -36,4 +38,5 @@ private:
     Hero m_hero;
     Finish m_finish;
     Camera m_camera;
+    Background m_background;
 };

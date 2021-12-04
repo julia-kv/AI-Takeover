@@ -47,6 +47,10 @@ void Game::handleEvents()
             m_sceneManager.handleEvents(event);
             break;
 
+        case sf::Event::Resized:
+            m_sceneManager.handleEvents(event);
+            break;
+
         default:
             break;
         }

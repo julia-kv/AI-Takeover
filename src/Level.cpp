@@ -3,7 +3,9 @@
 #include <fstream>
 #include <iostream>
 
-Level::Level(sf::RenderWindow *w, const std::string &fn) : m_window(w)
+Level::Level(sf::RenderWindow *w, const std::string &fn) : m_window(w),
+                                                           m_background(w),
+                                                           m_camera(w, &m_hero, &m_map)
 {
     std::cout << "Level ctor(sf::RenderWindow *w, const std::string &fn)\n";
     readLevelFile(fn);
@@ -19,10 +21,6 @@ void Level::handleEvents(const sf::Event &event)
 {
     switch (event.type)
     {
-    case sf::Event::Closed:
-        m_window->close();
-        break;
-
     case sf::Event::KeyReleased:
         if (event.key.code == sf::Keyboard::Left ||
             event.key.code == sf::Keyboard::Right ||
@@ -30,6 +28,12 @@ void Level::handleEvents(const sf::Event &event)
             event.key.code == sf::Keyboard::Down)
             m_hero.key_released(event.key.code);
         break;
+
+    case sf::Event::Resized:
+    {
+        m_camera.event_resized(event);
+        break;
+    }
 
     default:
         break;
@@ -45,10 +49,26 @@ SceneType Level::handleInput()
 void Level::update(sf::Time dt)
 {
     m_hero.update(dt);
+    check_hero_state();
+    m_background.update();
+    m_camera.update();
+}
+
+void Level::check_hero_state()
+{
+    if (m_hero.isFinished())
+    {
+        ///
+    }
+    else if (m_hero.isDead())
+    {
+        ///
+    }
 }
 
 void Level::draw()
 {
+    m_background.draw();
     m_map.draw();
     m_hero.draw();
 }

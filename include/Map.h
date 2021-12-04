@@ -31,20 +31,20 @@ public:
         sf::Vertex vert1(pos1);
         sf::Vertex vert2(pos2);
         sf::Vertex vert3(pos3);
-        
-        sf::Color color(sf::Color::White);
-        switch(ch)
-        {
-            case '*':
-                color = sf::Color(163, 163, 194);
-                break;
-                
-            case '-':
-                color = sf::Color::Yellow;
-                break;
 
-            default:
-                break;
+        sf::Color color(sf::Color::White);
+        switch (ch)
+        {
+        case '*':
+            color = sf::Color::Red;
+            break;
+
+        case '-':
+            color = sf::Color::Yellow;
+            break;
+
+        default:
+            break;
         }
 
         vert0.color = color;
@@ -56,8 +56,19 @@ public:
         m_vertices.push_back(vert1);
         m_vertices.push_back(vert2);
         m_vertices.push_back(vert3);
+    }
 
-        std::cout << "m_vertices size: " << m_vertices.size() << '\n';
+    void addPlatform(float x1, float x2, float y)
+    {
+    }
+
+    void update()
+    {
+        /* for (int i = index; i < vertices.size(); i += 4)
+        {
+            vertices[i].position.x += del_x;
+            vertices[i].position.y += del_y;
+        } */
     }
 
     void draw()
@@ -70,7 +81,7 @@ public:
         return m_map_size;
     }
 
-    std::vector<sf::Vertex>& getVertexArray()
+    std::vector<sf::Vertex> &getVertexArray()
     {
         return m_vertices;
     }
@@ -80,3 +91,42 @@ private:
     std::vector<sf::Vertex> m_vertices;
     sf::RenderWindow *m_window;
 };
+
+/* class Platforms
+{
+public:
+
+    void func()
+    {
+        for (int i = 0; i < borders.size(); ++i)
+        {
+            int j = 4 * i;
+            j
+        }
+    }
+
+    void update()
+    {
+        for (int i = index; i < vertices.size(); i += 4)
+        {
+            vertices[i].position.x += del_x;
+            vertices[i].position.y += del_y;
+        }
+    }
+
+
+    void addPlatform(float x1, float x2, float y)
+    {
+        vertices.push_back(sf::Vertex(sf::Vector2f(x1, y)));
+        vertices.push_back(sf::Vertex(sf::Vector2f(x1 + tile_size, y)));
+        vertices.push_back(sf::Vertex(sf::Vector2f(x1 + tile_size, y + tile_size)));
+        vertices.push_back(sf::Vertex(sf::Vector2f(x1, y + tile_size)));
+
+        borders.push_back(std::make_pair(x1, x2));
+    }
+
+private:
+    std::vector<sf::Vertex> vertices;
+    std::vector<std::pair<float,float>> borders;
+    int index;
+}; */
