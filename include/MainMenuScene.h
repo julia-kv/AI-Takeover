@@ -12,12 +12,11 @@ public:
     MainMenuScene(sf::RenderWindow *);
     ~MainMenuScene();
 
-    void handleEvents(const sf::Event& event);
+    void handleEvents(const sf::Event &event);
     SceneType handleInput();
     void update(sf::Time);
     void draw();
-
-    std::vector<Button>& getButtons();
+    std::vector<Button> &getButtons();
 
 private:
     void createButtons();

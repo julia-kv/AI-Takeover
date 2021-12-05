@@ -13,7 +13,7 @@ MainMenuScene::~MainMenuScene()
     m_buttons.clear();
 }
 
-void MainMenuScene::handleEvents(const sf::Event& event)
+void MainMenuScene::handleEvents(const sf::Event &event)
 {
 }
 
@@ -22,7 +22,7 @@ SceneType MainMenuScene::handleInput()
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         sf::Vector2i mousePos = sf::Mouse::getPosition(*m_window);
-        for (Button& btn : m_buttons)
+        for (Button &btn : m_buttons)
         {
             if (mousePos.x > btn.getPosition().x &&
                 mousePos.x < btn.getPosition().x + btn.getSize().x &&
@@ -43,8 +43,10 @@ void MainMenuScene::update(sf::Time dt)
 
 void MainMenuScene::draw()
 {
-    for (Button &button : m_buttons)
-        button.draw();
+    /* for (int i = 0; i < m_buttons.size(); ++i)
+        m_window->draw(m_buttons[i]); */
+    for (Button &btn : m_buttons)
+        btn.draw();
 }
 
 void MainMenuScene::createButtons()

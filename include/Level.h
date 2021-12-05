@@ -11,16 +11,15 @@
 #include <string>
 #include "Background.h"
 
-class Level
+class Level : public sf::Drawable, public sf::Transformable
 {
 public:
     Level(sf::RenderWindow *, const std::string &);
     ~Level();
 
-    void handleEvents(const sf::Event& event);
+    void handleEvents(const sf::Event &event);
     SceneType handleInput();
     void update(sf::Time);
-    void draw();
 
     Map &getMap();
     std::vector<Platform> &getPlatforms();
@@ -29,6 +28,7 @@ public:
     Camera &getCamera();
 
 private:
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const;
     void readLevelFile(const std::string &);
     void check_hero_state();
 

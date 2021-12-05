@@ -2,19 +2,18 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 
-class Background
+class Background : public sf::Drawable, public sf::Transformable
 {
 public:
-    Background(sf::RenderWindow *);
+    Background();
     ~Background();
 
-    void draw();
-    void update();
+    void update(const sf::View&);
 
 private:
+    virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
     void loadTexture();
 
     sf::Texture m_texture;
-    sf::Sprite m_sprite_left, m_sprite_center, m_sprite_right;
-    sf::RenderWindow *m_window;
+    std::array<sf::Vertex, 8> m_vertices;
 };

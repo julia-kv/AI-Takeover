@@ -24,7 +24,7 @@ public:
         float x_pos = m_hero->getPosition().x + tile_size / 2;
         x_pos = std::max(x_pos, (float)m_window->getSize().x / 2);
         x_pos = std::min(x_pos, (float)m_map->getSize().x * tile_size - (float)m_window->getSize().x / 2);
-        view.setCenter(x_pos, 300.0f);
+        view.setCenter(x_pos, m_window->getSize().y / 2); // ???
         m_window->setView(view);
 
         /* std::cout << "Hero position : " << m_window->mapCoordsToPixel(m_hero->getPosition()).x

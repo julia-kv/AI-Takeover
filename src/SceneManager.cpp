@@ -19,7 +19,7 @@ SceneManager::~SceneManager()
     std::cout << "SceneManager dtor\n";
 }
 
-void SceneManager::handleEvents(const sf::Event& event)
+void SceneManager::handleEvents(const sf::Event &event)
 {
     m_scenes[m_curScene]->handleEvents(event);
 }

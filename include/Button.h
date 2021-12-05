@@ -14,12 +14,6 @@ public:
     }
     ~Button() {}
 
-    void draw()
-    {
-        m_window->draw(m_rect);
-        m_window->draw(m_text);
-    }
-
     sf::Vector2f getPosition()
     {
         return m_rect.getPosition();
@@ -30,12 +24,12 @@ public:
         return m_rect.getSize();
     }
 
-    void setPosition(const sf::Vector2f& position)
+    void setPosition(const sf::Vector2f &position)
     {
         m_rect.setPosition(position);
     }
 
-    void setText(const std::string& str, sf::Font& font)
+    void setText(const std::string &str, sf::Font &font)
     {
         m_text.setFont(font);
         m_text.setString(str);
@@ -44,7 +38,14 @@ public:
         m_text.setPosition(m_rect.getPosition() + sf::Vector2f(20, 0));
     }
 
+    virtual void draw()
+    {
+        m_window->draw(m_rect);
+        m_window->draw(m_text);
+    }
+
 private:
+
     sf::RenderWindow *m_window;
     sf::RectangleShape m_rect;
     sf::Text m_text;

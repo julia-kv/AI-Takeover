@@ -13,7 +13,7 @@ PauseScene::~PauseScene()
     m_buttons.clear();
 }
 
-void PauseScene::handleEvents(const sf::Event& event) {}
+void PauseScene::handleEvents(const sf::Event &event) {}
 
 SceneType PauseScene::handleInput()
 {
@@ -22,11 +22,13 @@ SceneType PauseScene::handleInput()
 
 void PauseScene::update(sf::Time dt) {}
 
-void PauseScene::draw() {}
+void PauseScene::draw()
+{
+}
 
 void PauseScene::createButtons() {}
 
-std::vector<Button>& PauseScene::getButtons()
+std::vector<Button> &PauseScene::getButtons()
 {
     return m_buttons;
 }

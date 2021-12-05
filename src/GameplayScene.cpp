@@ -10,7 +10,7 @@ GameplayScene::~GameplayScene()
     std::cout << "GameplayScene dtor\n";
 }
 
-void GameplayScene::handleEvents(const sf::Event& event)
+void GameplayScene::handleEvents(const sf::Event &event)
 {
     m_level.handleEvents(event);
 }
@@ -27,5 +27,5 @@ void GameplayScene::update(sf::Time dt)
 
 void GameplayScene::draw()
 {
-    m_level.draw();
+    m_window->draw(m_level);
 }

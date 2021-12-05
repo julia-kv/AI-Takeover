@@ -4,7 +4,6 @@
 #include <iostream>
 
 Level::Level(sf::RenderWindow *w, const std::string &fn) : m_window(w),
-                                                           m_background(w),
                                                            m_camera(w, &m_hero, &m_map)
 {
     std::cout << "Level ctor(sf::RenderWindow *w, const std::string &fn)\n";
@@ -50,7 +49,7 @@ void Level::update(sf::Time dt)
 {
     m_hero.update(dt);
     check_hero_state();
-    m_background.update();
+    m_background.update(m_window->getView());
     m_camera.update();
 }
 
@@ -66,11 +65,11 @@ void Level::check_hero_state()
     }
 }
 
-void Level::draw()
+void Level::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    m_background.draw();
-    m_map.draw();
-    m_hero.draw();
+    target.draw(m_background);
+    target.draw(m_map);
+    target.draw(m_hero);
 }
 
 void Level::readLevelFile(const std::string &fn)
@@ -87,7 +86,7 @@ void Level::readLevelFile(const std::string &fn)
     myfile >> num_tiles_x >> num_tiles_y;
     getline(myfile, line);
 
-    m_map = Map(num_tiles_x, num_tiles_y, m_window);
+    m_map = Map(num_tiles_x, num_tiles_y);
     for (int i = 0; i < num_tiles_y; ++i)
     {
         getline(myfile, line);
@@ -98,9 +97,8 @@ void Level::readLevelFile(const std::string &fn)
 
     int hero_init_pos_x = 0, hero_init_pos_y = 0;
     myfile >> hero_init_pos_x >> hero_init_pos_y;
-    m_hero.setSize(40.0f);
+    //m_hero.setSize(40.0f);
     m_hero.setInitialPosition(hero_init_pos_x, hero_init_pos_y);
-    m_hero.setWindow(m_window);
     m_hero.setMap(&m_map);
 
     myfile.close();

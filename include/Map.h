@@ -3,7 +3,7 @@
 #include "SFML/Window.hpp"
 #include <iostream>
 
-class Map
+class Map : public sf::Drawable, public sf::Transformable
 {
     float tile_size = 40.0f;
 
@@ -12,9 +12,12 @@ public:
     {
     }
 
-    Map(int num_tiles_x, int num_tiles_y, sf::RenderWindow *w) : m_map_size(num_tiles_x, num_tiles_y),
-                                                                 m_window(w)
+    Map(int num_tiles_x, int num_tiles_y) : m_map_size(num_tiles_x, num_tiles_y)
     {
+        if (!m_texture.loadFromFile("texture.png"))
+        {
+            std::cout << "Failed to load texture.png file\n";
+        }
     }
 
     ~Map(){};
@@ -47,10 +50,15 @@ public:
             break;
         }
 
-        vert0.color = color;
+        /* vert0.color = color;
         vert1.color = color;
         vert2.color = color;
-        vert3.color = color;
+        vert3.color = color; */
+
+        vert0.texCoords = sf::Vector2f(0.f, 0.f);
+        vert1.texCoords = sf::Vector2f(64.f, 0.f);
+        vert2.texCoords = sf::Vector2f(64.f, 64.f);
+        vert3.texCoords = sf::Vector2f(0.f, 64.f);
 
         m_vertices.push_back(vert0);
         m_vertices.push_back(vert1);
@@ -68,12 +76,17 @@ public:
         {
             vertices[i].position.x += del_x;
             vertices[i].position.y += del_y;
-        } */
-    }
 
-    void draw()
-    {
-        m_window->draw(m_vertices.data(), m_vertices.size(), sf::Quads);
+            vertices[i + 1].position.x += del_x;
+            vertices[i + 1].position.y += del_y;
+
+            vertices[i + 2].position.x += del_x;
+            vertices[i + 2].position.y += del_y;
+
+            vertices[i + 3].position.x += del_x;
+            vertices[i + 3].position.y += del_y;
+
+        } */
     }
 
     sf::Vector2i getSize()
@@ -87,46 +100,14 @@ public:
     }
 
 private:
+    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const
+    {
+        states.transform *= getTransform();
+        states.texture = &m_texture;
+        target.draw(m_vertices.data(), m_vertices.size(), sf::Quads, states);
+    }
+
     sf::Vector2i m_map_size;
     std::vector<sf::Vertex> m_vertices;
-    sf::RenderWindow *m_window;
+    sf::Texture m_texture;
 };
-
-/* class Platforms
-{
-public:
-
-    void func()
-    {
-        for (int i = 0; i < borders.size(); ++i)
-        {
-            int j = 4 * i;
-            j
-        }
-    }
-
-    void update()
-    {
-        for (int i = index; i < vertices.size(); i += 4)
-        {
-            vertices[i].position.x += del_x;
-            vertices[i].position.y += del_y;
-        }
-    }
-
-
-    void addPlatform(float x1, float x2, float y)
-    {
-        vertices.push_back(sf::Vertex(sf::Vector2f(x1, y)));
-        vertices.push_back(sf::Vertex(sf::Vector2f(x1 + tile_size, y)));
-        vertices.push_back(sf::Vertex(sf::Vector2f(x1 + tile_size, y + tile_size)));
-        vertices.push_back(sf::Vertex(sf::Vector2f(x1, y + tile_size)));
-
-        borders.push_back(std::make_pair(x1, x2));
-    }
-
-private:
-    std::vector<sf::Vertex> vertices;
-    std::vector<std::pair<float,float>> borders;
-    int index;
-}; */

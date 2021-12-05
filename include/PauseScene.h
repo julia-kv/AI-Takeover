@@ -12,12 +12,11 @@ public:
     PauseScene(sf::RenderWindow *);
     ~PauseScene();
 
-    void handleEvents(const sf::Event& event);
+    void handleEvents(const sf::Event &event);
     SceneType handleInput();
     void update(sf::Time);
+    std::vector<Button> &getButtons();
     void draw();
-
-    std::vector<Button>& getButtons();
 
 private:
     void createButtons();

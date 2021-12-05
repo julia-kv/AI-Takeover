@@ -1,9 +1,9 @@
 #include "Background.h"
 #include <iostream>
 
-Background::Background(sf::RenderWindow *w) : m_window(w)
+Background::Background()
 {
-    std::cout << "Background(sf::RenderWindow *w) ctor\n";
+    std::cout << "Background() ctor\n";
     loadTexture();
 }
 
@@ -12,26 +12,30 @@ Background::~Background()
     std::cout << "Background dtor\n";
 }
 
-void Background::draw()
+void Background::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    m_window->draw(m_sprite_left);
-    m_window->draw(m_sprite_center);
-    m_window->draw(m_sprite_right);
+    states.transform *= getTransform();
+    states.texture = &m_texture;
+    target.draw(m_vertices.data(), m_vertices.size(), sf::Quads, states);
 }
 
-void Background::update()
+void Background::update(const sf::View &windowView)
 {
-    if (m_window->getView().getCenter().x < m_sprite_center.getPosition().x)
+    float camera_pos = windowView.getCenter().x;
+    if (camera_pos < m_vertices[0].position.x || camera_pos > m_vertices[1].position.x)
     {
-        m_sprite_right.setPosition(m_sprite_center.getPosition());
-        m_sprite_center.setPosition(m_sprite_left.getPosition());
-        m_sprite_left.setPosition(m_sprite_center.getPosition().x - 800.0f, m_sprite_center.getPosition().y);
+        std::swap(m_vertices[0], m_vertices[4]);
+        std::swap(m_vertices[1], m_vertices[5]);
+        std::swap(m_vertices[2], m_vertices[6]);
+        std::swap(m_vertices[3], m_vertices[7]);
     }
-    else if (m_window->getView().getCenter().x > m_sprite_right.getPosition().x)
+    else
     {
-        m_sprite_left.setPosition(m_sprite_center.getPosition());
-        m_sprite_center.setPosition(m_sprite_right.getPosition());
-        m_sprite_right.setPosition(m_sprite_center.getPosition().x + 800.0f, m_sprite_center.getPosition().y);
+        float del_x = m_texture.getSize().x;
+        if (camera_pos < m_vertices[0].position.x + del_x / 2)
+            del_x *= -1;
+        for (int i = 4; i < 8; ++i)
+            m_vertices[i].position = m_vertices[i - 4].position + sf::Vector2f(del_x, 0.f);
     }
 }
 
@@ -41,12 +45,25 @@ void Background::loadTexture()
     {
         std::cout << "Failed to load background texture from file background.jpg\n";
     }
-    
-    m_sprite_left.setTexture(m_texture);
-    m_sprite_center.setTexture(m_texture);
-    m_sprite_right.setTexture(m_texture);
 
-    m_sprite_left.setPosition(-800, 0);
-    m_sprite_center.setPosition(0, 0);
-    m_sprite_right.setPosition(800, 0);
+    float texture_size_x = (float) m_texture.getSize().x;
+    float texture_size_y = (float) m_texture.getSize().y;
+
+    m_vertices[0].position = sf::Vector2f(0.f, 0.f);
+    m_vertices[0].texCoords = m_vertices[0].position;
+
+    m_vertices[1].position = sf::Vector2f(texture_size_x, 0.f);
+    m_vertices[1].texCoords = m_vertices[1].position;
+
+    m_vertices[2].position = sf::Vector2f(texture_size_x, texture_size_y);
+    m_vertices[2].texCoords = m_vertices[2].position;
+
+    m_vertices[3].position = sf::Vector2f(0.f, texture_size_y);
+    m_vertices[3].texCoords = m_vertices[3].position;
+
+    for (int i = 4; i < 8; ++i)
+    {
+        m_vertices[i].position = m_vertices[i - 4].position - sf::Vector2f(texture_size_x, 0.f);
+        m_vertices[i].texCoords = m_vertices[i - 4].texCoords;
+    }
 }
