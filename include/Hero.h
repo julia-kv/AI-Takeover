@@ -15,13 +15,14 @@ public:
         m_acceleration = 1000.0;
         is_flying = true;
 
-        if (!m_texture.loadFromFile("hero.png"))
+        if (!m_texture.loadFromFile("робот.png"))
         {
             std::cout << "Failed to read file hero.png\n";
         }
 
         m_sprite.setTexture(m_texture);
-        m_sprite.setScale(tile_size / m_texture.getSize().x, 2 * tile_size / m_texture.getSize().y);
+        m_sprite.setTextureRect(sf::IntRect(0, 0, 40, 80));
+        m_sprite.setScale(tile_size / 40, 2 * tile_size / 80);
     }
     ~Hero(){};
 
@@ -40,7 +41,9 @@ public:
         if (is_flying)
             m_vel.y += m_acceleration * dt.asSeconds();
         sf::Vector2f del = m_vel * dt.asSeconds();
+
         move(del);
+        changeDirection();
     }
 
     void key_released(sf::Keyboard::Key code)
@@ -88,6 +91,20 @@ private:
     {
         states.transform *= getTransform();
         target.draw(m_sprite);
+    }
+
+    void changeDirection()
+    {
+        if (m_vel.x > 0)
+        {
+            m_sprite.setTextureRect(sf::IntRect(40, 0, 40, 80));
+        }
+        else if (m_vel.x < 0)
+        {
+            m_sprite.setTextureRect(sf::IntRect(120, 0, 40, 80));
+        }
+        else
+            m_sprite.setTextureRect(sf::IntRect(0, 0, 40, 80));
     }
 
     void move(sf::Vector2f del)

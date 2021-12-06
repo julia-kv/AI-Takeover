@@ -41,7 +41,7 @@ void Background::update(const sf::View &windowView)
 
 void Background::loadTexture()
 {
-    if (!m_texture.loadFromFile("background.png"))
+    if (!m_texture.loadFromFile("background_1.png"))
     {
         std::cout << "Failed to load background texture from file background.jpg\n";
     }

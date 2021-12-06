@@ -47,8 +47,9 @@ SceneType Level::handleInput()
 
 void Level::update(sf::Time dt)
 {
+    m_map.update(dt);
     m_hero.update(dt);
-    check_hero_state();
+    //check_hero_state();
     m_background.update(m_window->getView());
     m_camera.update();
 }
