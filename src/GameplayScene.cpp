@@ -1,6 +1,7 @@
 #include "GameplayScene.h"
 
-GameplayScene::GameplayScene(sf::RenderWindow *w, const std::string &fn) : m_window(w), m_level(w, fn)
+GameplayScene::GameplayScene(sf::RenderWindow *w, const size_t num_of_level) : m_window(w),
+                                                                               m_level(w, num_of_level)
 {
 }
 
