@@ -1,7 +1,7 @@
 #include "MainMenuScene.h"
 #include <iostream>
 
-MainMenuScene::MainMenuScene(sf::RenderWindow *w) : m_window(w)
+MainMenuScene::MainMenuScene(sf::RenderWindow *w) : m_window(w), m_background("MainMenuBackground.png")
 {
     createButtons();
 }
@@ -25,10 +25,7 @@ SceneType MainMenuScene::handleInput()
                 mousePos.x < btn.getPosition().x + btn.getSize().x &&
                 mousePos.y > btn.getPosition().y &&
                 mousePos.y < btn.getPosition().y + btn.getSize().y)
-            {
-                std::cout << "Button pressed, switching to GamePlay\n";
                 return SceneType::GAMEPLAY;
-            }
         }
     }
     return SceneType::MAIN_MENU;
@@ -40,6 +37,7 @@ void MainMenuScene::update(sf::Time dt)
 
 void MainMenuScene::draw() const
 {
+    m_window->draw(m_background);
     for (const Button &btn : m_buttons)
         m_window->draw(btn);
 }

@@ -5,6 +5,7 @@
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 #include <vector>
+#include "Background.h"
 
 class MainMenuScene : public Scene
 {
@@ -24,4 +25,5 @@ private:
     sf::RenderWindow *m_window;
     std::vector<Button> m_buttons;
     sf::Font m_font;
+    Background m_background;
 };

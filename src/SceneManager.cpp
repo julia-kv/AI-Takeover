@@ -3,14 +3,16 @@
 #include "SFML/Graphics.hpp"
 #include "MainMenuScene.h"
 #include "GameplayScene.h"
+#include "ChooseLevelMenuScene.h"
+#include "PauseScene.h"
 #include <iostream>
 
-SceneManager::SceneManager(sf::RenderWindow *w) : m_window(w)
+SceneManager::SceneManager(sf::RenderWindow *w, const Constants &constants) : m_window(w),
+                                                                              m_constants(constants),
+                                                                              num_of_level(1)
 {
     m_curScene = MAIN_MENU;
     m_scenes[MAIN_MENU] = std::make_unique<MainMenuScene>(w);
-
-    m_levelFile = "Level_1.txt";
 }
 
 SceneManager::~SceneManager()
@@ -63,19 +65,32 @@ void SceneManager::draw()
     m_scenes[m_curScene]->draw();
 }
 
-void SceneManager::setLevelFile(const std::string &fileName)
+void SceneManager::switchTo(SceneType newScene)
 {
-}
-
-void SceneManager::switchTo(SceneType scene_to_switch)
-{
-    if (m_curScene == SceneType::MAIN_MENU &&
-        scene_to_switch == SceneType::GAMEPLAY)
+    switch (newScene)
     {
-        std::cout << "SceneManager: switching from MAIN_MENU to GAMEPLAY\n";
-        m_scenes[SceneType::GAMEPLAY] = std::make_unique<GameplayScene>(m_window, m_levelFile);
-        m_scenes[m_curScene].reset();
-        std::cout << "Deleted MainMenu ptr\n";
-        m_curScene = SceneType::GAMEPLAY;
+    case SceneType::MAIN_MENU:
+        m_scenes[newScene] = std::make_unique<MainMenuScene>(m_window);
+        break;
+
+    case SceneType::CHOOSE_LEVEL_MENU:
+        m_scenes[newScene] = std::make_unique<ChooseLevelMenuScene>(m_window, this);
+        break;
+
+    case SceneType::GAMEPLAY:
+        m_scenes[newScene] = std::make_unique<GameplayScene>(m_window, num_of_level);
+        break;
+
+    case SceneType::PAUSE:
+        m_scenes[newScene] = std::make_unique<PauseScene>(m_window);
+        break;
+
+    default:
+        break;
     }
+
+    if (m_curScene != SceneType::GAMEPLAY || newScene != SceneType::PAUSE)
+        m_scenes[m_curScene].reset();
+
+    m_curScene = newScene;
 }

@@ -4,11 +4,12 @@
 #include "SFML/Graphics.hpp"
 #include "Scene.h"
 #include "SceneType.h"
+#include "Constants.h"
 
 class SceneManager
 {
 public:
-    SceneManager(sf::RenderWindow *);
+    SceneManager(sf::RenderWindow *, const Constants &);
     ~SceneManager();
 
     void handleEvents();
@@ -16,13 +17,11 @@ public:
     void update(sf::Time);
     void draw();
 
-    void setLevelFile(const std::string &);
-
-    void switchTo(SceneType scene_to_switch);
-
 private:
-    std::array<std::unique_ptr<Scene>,4> m_scenes;
+    void switchTo(SceneType scene_to_switch);
+    std::array<std::unique_ptr<Scene>, 4> m_scenes;
     sf::RenderWindow *m_window;
     SceneType m_curScene;
-    std::string m_levelFile;
+    size_t num_of_level;
+    Constants m_constants;
 };
