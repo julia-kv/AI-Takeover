@@ -19,9 +19,33 @@ SceneManager::~SceneManager()
     std::cout << "SceneManager dtor\n";
 }
 
-void SceneManager::handleEvents(const sf::Event &event)
+void SceneManager::handleEvents()
 {
-    m_scenes[m_curScene]->handleEvents(event);
+    sf::Event event;
+    while (m_window->pollEvent(event))
+    {
+        switch (event.type)
+        {
+        case sf::Event::Closed:
+            m_window->close();
+            break;
+
+        case sf::Event::KeyReleased:
+            m_scenes[m_curScene]->handleEvents(event);
+            break;
+
+        case sf::Event::Resized:
+        {
+            sf::View view = m_window->getView();
+            view.setSize(event.size.width, event.size.height);
+            m_window->setView(view);
+            break;
+        }
+
+        default:
+            break;
+        }
+    }
 }
 
 void SceneManager::handleInput()

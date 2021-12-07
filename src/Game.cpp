@@ -1,10 +1,10 @@
 #include "Game.h"
 #include <iostream>
+#include "Constants.h"
 
-Game::Game() : m_sceneManager(&m_window)
+Game::Game()
 {
     std::cout << "Game ctor()\n";
-    m_window.create(sf::VideoMode(800, 600), "AI_Takeover");
 }
 
 Game::~Game()
@@ -14,49 +14,32 @@ Game::~Game()
 
 void Game::run()
 {
+    Constants constants;
+    if (!constants.read_file())
+        return;
+
+    sf::RenderWindow window(sf::VideoMode(constants["SCREEN_INITIAL_WIDTH"], constants["SCREEN_INITIAL_HEIGHT"]),
+                            "AI_Takeover");
+    SceneManager sceneManager(&window);
+    startGameLoop(window, sceneManager);
+}
+
+void Game::startGameLoop(sf::RenderWindow &window, SceneManager &sceneManager)
+{
     sf::Clock clock;
     sf::Time frameTime = sf::seconds(1.0f / 60.0f);
 
-    while (m_window.isOpen())
+    while (window.isOpen())
     {
         sf::Time dt = clock.restart();
         sf::sleep(frameTime - dt);
 
-        handleEvents();
-        m_sceneManager.handleInput();
-        m_sceneManager.update(dt);
+        sceneManager.handleEvents();
+        sceneManager.handleInput();
+        sceneManager.update(dt);
 
-        m_window.clear(sf::Color::Black);
-        m_sceneManager.draw();
-        m_window.display();
-    }
-}
-
-void Game::handleEvents()
-{
-    sf::Event event;
-    while (m_window.pollEvent(event))
-    {
-        switch (event.type)
-        {
-        case sf::Event::Closed:
-            m_window.close();
-            break;
-
-        case sf::Event::KeyReleased:
-            m_sceneManager.handleEvents(event);
-            break;
-
-        case sf::Event::Resized:
-        {
-            sf::View view = m_window.getView();
-            view.setSize(event.size.width, event.size.height);
-            m_window.setView(view);
-            break;
-        }
-
-        default:
-            break;
-        }
+        window.clear(sf::Color::Black);
+        sceneManager.draw();
+        window.display();
     }
 }

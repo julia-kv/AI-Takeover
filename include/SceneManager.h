@@ -11,7 +11,7 @@ public:
     SceneManager(sf::RenderWindow *);
     ~SceneManager();
 
-    void handleEvents(const sf::Event& event);
+    void handleEvents();
     void handleInput();
     void update(sf::Time);
     void draw();

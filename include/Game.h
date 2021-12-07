@@ -12,8 +12,5 @@ public:
     void run();
 
 private:
-    void handleEvents();
-
-    SceneManager m_sceneManager;
-    sf::RenderWindow m_window;
+    void startGameLoop(sf::RenderWindow &window, SceneManager &sceneManager);
 };
