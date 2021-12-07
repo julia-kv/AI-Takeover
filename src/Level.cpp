@@ -28,12 +28,6 @@ void Level::handleEvents(const sf::Event &event)
             m_hero.key_released(event.key.code);
         break;
 
-    case sf::Event::Resized:
-    {
-        m_camera.event_resized(event);
-        break;
-    }
-
     default:
         break;
     }

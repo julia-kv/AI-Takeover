@@ -33,13 +33,6 @@ public:
         std::cout << "Window size: " << m_window->getSize().x << " , " << m_window->getSize().y << '\n'; */
     }
 
-    void event_resized(const sf::Event &event)
-    {
-        sf::View view = m_window->getView();
-        view.setSize(event.size.width, event.size.height);
-        m_window->setView(view);
-    }
-
 private:
     sf::RenderWindow *m_window;
     Hero *m_hero;

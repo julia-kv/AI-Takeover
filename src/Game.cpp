@@ -48,8 +48,12 @@ void Game::handleEvents()
             break;
 
         case sf::Event::Resized:
-            m_sceneManager.handleEvents(event);
+        {
+            sf::View view = m_window.getView();
+            view.setSize(event.size.width, event.size.height);
+            m_window.setView(view);
             break;
+        }
 
         default:
             break;
