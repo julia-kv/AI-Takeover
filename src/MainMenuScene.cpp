@@ -1,7 +1,7 @@
 #include "MainMenuScene.h"
 #include <iostream>
 
-MainMenuScene::MainMenuScene(sf::RenderWindow *w) : m_window(w), m_background("MainMenuBackground.png")
+MainMenuScene::MainMenuScene(sf::RenderWindow &w) : m_window(w), m_background("MainMenuBackground.png")
 {
     createButtons();
 }
@@ -18,7 +18,7 @@ SceneType MainMenuScene::handleInput()
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(*m_window);
+        sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
         for (Button &btn : m_buttons)
         {
             if (mousePos.x > btn.getPosition().x &&
@@ -31,15 +31,16 @@ SceneType MainMenuScene::handleInput()
     return SceneType::MAIN_MENU;
 }
 
-void MainMenuScene::update(sf::Time dt)
+SceneType MainMenuScene::update(sf::Time dt)
 {
+    return SceneType::MAIN_MENU;
 }
 
 void MainMenuScene::draw() const
 {
-    m_window->draw(m_background);
+    m_window.draw(m_background);
     for (const Button &btn : m_buttons)
-        m_window->draw(btn);
+        m_window.draw(btn);
 }
 
 void MainMenuScene::createButtons()
@@ -49,8 +50,7 @@ void MainMenuScene::createButtons()
         std::cout << "Failed to load font from file arial.ttf" << std::endl;
     }
 
-    m_buttons = {
-        Button(m_window, {100.0, 40.0})};
+    m_buttons = {Button({100.0, 40.0})};
 
     m_buttons[0].setPosition(sf::Vector2f(350.0, 285.0));
     m_buttons[0].setText("Play", m_font);

@@ -9,12 +9,12 @@
 class ChooseLevelMenuScene : public Scene
 {
 public:
-    ChooseLevelMenuScene(sf::RenderWindow *, SceneManager *);
+    ChooseLevelMenuScene(sf::RenderWindow &, SceneManager *);
     ~ChooseLevelMenuScene();
 
     void handleEvents(const sf::Event& event);
     SceneType handleInput();
-    void update(sf::Time);
+    SceneType update(sf::Time);
     void draw() const;
 
     std::vector<Button>& getButtons();
@@ -23,6 +23,6 @@ private:
     void createButtons();
 
     std::vector<Button> m_buttons;
-    sf::RenderWindow *m_window;
+    sf::RenderWindow &m_window;
     SceneManager *m_sceneManager;
 };

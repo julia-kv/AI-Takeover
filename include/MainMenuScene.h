@@ -10,19 +10,19 @@
 class MainMenuScene : public Scene
 {
 public:
-    MainMenuScene(sf::RenderWindow *);
+    MainMenuScene(sf::RenderWindow &);
     ~MainMenuScene();
 
     void handleEvents(const sf::Event &event);
     SceneType handleInput();
-    void update(sf::Time);
+    SceneType update(sf::Time);
     void draw() const;
     std::vector<Button> &getButtons();
 
 private:
     void createButtons();
 
-    sf::RenderWindow *m_window;
+    sf::RenderWindow &m_window;
     std::vector<Button> m_buttons;
     sf::Font m_font;
     Background m_background;

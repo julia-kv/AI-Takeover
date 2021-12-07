@@ -3,10 +3,16 @@
 #include <fstream>
 #include <iostream>
 
-Level::Level(sf::RenderWindow *w, const size_t num_of_level) : m_window(w),
-                                                               m_camera(w, &m_hero, &m_map),
-                                                               m_background("Background_" + std::to_string(num_of_level) + ".png")
+Level::Level(sf::RenderWindow &w,
+             const size_t num_of_level,
+             Constants &constants) : m_constants(constants),
+                                     m_window(w),
+                                     m_camera(w, &m_hero),
+                                     m_background("Background_" + std::to_string(num_of_level) + ".png")
 {
+    m_hero.setSize(m_constants.at("TILE_SIZE"));
+    m_hero.setVelocity(m_constants.at("HERO_VELOCITY"));
+    m_hero.setAcceleration(m_constants.at("HERO_ACCELERATION"));
     readLevelFile("Level_" + std::to_string(num_of_level) + ".txt");
 }
 
@@ -38,13 +44,14 @@ SceneType Level::handleInput()
     return SceneType::GAMEPLAY;
 }
 
-void Level::update(sf::Time dt)
+SceneType Level::update(sf::Time dt)
 {
     m_map.update(dt);
     m_hero.update(dt);
-    //check_hero_state();
-    m_background.update(m_window->getView());
+    check_hero_state();
+    m_background.update(m_window.getView());
     m_camera.update();
+    return SceneType::GAMEPLAY;
 }
 
 void Level::check_hero_state()
@@ -80,20 +87,28 @@ void Level::readLevelFile(const std::string &fn)
     myfile >> num_tiles_x >> num_tiles_y;
     getline(myfile, line);
 
+    int hero_init_pos_x = 0, hero_init_pos_y = 0;
     m_map = Map(num_tiles_x, num_tiles_y);
     for (int i = 0; i < num_tiles_y; ++i)
     {
         getline(myfile, line);
         for (int j = 0; j < num_tiles_x; ++j)
             if (line[j] != ' ')
-                m_map.addTile(i, j, line[j]);
+            {
+                if (line[j] == 'h')
+                {
+                    hero_init_pos_x = j;
+                    hero_init_pos_y = i;
+                }
+                else
+                    m_map.addTile(i, j, line[j]);
+            }
     }
 
-    int hero_init_pos_x = 0, hero_init_pos_y = 0;
-    myfile >> hero_init_pos_x >> hero_init_pos_y;
-    //m_hero.setSize(40.0f);
     m_hero.setInitialPosition(hero_init_pos_x, hero_init_pos_y);
     m_hero.setMap(&m_map);
+
+    m_camera.setMaxSize(m_map.getSize().x * m_constants.at("TILE_SIZE"));
 
     myfile.close();
 }

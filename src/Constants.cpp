@@ -3,7 +3,7 @@
 Constants::Constants() {}
 Constants::~Constants() {}
 
-bool Constants::read_file(const std::string &f_name/* =".config" */)
+bool Constants::read_file(const std::string &f_name /* =".config" */)
 {
     std::string line;
     std::ifstream file(f_name);
@@ -33,7 +33,17 @@ float Constants::operator[](const std::string &key)
 
 float Constants::at(const std::string &key) const
 {
-    return m_map.at(key);
+    float value;
+    try
+    {
+        value = m_map.at(key);
+        return value;
+    }
+    catch (const std::out_of_range &e)
+    {
+        std::cerr << "Constant " << key << " not found in\n";
+        throw(e);
+    }
 }
 
 void Constants::parse_line(const std::string &line)

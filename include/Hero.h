@@ -6,25 +6,35 @@
 
 class Hero : public sf::Drawable, public sf::Transformable
 {
-    float tile_size = 40.0f;
-
 public:
-    Hero()
+    Hero() : is_flying(true)
     {
-        m_hero_vel = 300.0f;
-        m_acceleration = 1000.0;
-        is_flying = true;
-
-        if (!m_texture.loadFromFile("робот.png"))
+        if (!m_texture.loadFromFile("hero.png"))
         {
             std::cout << "Failed to read file hero.png\n";
         }
 
         m_sprite.setTexture(m_texture);
         m_sprite.setTextureRect(sf::IntRect(0, 0, 40, 80));
-        m_sprite.setScale(tile_size / 40, 2 * tile_size / 80);
     }
     ~Hero(){};
+
+    void setSize(const float tile_size)
+    {
+        m_tileSize = tile_size;
+        m_halfTileSize = tile_size / 2;
+        m_sprite.setScale(tile_size / 40, tile_size / 40);
+    }
+
+    void setVelocity(const float v)
+    {
+        m_hero_vel = v;
+    }
+
+    void setAcceleration(const float a)
+    {
+        m_acceleration = a;
+    }
 
     sf::Vector2f getPosition()
     {
@@ -33,7 +43,7 @@ public:
 
     void setInitialPosition(int tile_x, int tile_y)
     {
-        m_sprite.setPosition(tile_x * tile_size, tile_y * tile_size);
+        m_sprite.setPosition(tile_x * m_tileSize, tile_y * m_tileSize);
     }
 
     void update(sf::Time dt)
@@ -110,14 +120,14 @@ private:
     void move(sf::Vector2f del)
     {
         if (del.x > 0)
-            del.x = std::min(del.x, tile_size / 2);
+            del.x = std::min(del.x, m_halfTileSize);
         else
-            del.x = std::max(del.x, -tile_size / 2);
+            del.x = std::max(del.x, -m_halfTileSize);
 
         if (del.y > 0)
-            del.y = std::min(del.y, tile_size / 2);
+            del.y = std::min(del.y, m_halfTileSize);
         else
-            del.y = std::max(del.y, -tile_size / 2);
+            del.y = std::max(del.y, -m_halfTileSize);
 
         move_x(del.x);
         move_y(del.y);
@@ -130,9 +140,9 @@ private:
 
         m_sprite.move(dx, 0);
         float rect_left = m_sprite.getPosition().x;
-        float rect_right = m_sprite.getPosition().x + tile_size;
+        float rect_right = m_sprite.getPosition().x + m_tileSize;
         float rect_top = m_sprite.getPosition().y;
-        float rect_bottom = m_sprite.getPosition().y + 2 * tile_size;
+        float rect_bottom = m_sprite.getPosition().y + 2 * m_tileSize;
 
         std::vector<sf::Vertex> vertices = m_map->getVertexArray();
 
@@ -155,7 +165,7 @@ private:
                 if (dx > 0)
                 {
                     if (rect_left < tile_left && tile_left < rect_right)
-                        m_sprite.setPosition(tile_left - tile_size, rect_top);
+                        m_sprite.setPosition(tile_left - m_tileSize, rect_top);
                 }
                 else
                 {
@@ -175,9 +185,9 @@ private:
         m_sprite.move(0, dy);
 
         float rect_left = m_sprite.getPosition().x;
-        float rect_right = m_sprite.getPosition().x + tile_size;
+        float rect_right = m_sprite.getPosition().x + m_tileSize;
         float rect_top = m_sprite.getPosition().y;
-        float rect_bottom = m_sprite.getPosition().y + 2 * tile_size;
+        float rect_bottom = m_sprite.getPosition().y + 2 * m_tileSize;
 
         std::vector<sf::Vertex> vertices = m_map->getVertexArray();
         for (int i = 0; i < vertices.size(); i += 4)
@@ -195,7 +205,7 @@ private:
                 {
                     if (rect_top < tile_top && tile_top < rect_bottom)
                     {
-                        m_sprite.setPosition(rect_left, tile_top - 2 * tile_size);
+                        m_sprite.setPosition(rect_left, tile_top - 2 * m_tileSize);
                         is_flying = false;
                     }
                 }
@@ -217,4 +227,5 @@ private:
     float m_hero_vel, m_acceleration;
     Map *m_map;
     bool is_flying;
+    float m_tileSize, m_halfTileSize;
 };
