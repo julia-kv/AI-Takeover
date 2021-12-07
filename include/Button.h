@@ -3,7 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "SceneManager.h"
 
-class Button
+class Button : public sf::Drawable, public sf::Transformable
 {
 public:
     Button(sf::RenderWindow *w,
@@ -38,13 +38,12 @@ public:
         m_text.setPosition(m_rect.getPosition() + sf::Vector2f(20, 0));
     }
 
-    virtual void draw()
-    {
-        m_window->draw(m_rect);
-        m_window->draw(m_text);
-    }
-
 private:
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
+    {
+        target.draw(m_rect);
+        target.draw(m_text);
+    }
 
     sf::RenderWindow *m_window;
     sf::RectangleShape m_rect;

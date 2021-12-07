@@ -26,7 +26,7 @@ void ChooseLevelMenuScene::update(sf::Time dt)
 {
 }
 
-void ChooseLevelMenuScene::draw()
+void ChooseLevelMenuScene::draw() const
 {
 }
 

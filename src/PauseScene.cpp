@@ -22,7 +22,7 @@ SceneType PauseScene::handleInput()
 
 void PauseScene::update(sf::Time dt) {}
 
-void PauseScene::draw()
+void PauseScene::draw() const
 {
 }
 

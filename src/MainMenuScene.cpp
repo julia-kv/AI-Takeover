@@ -41,12 +41,10 @@ void MainMenuScene::update(sf::Time dt)
 {
 }
 
-void MainMenuScene::draw()
+void MainMenuScene::draw() const
 {
-    /* for (int i = 0; i < m_buttons.size(); ++i)
-        m_window->draw(m_buttons[i]); */
-    for (Button &btn : m_buttons)
-        btn.draw();
+    for (const Button &btn : m_buttons)
+        m_window->draw(btn);
 }
 
 void MainMenuScene::createButtons()

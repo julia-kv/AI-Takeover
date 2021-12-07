@@ -15,7 +15,7 @@ public:
     void handleEvents(const sf::Event& event);
     SceneType handleInput();
     void update(sf::Time);
-    void draw();
+    void draw() const;
 
     std::vector<Button>& getButtons();
 

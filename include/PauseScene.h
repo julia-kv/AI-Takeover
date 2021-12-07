@@ -16,7 +16,7 @@ public:
     SceneType handleInput();
     void update(sf::Time);
     std::vector<Button> &getButtons();
-    void draw();
+    void draw() const;
 
 private:
     void createButtons();

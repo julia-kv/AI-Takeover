@@ -25,7 +25,7 @@ void GameplayScene::update(sf::Time dt)
     m_level.update(dt);
 }
 
-void GameplayScene::draw()
+void GameplayScene::draw() const
 {
     m_window->draw(m_level);
 }
