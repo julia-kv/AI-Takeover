@@ -3,10 +3,11 @@
 #include <fstream>
 #include <iostream>
 
-Level::Level(sf::RenderWindow *w, const std::string &fn) : m_window(w),
-                                                           m_camera(w, &m_hero, &m_map)
+Level::Level(sf::RenderWindow *w, const size_t num_of_level) : m_window(w),
+                                                               m_camera(w, &m_hero, &m_map),
+                                                               m_background("Background_" + std::to_string(num_of_level) + ".png")
 {
-    readLevelFile(fn);
+    readLevelFile("Level_" + std::to_string(num_of_level) + ".txt");
 }
 
 Level::~Level()

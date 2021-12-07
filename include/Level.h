@@ -14,7 +14,7 @@
 class Level : public sf::Drawable, public sf::Transformable
 {
 public:
-    Level(sf::RenderWindow *, const std::string &);
+    Level(sf::RenderWindow *, const size_t);
     ~Level();
 
     void handleEvents(const sf::Event &event);
