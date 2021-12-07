@@ -3,14 +3,11 @@
 
 MainMenuScene::MainMenuScene(sf::RenderWindow *w) : m_window(w)
 {
-    std::cout << "MainMenuScene ctor(sf::RenderWindow *w)\n";
     createButtons();
 }
 
 MainMenuScene::~MainMenuScene()
 {
-    std::cout << "MainMenuScene dtor\n";
-    m_buttons.clear();
 }
 
 void MainMenuScene::handleEvents(const sf::Event &event)

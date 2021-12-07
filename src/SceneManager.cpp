@@ -7,7 +7,6 @@
 
 SceneManager::SceneManager(sf::RenderWindow *w) : m_window(w)
 {
-    std::cout << "SceneManager ctor(sf::RenderWindow *w)\n";
     m_curScene = MAIN_MENU;
     m_scenes[MAIN_MENU] = std::make_unique<MainMenuScene>(w);
 
@@ -16,7 +15,6 @@ SceneManager::SceneManager(sf::RenderWindow *w) : m_window(w)
 
 SceneManager::~SceneManager()
 {
-    std::cout << "SceneManager dtor\n";
 }
 
 void SceneManager::handleEvents()

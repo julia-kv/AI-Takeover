@@ -4,12 +4,10 @@
 
 Game::Game()
 {
-    std::cout << "Game ctor()\n";
 }
 
 Game::~Game()
 {
-    std::cout << "Game dtor\n";
 }
 
 void Game::run()
@@ -18,8 +16,17 @@ void Game::run()
     if (!constants.read_file())
         return;
 
-    sf::RenderWindow window(sf::VideoMode(constants["SCREEN_INITIAL_WIDTH"], constants["SCREEN_INITIAL_HEIGHT"]),
-                            "AI_Takeover");
+    sf::RenderWindow window;
+    try
+    {
+        window.create(sf::VideoMode(constants.at("SCREEN_INITIAL_WIDTH"),
+                                    constants.at("SCREEN_INITIAL_HEIGHT")),
+                      "AI_Takeover");
+    }
+    catch (const std::out_of_range &)
+    {
+        std::cerr << "SCREEN_INITIAL_WIDTH or SCREEN_INITIAL_HEIGHT not found if constants" << '\n';
+    }
     SceneManager sceneManager(&window);
     startGameLoop(window, sceneManager);
 }

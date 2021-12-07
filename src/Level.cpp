@@ -6,13 +6,11 @@
 Level::Level(sf::RenderWindow *w, const std::string &fn) : m_window(w),
                                                            m_camera(w, &m_hero, &m_map)
 {
-    std::cout << "Level ctor(sf::RenderWindow *w, const std::string &fn)\n";
     readLevelFile(fn);
 }
 
 Level::~Level()
 {
-    std::cout << "Level dtor\n";
     m_platforms.clear();
 }
 

@@ -3,13 +3,11 @@
 
 Background::Background()
 {
-    std::cout << "Background() ctor\n";
     loadTexture();
 }
 
 Background::~Background()
 {
-    std::cout << "Background dtor\n";
 }
 
 void Background::draw(sf::RenderTarget &target, sf::RenderStates states) const

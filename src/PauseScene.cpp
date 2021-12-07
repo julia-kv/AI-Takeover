@@ -3,14 +3,11 @@
 
 PauseScene::PauseScene(sf::RenderWindow *w) : m_window(w)
 {
-    std::cout << "PauseScene ctor(sf::RenderWindow *w)\n";
     createButtons();
 }
 
 PauseScene::~PauseScene()
 {
-    std::cout << "PauseScene dtor\n";
-    m_buttons.clear();
 }
 
 void PauseScene::handleEvents(const sf::Event &event) {}
