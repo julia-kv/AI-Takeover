@@ -8,7 +8,7 @@
 class GameplayScene : public Scene
 {
 public:
-    GameplayScene(sf::RenderWindow *, const std::string &);
+    GameplayScene(sf::RenderWindow *, const size_t);
     ~GameplayScene();
 
     void handleEvents(const sf::Event &event);
