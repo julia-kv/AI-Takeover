@@ -38,6 +38,23 @@ public:
     }
     ~Hero(){};
 
+    void setSize(const float tile_size)
+    {
+        m_tileSize = tile_size;
+        m_halfTileSize = tile_size / 2;
+        m_sprite.setScale(tile_size / 40, tile_size / 40);
+    }
+
+    void setVelocity(const float v)
+    {
+        m_hero_vel = v;
+    }
+
+    void setAcceleration(const float a)
+    {
+        m_acceleration = a;
+    }
+
     sf::Vector2f getPosition()
     {
         return m_sprite.getPosition();
@@ -169,14 +186,14 @@ private:
 
     void move(sf::Vector2f del) {
         if (del.x > 0)
-            del.x = std::min(del.x, tile_size / 2);
+            del.x = std::min(del.x, m_halfTileSize);
         else
-            del.x = std::max(del.x, -tile_size / 2);
+            del.x = std::max(del.x, -m_halfTileSize);
 
         if (del.y > 0)
-            del.y = std::min(del.y, tile_size / 2);
+            del.y = std::min(del.y, m_halfTileSize);
         else
-            del.y = std::max(del.y, -tile_size / 2);
+            del.y = std::max(del.y, -m_halfTileSize);
 
         move_x(del.x);
         move_y(del.y);
@@ -236,7 +253,6 @@ private:
         float rect_right = m_sprite.getPosition().x + m_sprite.getTextureRect().width * m_sprite.getScale().x;
         float rect_top = m_sprite.getPosition().y;
         float rect_bottom = m_sprite.getPosition().y + m_sprite.getTextureRect().height * m_sprite.getScale().y;
-
 
         std::vector<sf::Vertex> vertices = m_map->getVertexArray();
         int platform_idx = -1;
@@ -305,7 +321,6 @@ private:
 
 //    float m_hero_vel, m_acceleration;
     Map *m_map;
-
     sf::Vector2f m_window_size;
 };
 

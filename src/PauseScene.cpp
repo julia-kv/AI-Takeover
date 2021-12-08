@@ -1,7 +1,7 @@
 #include "PauseScene.h"
 #include <iostream>
 
-PauseScene::PauseScene(sf::RenderWindow *w) : m_window(w)
+PauseScene::PauseScene(sf::RenderWindow &w) : m_window(w)
 {
     createButtons();
 }
@@ -17,7 +17,10 @@ SceneType PauseScene::handleInput()
     return SceneType::PAUSE;
 }
 
-void PauseScene::update(sf::Time dt) {}
+SceneType PauseScene::update(sf::Time dt)
+{
+    return SceneType::PAUSE;
+}
 
 void PauseScene::draw() const
 {

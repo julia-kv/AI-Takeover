@@ -6,8 +6,7 @@
 class Button : public sf::Drawable, public sf::Transformable
 {
 public:
-    Button(sf::RenderWindow *w,
-           sf::Vector2f size) : m_window(w)
+    Button(sf::Vector2f size)
     {
         m_rect = sf::RectangleShape(size);
         m_rect.setFillColor(sf::Color(179, 179, 255));
@@ -45,7 +44,6 @@ private:
         target.draw(m_text);
     }
 
-    sf::RenderWindow *m_window;
     sf::RectangleShape m_rect;
     sf::Text m_text;
 };

@@ -12,6 +12,6 @@ public:
 
     virtual void handleEvents(const sf::Event &event) = 0;
     virtual SceneType handleInput() = 0;
-    virtual void update(sf::Time) = 0;
+    virtual SceneType update(sf::Time) = 0;
     virtual void draw() const = 0;
 };

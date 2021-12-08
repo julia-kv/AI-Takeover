@@ -9,18 +9,18 @@
 class PauseScene : public Scene
 {
 public:
-    PauseScene(sf::RenderWindow *);
+    PauseScene(sf::RenderWindow &);
     ~PauseScene();
 
     void handleEvents(const sf::Event &event);
     SceneType handleInput();
-    void update(sf::Time);
+    SceneType update(sf::Time);
     std::vector<Button> &getButtons();
     void draw() const;
 
 private:
     void createButtons();
 
-    sf::RenderWindow *m_window;
+    sf::RenderWindow &m_window;
     std::vector<Button> m_buttons;
 };

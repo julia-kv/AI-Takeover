@@ -21,9 +21,11 @@ void Background::update(const sf::View &windowView)
 {
     RelativePosition curPos = findPosition(windowView);
     if (curPos == m_previousPosition)
-        return;
+    {
+        if (curPos != RelativePosition::OUTSIDE)
+            return;
+    }
 
-    m_previousPosition = curPos;
     if (curPos == RelativePosition::OUTSIDE)
     {
         std::swap(m_vertices[0], m_vertices[4]);
@@ -39,6 +41,7 @@ void Background::update(const sf::View &windowView)
         for (int i = 4; i < 8; ++i)
             m_vertices[i].position = m_vertices[i - 4].position + sf::Vector2f(del_x, 0.f);
     }
+    m_previousPosition = curPos;
 }
 
 void Background::loadTexture(const std::string &f_name)

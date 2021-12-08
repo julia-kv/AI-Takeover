@@ -90,7 +90,7 @@ public:
             break;
         }
 
-        case '?':
+        case 'h':
         {
             vector2f hero_pos(j * tile_size, i * tile_size);
             m_hero_pos = hero_pos;

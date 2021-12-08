@@ -10,16 +10,17 @@
 #include <vector>
 #include <string>
 #include "Background.h"
+#include "Constants.h"
 
 class Level : public sf::Drawable, public sf::Transformable
 {
 public:
-    Level(sf::RenderWindow *, const size_t);
+    Level(sf::RenderWindow &, const size_t, Constants &constants);
     ~Level();
 
     void handleEvents(const sf::Event &event);
     SceneType handleInput();
-    void update(sf::Time);
+    SceneType update(sf::Time);
 
     Map &getMap();
     std::vector<Platform> &getPlatforms();
@@ -32,11 +33,12 @@ private:
     void readLevelFile(const size_t);
     void check_hero_state();
 
-    sf::RenderWindow *m_window;
+    sf::RenderWindow &m_window;
     Map m_map;
     std::vector<Platform> m_platforms;
     Hero m_hero;
     Finish m_finish;
     Camera m_camera;
     Background m_background;
+    Constants &m_constants;
 };

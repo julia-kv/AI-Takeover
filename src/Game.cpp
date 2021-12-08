@@ -21,13 +21,15 @@ void Game::run()
     {
         window.create(sf::VideoMode(constants.at("SCREEN_INITIAL_WIDTH"),
                                     constants.at("SCREEN_INITIAL_HEIGHT")),
-                      "AI_Takeover");
+                      "AI_Takeover",
+                      sf::Style::Default);
     }
     catch (const std::out_of_range &)
     {
         std::cerr << "SCREEN_INITIAL_WIDTH or SCREEN_INITIAL_HEIGHT not found if constants" << '\n';
+        return;
     }
-    SceneManager sceneManager(&window, std::move(constants));
+    SceneManager sceneManager(window, std::move(constants));
     startGameLoop(window, sceneManager);
 }
 
@@ -35,7 +37,6 @@ void Game::startGameLoop(sf::RenderWindow &window, SceneManager &sceneManager)
 {
     sf::Clock clock;
     sf::Time frameTime = sf::seconds(1.0f / 60.0f);
-
     while (window.isOpen())
     {
         sf::Time dt = clock.restart();

@@ -39,12 +39,14 @@ SceneType Level::handleInput()
     return SceneType::GAMEPLAY;
 }
 
-void Level::update(sf::Time dt)
+SceneType Level::update(sf::Time dt)
 {
     m_map.update(dt);
     m_hero.update(dt);
-    m_background.update(m_window->getView());
+    check_hero_state();
+    m_background.update(m_window.getView());
     m_camera.update();
+    return SceneType::GAMEPLAY;
 }
 
 void Level::check_hero_state()
@@ -72,6 +74,7 @@ void Level::readLevelFile(const size_t num_of_level)
     m_hero.setMap(&m_map);
     m_hero.setInitialPosition(m_map.getHeroPosition());
     m_finish.setPosition(m_map.getFinishPosition());
+    m_camera.setMaxSize(m_map.getSize().x * m_constants.at("TILE_SIZE"));
 
 }
 

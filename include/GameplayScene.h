@@ -4,19 +4,20 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include <string>
+#include "Constants.h"
 
 class GameplayScene : public Scene
 {
 public:
-    GameplayScene(sf::RenderWindow *, const size_t);
+    GameplayScene(sf::RenderWindow &, const size_t, Constants &);
     ~GameplayScene();
 
     void handleEvents(const sf::Event &event);
     SceneType handleInput();
-    void update(sf::Time);
+    SceneType update(sf::Time);
     void draw() const;
 
 private:
-    sf::RenderWindow *m_window;
+    sf::RenderWindow &m_window;
     Level m_level;
 };

@@ -9,7 +9,7 @@
 class SceneManager
 {
 public:
-    SceneManager(sf::RenderWindow *, const Constants &);
+    SceneManager(sf::RenderWindow &, const Constants &);
     ~SceneManager();
 
     void handleEvents();
@@ -20,7 +20,7 @@ public:
 private:
     void switchTo(SceneType scene_to_switch);
     std::array<std::unique_ptr<Scene>, 4> m_scenes;
-    sf::RenderWindow *m_window;
+    sf::RenderWindow &m_window;
     SceneType m_curScene;
     size_t num_of_level;
     Constants m_constants;

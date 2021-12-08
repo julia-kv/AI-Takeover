@@ -7,7 +7,7 @@
 #include "PauseScene.h"
 #include <iostream>
 
-SceneManager::SceneManager(sf::RenderWindow *w, const Constants &constants) : m_window(w),
+SceneManager::SceneManager(sf::RenderWindow &w, const Constants &constants) : m_window(w),
                                                                               m_constants(constants),
                                                                               num_of_level(1)
 {
@@ -22,25 +22,25 @@ SceneManager::~SceneManager()
 void SceneManager::handleEvents()
 {
     sf::Event event;
-    while (m_window->pollEvent(event))
+    while (m_window.pollEvent(event))
     {
         switch (event.type)
         {
         case sf::Event::Closed:
-            m_window->close();
-            break;
-
-        case sf::Event::KeyReleased:
-            m_scenes[m_curScene]->handleEvents(event);
+            m_window.close();
             break;
 
         case sf::Event::Resized:
         {
-            sf::View view = m_window->getView();
+            sf::View view = m_window.getView();
             view.setSize(event.size.width, event.size.height);
-            m_window->setView(view);
+            m_window.setView(view);
             break;
         }
+
+        case sf::Event::KeyReleased:
+            m_scenes[m_curScene]->handleEvents(event);
+            break;
 
         default:
             break;
@@ -57,7 +57,9 @@ void SceneManager::handleInput()
 
 void SceneManager::update(sf::Time dt)
 {
-    m_scenes[m_curScene]->update(dt);
+    SceneType scn = m_scenes[m_curScene]->update(dt);
+    if (scn != m_curScene)
+        switchTo(scn);
 }
 
 void SceneManager::draw()
@@ -78,7 +80,7 @@ void SceneManager::switchTo(SceneType newScene)
         break;
 
     case SceneType::GAMEPLAY:
-        m_scenes[newScene] = std::make_unique<GameplayScene>(m_window, num_of_level);
+        m_scenes[newScene] = std::make_unique<GameplayScene>(m_window, num_of_level, m_constants);
         break;
 
     case SceneType::PAUSE:
