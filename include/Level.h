@@ -30,7 +30,7 @@ public:
 
 private:
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const;
-    void readLevelFile(const std::string &);
+    void readLevelFile(const size_t);
     void check_hero_state();
 
     sf::RenderWindow &m_window;

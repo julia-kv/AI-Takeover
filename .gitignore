@@ -2,3 +2,5 @@
 /.vscode
 /tests/build
 *Zone.Identifier
+/cmake-build-debug
+.idea
