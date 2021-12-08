@@ -4,7 +4,6 @@
 #include <iostream>
 #include <fstream>
 
-
 typedef sf::Vector2<float> vector2f;
 
 class Map : public sf::Drawable, public sf::Transformable
@@ -25,7 +24,8 @@ public:
 
     ~Map(){};
 
-    void readMap(const size_t num_of_level) {
+    void readMap(const size_t num_of_level)
+    {
         readLevelFile("Level_" + std::to_string(num_of_level) + ".txt");
     }
 
@@ -42,12 +42,12 @@ public:
         size_t j = 0;
         size_t k = 0;
 
-        while(!myfile.eof())
+        while (!myfile.eof())
         {
             getline(myfile, line);
 
             size_t num_tiles_x = line.size();
-            k = std::max(k,num_tiles_x);
+            k = std::max(k, num_tiles_x);
 
             for (int i = 0; i < num_tiles_x; ++i)
                 if (line[i] != ' ')
@@ -58,11 +58,10 @@ public:
         m_map_size.x = k;
         m_map_size.y = j;
 
-        for (size_t i = 0; i < m_platform_idx.size(); ++i)
+        /* for (size_t i = 0; i < m_platform_idx.size(); ++i)
         {
             std::cout << m_platform_idx[i] << "\n";
-        }
-
+        } */
     }
 
     void readTile(int i, int j, char ch)
@@ -131,7 +130,7 @@ public:
     {
         if (!m_right_border)
         {
-            addTile(i,j,1);
+            addTile(i, j, 1);
             m_platform_idx.push_back(m_platform_count - 1);
             m_right_border = true;
         }
@@ -209,7 +208,8 @@ public:
         {
             if (m_platform_idx[i] != platform_idx)
                 ++j;
-            else {
+            else
+            {
                 is_find = true;
                 break;
             }
@@ -233,7 +233,6 @@ public:
     {
         return m_finish_pos;
     }
-
 
 private:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const

@@ -2,14 +2,14 @@
 
 Finish::Finish() {
 
-    if (!m_texture.loadFromFile("робот.png"))
+    if (!m_texture.loadFromFile("finish.png"))
     {
         std::cout << "Failed to read file finish.png\n";
     }
 
     m_sprite.setTexture(m_texture);
 //    m_sprite.setTextureRect(sf::IntRect(0, 0, 32, 64));
-    m_sprite.setScale(tile_size / 32, 2 * tile_size / 64);
+    m_sprite.setScale(tile_size / 32, tile_size / 32);
 
 }
 
@@ -26,5 +26,3 @@ vector2f Finish::getPosition()
 }
 
 void Finish::update(sf::Time dt) {}
-
-

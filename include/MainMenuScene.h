@@ -6,6 +6,7 @@
 #include "SFML/Graphics.hpp"
 #include <vector>
 #include "Background.h"
+#include "Gui.h"
 
 class MainMenuScene : public Scene
 {
@@ -17,13 +18,12 @@ public:
     SceneType handleInput();
     SceneType update(sf::Time);
     void draw() const;
-    std::vector<Button> &getButtons();
 
 private:
     void createButtons();
 
     sf::RenderWindow &m_window;
-    std::vector<Button> m_buttons;
+    Gui m_gui;
     sf::Font m_font;
     Background m_background;
 };

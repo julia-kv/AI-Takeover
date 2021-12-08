@@ -9,7 +9,7 @@
 
 SceneManager::SceneManager(sf::RenderWindow &w, const Constants &constants) : m_window(w),
                                                                               m_constants(constants),
-                                                                              num_of_level(1)
+                                                                              m_numOfLevel(1)
 {
     m_curScene = MAIN_MENU;
     m_scenes[MAIN_MENU] = std::make_unique<MainMenuScene>(w);
@@ -35,6 +35,7 @@ void SceneManager::handleEvents()
             sf::View view = m_window.getView();
             view.setSize(event.size.width, event.size.height);
             m_window.setView(view);
+            m_scenes[m_curScene]->handleEvents(event);
             break;
         }
 
@@ -62,7 +63,7 @@ void SceneManager::update(sf::Time dt)
         switchTo(scn);
 }
 
-void SceneManager::draw()
+void SceneManager::draw() const
 {
     m_scenes[m_curScene]->draw();
 }
@@ -76,11 +77,12 @@ void SceneManager::switchTo(SceneType newScene)
         break;
 
     case SceneType::CHOOSE_LEVEL_MENU:
-        m_scenes[newScene] = std::make_unique<ChooseLevelMenuScene>(m_window, this);
+        m_scenes[newScene] = std::make_unique<ChooseLevelMenuScene>(m_window, *this);
         break;
 
     case SceneType::GAMEPLAY:
-        m_scenes[newScene] = std::make_unique<GameplayScene>(m_window, num_of_level, m_constants);
+        if (m_curScene != SceneType::PAUSE)
+            m_scenes[newScene] = std::make_unique<GameplayScene>(m_window, m_numOfLevel, m_constants);
         break;
 
     case SceneType::PAUSE:
@@ -95,4 +97,9 @@ void SceneManager::switchTo(SceneType newScene)
         m_scenes[m_curScene].reset();
 
     m_curScene = newScene;
+}
+
+void SceneManager::setLevel(const size_t lvl)
+{
+    m_numOfLevel = lvl;
 }
