@@ -6,6 +6,7 @@
 #include "SFML/Graphics.hpp"
 #include <vector>
 #include "Background.h"
+#include "Gui.h"
 
 class ChooseLevelMenuScene : public Scene
 {
@@ -21,7 +22,7 @@ public:
 private:
     void createButtons();
 
-    std::vector<Button> m_buttons;
+    Gui m_gui;
     sf::RenderWindow &m_window;
     SceneManager &m_sceneManager;
     sf::Font m_font;

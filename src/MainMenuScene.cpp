@@ -15,10 +15,6 @@ MainMenuScene::~MainMenuScene()
 
 void MainMenuScene::handleEvents(const sf::Event &event)
 {
-    if (event.type == sf::Event::Resized)
-    {
-        //m_gui.updatePositions();
-    }
 }
 
 SceneType MainMenuScene::handleInput()
@@ -28,12 +24,15 @@ SceneType MainMenuScene::handleInput()
         switch (m_gui.getPressedButton())
         {
         case 0:
-            return SceneType::GAMEPLAY;
+            return SceneType::CHOOSE_LEVEL_MENU;
             break;
 
         case 1:
+        {
+            m_window.close();
             return SceneType::GAMEPLAY;
             break;
+        }
 
         default:
             break;
