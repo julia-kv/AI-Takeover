@@ -8,9 +8,6 @@ Finish::Finish() {
     }
 
     m_sprite.setTexture(m_texture);
-//    m_sprite.setTextureRect(sf::IntRect(0, 0, 32, 64));
-    m_sprite.setScale(tile_size / 32, tile_size / 32);
-
 }
 
 Finish::~Finish() {}
@@ -23,6 +20,12 @@ void Finish::setPosition(sf::Vector2f pos)
 vector2f Finish::getPosition()
 {
     return m_sprite.getPosition();
+}
+
+void Finish::setSize(const float tile_size) {
+    m_tileSize = tile_size;
+    m_halfTileSize = tile_size / 2;
+    m_sprite.setScale(tile_size / 920, tile_size / 829);
 }
 
 void Finish::update(sf::Time dt) {}
