@@ -6,8 +6,9 @@
 Level::Level(sf::RenderWindow *w, const size_t num_of_level) : m_window(w),
                                                                m_camera(w, &m_hero, &m_map),
                                                                m_background("Background_" + std::to_string(num_of_level) + ".png")
+
 {
-    readLevelFile("Level_" + std::to_string(num_of_level) + ".txt");
+    readLevelFile(num_of_level);
 }
 
 Level::~Level()
@@ -24,7 +25,7 @@ void Level::handleEvents(const sf::Event &event)
             event.key.code == sf::Keyboard::Right ||
             event.key.code == sf::Keyboard::Up ||
             event.key.code == sf::Keyboard::Down)
-            m_hero.key_released(event.key.code);
+            m_hero.keyReleased(event.key.code);
         break;
 
     default:
@@ -42,7 +43,6 @@ void Level::update(sf::Time dt)
 {
     m_map.update(dt);
     m_hero.update(dt);
-    //check_hero_state();
     m_background.update(m_window->getView());
     m_camera.update();
 }
@@ -66,36 +66,13 @@ void Level::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_hero);
 }
 
-void Level::readLevelFile(const std::string &fn)
+void Level::readLevelFile(const size_t num_of_level)
 {
-    std::string line;
-    std::ifstream myfile(fn);
-    if (!myfile.is_open())
-    {
-        std::cout << "Failed to open level file \'" << fn << '\'' << std::endl;
-        return;
-    }
-
-    int num_tiles_x = 0, num_tiles_y = 0;
-    myfile >> num_tiles_x >> num_tiles_y;
-    getline(myfile, line);
-
-    m_map = Map(num_tiles_x, num_tiles_y);
-    for (int i = 0; i < num_tiles_y; ++i)
-    {
-        getline(myfile, line);
-        for (int j = 0; j < num_tiles_x; ++j)
-            if (line[j] != ' ')
-                m_map.addTile(i, j, line[j]);
-    }
-
-    int hero_init_pos_x = 0, hero_init_pos_y = 0;
-    myfile >> hero_init_pos_x >> hero_init_pos_y;
-    //m_hero.setSize(40.0f);
-    m_hero.setInitialPosition(hero_init_pos_x, hero_init_pos_y);
+    m_map.readMap(num_of_level);
     m_hero.setMap(&m_map);
+    m_hero.setInitialPosition(m_map.getHeroPosition());
+    m_finish.setPosition(m_map.getFinishPosition());
 
-    myfile.close();
 }
 
 Map &Level::getMap()
