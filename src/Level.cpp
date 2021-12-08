@@ -16,7 +16,6 @@ Level::Level(sf::RenderWindow &w,
 
 Level::~Level()
 {
-    m_platforms.clear();
 }
 
 void Level::handleEvents(const sf::Event &event)
@@ -56,7 +55,7 @@ void Level::check_hero_state()
 {
     if (m_hero.isFinished())
     {
-        ///
+        /// m_finish.changeTexture();
     }
     else if (m_hero.isDead())
     {
@@ -93,11 +92,6 @@ void Level::readLevelFile(const size_t num_of_level)
 Map &Level::getMap()
 {
     return m_map;
-}
-
-std::vector<Platform> &Level::getPlatforms()
-{
-    return m_platforms;
 }
 
 Hero &Level::getHero()

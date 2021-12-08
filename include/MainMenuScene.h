@@ -20,8 +20,6 @@ public:
     void draw() const;
 
 private:
-    void createButtons();
-
     sf::RenderWindow &m_window;
     Gui m_gui;
     sf::Font m_font;

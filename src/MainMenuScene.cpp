@@ -51,16 +51,3 @@ void MainMenuScene::draw() const
     m_window.draw(m_background);
     m_window.draw(m_gui);
 }
-
-void MainMenuScene::createButtons()
-{
-    /* if (!m_font.loadFromFile("arial.ttf"))
-    {
-        std::cout << "Failed to load font from file 'arial.ttf'\n";
-    }
-
-    m_buttons = {Button({100.0, 40.0})};
-
-    m_buttons[0].setPosition(sf::Vector2f(350.0, 285.0));
-    m_buttons[0].setText("Play", m_font); */
-}

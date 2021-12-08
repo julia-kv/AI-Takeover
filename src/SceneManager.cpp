@@ -94,7 +94,7 @@ void SceneManager::switchTo(SceneType newScene)
     }
 
     if (m_curScene != SceneType::GAMEPLAY || newScene != SceneType::PAUSE)
-        m_scenes[m_curScene].reset();
+        m_scenes[m_curScene].reset(nullptr);
 
     m_curScene = newScene;
 }

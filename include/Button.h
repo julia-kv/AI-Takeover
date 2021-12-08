@@ -32,7 +32,7 @@ public:
     void setPosition(const sf::Vector2f &pos, const float windowWidth)
     {
         m_sprite.setPosition(pos);
-        m_text.setPosition((windowWidth - m_text.getGlobalBounds().width) / 2, pos.y);
+        m_text.setPosition((windowWidth - m_text.getGlobalBounds().width) / 2, pos.y + m_text.getGlobalBounds().height / 2);
     }
 
     void setWidth(const float width)

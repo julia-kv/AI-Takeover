@@ -15,17 +15,17 @@ public:
 
     void readMap(const size_t);
 
-    void readLevelFile(const std::string&);
+    void readLevelFile(const std::string &);
 
-    void readTile(int , int , char );
+    void readTile(int, int, char);
 
-    void addTile(int , int , int );
+    void addTile(int, int, int);
 
-    void addPlatform(int , int );
+    void addPlatform(int, int);
 
-    void setSize(const float );
+    void setSize(const float);
 
-    void setVelocity(const float );
+    void setVelocity(const float);
 
     void update(sf::Time);
 
