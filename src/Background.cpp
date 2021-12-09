@@ -1,7 +1,7 @@
 #include "Background.h"
 #include <iostream>
 
-Background::Background(const std::string &f_name)
+Background::Background(const std::string &f_name) : m_previousPosition(RelativePosition::START)
 {
     loadTexture(f_name);
 }

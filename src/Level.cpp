@@ -45,22 +45,22 @@ SceneType Level::update(sf::Time dt)
 {
     m_map.update(dt);
     m_hero.update(dt);
-    check_hero_state();
     m_background.update(m_window.getView());
     m_camera.update();
-    return SceneType::GAMEPLAY;
+    return checkHeroState();;
 }
 
-void Level::check_hero_state()
+SceneType Level::checkHeroState()
 {
     if (m_hero.isFinished())
     {
-        /// m_finish.changeTexture();
+       return SceneType::MAIN_MENU;
     }
     else if (m_hero.isDead())
     {
-        ///
+       return SceneType::MAIN_MENU;
     }
+    return SceneType::GAMEPLAY;
 }
 
 void Level::draw(sf::RenderTarget &target, sf::RenderStates states) const

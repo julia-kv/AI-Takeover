@@ -29,7 +29,7 @@ public:
 private:
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const;
     void readLevelFile(const size_t);
-    void check_hero_state();
+    SceneType checkHeroState();
 
     sf::RenderWindow &m_window;
     Map m_map;

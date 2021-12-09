@@ -6,7 +6,8 @@ enum RelativePosition
 {
     LEFT_HALF,
     RIGHT_HALF,
-    OUTSIDE
+    OUTSIDE,
+    START
 };
 
 class Background : public sf::Drawable, public sf::Transformable
