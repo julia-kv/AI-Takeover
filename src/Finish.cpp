@@ -1,7 +1,9 @@
 #include "Finish.h"
 
-Finish::Finish() 
+Finish::Finish(const float tile_size) : m_tileSize(tile_size)
 {
+    if (tile_size <= 0)
+        throw (std::invalid_argument("Failed const TILE_SIZE"));
 
     if (!m_texture.loadFromFile("finish.png"))
     {
@@ -9,6 +11,8 @@ Finish::Finish()
     }
 
     m_sprite.setTexture(m_texture);
+    m_sprite.setScale(m_tileSize / m_texture.getSize().x, m_tileSize / m_texture.getSize().y);
+
 }
 
 Finish::~Finish() {}
@@ -21,13 +25,6 @@ void Finish::setPosition(sf::Vector2f pos)
 vector2f Finish::getPosition()
 {
     return m_sprite.getPosition();
-}
-
-void Finish::setSize(const float tile_size)
-{
-    m_tileSize = tile_size;
-    m_halfTileSize = tile_size / 2;
-    m_sprite.setScale(tile_size / m_texture.getSize().x, tile_size / m_texture.getSize().y);
 }
 
 void Finish::update(sf::Time dt) {}

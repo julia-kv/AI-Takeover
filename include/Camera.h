@@ -5,11 +5,11 @@
 
 class Camera
 {
-    float tile_size = 40.0f;
 
 public:
-    Camera(sf::RenderWindow &w, Hero &h) : m_window(w),
-                                           m_hero(h)
+    Camera(sf::RenderWindow &w, Hero &h, const float tile_size) : m_window(w),
+                                                                  m_hero(h),
+                                                                  m_tileSize(tile_size)
     {
     }
 
@@ -20,7 +20,7 @@ public:
     void update()
     {
         sf::View view = m_window.getView();
-        float x_pos = m_hero.getPosition().x + tile_size / 2;
+        float x_pos = m_hero.getPosition().x + m_tileSize / 2;
         float del_x = x_pos - view.getCenter().x;
         float halfTileSize = (float)m_window.getSize().x / 2;
         float padding = 0.2 * halfTileSize;
@@ -41,6 +41,8 @@ public:
     }
 
 private:
+
+    const float m_tileSize;
     sf::RenderWindow &m_window;
     Hero &m_hero;
     float max_size;

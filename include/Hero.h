@@ -17,15 +17,9 @@ class Hero : public sf::Drawable, public sf::Transformable
     float m_y_koef = 1.5f;
 
 public:
-    Hero();
+    Hero(const float, const float, const float);
 
-    ~Hero(){};
-
-    void setSize(const float );
-
-    void setVelocity(const float );
-
-    void setAcceleration(const float);
+    ~Hero();
 
     sf::Vector2f getPosition();
 
@@ -59,13 +53,16 @@ private:
     sf::Vector2f m_vel;
     sf::Sprite m_sprite;
     sf::Texture m_texture;
-    float m_changes, m_tileSize, m_halfTileSize, m_hero_vel, m_acceleration;
+    sf::Vector2f m_texture_size;
 
+    const float m_tileSize, m_halfTileSize, m_hero_vel, m_acceleration;
+
+    float m_changes;
     bool m_is_jump;
     State m_state;
 
     int m_idx_platform;
 
-    Map *m_map;
+    Map *m_map{};
     sf::Vector2f m_window_size;
 };

@@ -1,8 +1,16 @@
 #include "Map.h"
 
-Map::Map() : m_right_border(false),
-             m_platform_count(0)
+Map::Map(const float tile_size, const float v) : m_tileSize(tile_size),
+                                                 m_platform_vel(v),
+                                                 m_right_border(false),
+                                                 m_platform_count(0)
 {
+    if (tile_size <= 0)
+        throw(std::invalid_argument("Failed const TILE_SIZE"));
+
+    if (v == 0)
+        throw(std::invalid_argument("Failed const PLATFORM_VEL"));
+
     if (!m_texture.loadFromFile("texture.png")) {
         std::cout << "Failed to load texture.png file\n";
     }
@@ -84,10 +92,10 @@ void Map::addTile(int i, int j, int texture_num)
     sf::Vertex vert2(pos2);
     sf::Vertex vert3(pos3);
 
-    vert0.texCoords = sf::Vector2f(0 + texture_num * 64, 0);
-    vert1.texCoords = sf::Vector2f(64 + texture_num * 64, 0);
-    vert2.texCoords = sf::Vector2f(64 + texture_num * 64, 64);
-    vert3.texCoords = sf::Vector2f(0 + texture_num * 64, 64);
+    vert0.texCoords = sf::Vector2f(0 + texture_num * m_texture.getSize().y, 0);
+    vert1.texCoords = sf::Vector2f( m_texture.getSize().y + texture_num * m_texture.getSize().y, 0);
+    vert2.texCoords = sf::Vector2f( m_texture.getSize().y + texture_num * m_texture.getSize().y, m_texture.getSize().y);
+    vert3.texCoords = sf::Vector2f(0 + texture_num *  m_texture.getSize().y,  m_texture.getSize().y);
 
     m_vertices.push_back(vert0);
     m_vertices.push_back(vert1);
@@ -110,14 +118,6 @@ void Map::addPlatform(int i, int j)
         m_platform_vel_arr.push_back(m_platform_vel);
         m_right_border = false;
     }
-}
-
-void Map::setSize(const float m_tile_size) {
-    m_tileSize = m_tile_size;
-}
-
-void Map::setVelocity(const float v) {
-    m_platform_vel = v;
 }
 
 void Map::update(sf::Time dt) {
@@ -153,14 +153,11 @@ std::vector<sf::Vertex> &Map::getVertexArray() {
 }
 
 bool Map::isPlatformMoving(int platform_idx) {
-    if (platform_idx == -1)
-        return false;
 
-    for (size_t i = 0; i < m_platform_idx.size(); ++i) {
-        if (m_platform_idx[i] == platform_idx)
-            return true;
-    }
-    return false;
+    return (std::count(m_platform_idx.begin(),
+                       m_platform_idx.end(),
+                       platform_idx) != 0);
+
 }
 
 vector2f Map::getPlatformPosition(int platform_idx) {
@@ -169,18 +166,15 @@ vector2f Map::getPlatformPosition(int platform_idx) {
 }
 
 float Map::getPlatformVel(int platform_idx) {
-    int j = 0;
-    bool is_find = false;
-    for (size_t i = 0; i < m_platform_idx.size(); ++i) {
-        if (m_platform_idx[i] != platform_idx)
-            ++j;
-        else {
-            is_find = true;
-            break;
-        }
-    }
-    if (is_find) {
-        return m_platform_vel_arr[j];
+
+    auto it = find(m_platform_idx.begin(),
+                   m_platform_idx.end(),
+                   platform_idx);
+
+    if (it != m_platform_idx.end()) {
+        int i = it - m_platform_idx.begin();
+        return m_platform_vel_arr[i];
+
     } else {
         return -1;
     }

@@ -1,42 +1,44 @@
 #include "Hero.h"
 
-Hero::Hero()
+Hero::Hero(const float tile_size, const float v, const float a) : m_tileSize(tile_size),
+                                                                  m_hero_vel(v),
+                                                                  m_acceleration(a),
+                                                                  m_halfTileSize(a / 2)
 {
+    if (tile_size <= 0)
+        throw(std::invalid_argument("Failed const TILE_SIZE"));
+
+    if (v == 0)
+        throw(std::invalid_argument("Failed const HERO_VEL"));
+
+    if (a == 0)
+        throw(std::invalid_argument("Failed HERO_ACCELERATION"));
+
+
     if (!m_texture.loadFromFile("человек.png"))
     {
         std::cout << "Failed to read file человек.png\n";
     }
 
     m_sprite.setTexture(m_texture);
-    m_sprite.setTextureRect(sf::IntRect(0, 0, 32, 64));
+
+    m_texture_size.x = m_texture.getSize().x / 5;
+    m_texture_size.y = m_texture.getSize().y;
+
+    m_sprite.setTextureRect(sf::IntRect(0, 0, m_texture_size.x, m_texture_size.y));
+    m_sprite.setScale(m_tileSize / m_texture_size.x, (m_tileSize * 2) / m_texture_size.y);
 
     m_vel.x = 0;
-    m_vel.y = 0;
+    m_vel.y = m_acceleration;
 
     m_state = State::PLAYING;
     m_is_jump = true;
-    m_idx_platform = -1; //is_flying
-    m_vel.y = m_acceleration;
+
+    m_idx_platform = -1;
     m_changes = 0;
 }
 
-void Hero::setSize(const float tile_size)
-{
-    m_tileSize = tile_size;
-    m_halfTileSize = tile_size / 2;
-    m_sprite.setScale(tile_size / 32, tile_size / 32);
-}
-
-void Hero::setVelocity(const float v)
-{
-    m_hero_vel = v;
-}
-
-void Hero::setAcceleration(const float a)
-{
-    m_acceleration = a;
-    m_vel.y = m_acceleration;
-}
+Hero::~Hero() {}
 
 sf::Vector2f Hero::getPosition()
 {
@@ -96,6 +98,8 @@ void Hero::update(sf::Time dt)
     move(del);
     changeDirection(dt);
 
+    std::cout << " hero: " << m_idx_platform << "\n";
+
     if (isReachFinish())
     {
         m_state = State::FINISHED;
@@ -125,23 +129,28 @@ void Hero::changeDirection(sf::Time dt)
     {
         if (m_changes > 0.35)
         {
-            if (m_sprite.getTextureRect().left == 64)
+            if (m_sprite.getTextureRect().left == m_texture_size.x * 2)
             {
-                m_sprite.setTextureRect(sf::IntRect(32, 0, 32, 64));
+                m_sprite.setTextureRect(sf::IntRect(m_texture_size.x, 0,
+                                                    m_texture_size.x, m_texture_size.y));
                 m_changes = 0;
             }
             else
             {
-                m_sprite.setTextureRect(sf::IntRect(64, 0, 32, 64));
+                m_sprite.setTextureRect(sf::IntRect(m_texture_size.x * 2, 0,
+                                                    m_texture_size.x, m_texture_size.y));
                 m_changes = 0;
             }
         }
         else
         {
-            if (m_sprite.getTextureRect().left == 64)
-                m_sprite.setTextureRect(sf::IntRect(64, 0, 32, 64));
+            if (m_sprite.getTextureRect().left == m_texture_size.x * 2)
+                m_sprite.setTextureRect(sf::IntRect(m_texture_size.x * 2, 0,
+                                                    m_texture_size.x, m_texture_size.y));
+
             else
-                m_sprite.setTextureRect(sf::IntRect(32, 0, 32, 64));
+                m_sprite.setTextureRect(sf::IntRect(m_texture_size.x, 0,
+                                                    m_texture_size.x, m_texture_size.y));
             m_changes += dt.asSeconds();
         }
     }
@@ -149,29 +158,33 @@ void Hero::changeDirection(sf::Time dt)
     {
         if (m_changes > 0.35)
         {
-            if (m_sprite.getTextureRect().left == 96)
+            if (m_sprite.getTextureRect().left == m_texture_size.x * 4)
             {
-                m_sprite.setTextureRect(sf::IntRect(128, 0, 32, 64));
+                m_sprite.setTextureRect(sf::IntRect(m_texture_size.x * 3, 0,
+                                                    m_texture_size.x, m_texture_size.y));
                 m_changes = 0;
             }
             else
             {
-                m_sprite.setTextureRect(sf::IntRect(96, 0, 32, 64));
+                m_sprite.setTextureRect(sf::IntRect(m_texture_size.x * 4, 0,
+                                                    m_texture_size.x, m_texture_size.y));
                 m_changes = 0;
             }
         }
         else
         {
-            if (m_sprite.getTextureRect().left == 96)
-                m_sprite.setTextureRect(sf::IntRect(96, 0, 32, 64));
+            if (m_sprite.getTextureRect().left == m_texture_size.x * 4)
+                m_sprite.setTextureRect(sf::IntRect(m_texture_size.x * 4, 0,
+                                                    m_texture_size.x, m_texture_size.y));
             else
-                m_sprite.setTextureRect(sf::IntRect(128, 0, 32, 64));
+                m_sprite.setTextureRect(sf::IntRect(m_texture_size.x * 3, 0,
+                                                    m_texture_size.x, m_texture_size.y));
             m_changes += dt.asSeconds();
         }
     }
     else
     {
-        m_sprite.setTextureRect(sf::IntRect(0, 0, 32, 64));
+        m_sprite.setTextureRect(sf::IntRect(0, 0, m_texture_size.x, m_texture_size.y));
         m_changes = 0;
     }
 }
@@ -190,6 +203,7 @@ void Hero::move(sf::Vector2f del)
 
     move_x(del.x);
     move_y(del.y);
+
 }
 
 void Hero::move_x(float dx)
@@ -198,12 +212,13 @@ void Hero::move_x(float dx)
     m_sprite.move(dx, 0);
 
     float rect_left = m_sprite.getPosition().x;
-    float rect_right = m_sprite.getPosition().x + m_sprite.getTextureRect().width * m_sprite.getScale().x;
+    float rect_right = m_sprite.getPosition().x + m_texture_size.x * m_sprite.getScale().x;
     float rect_top = m_sprite.getPosition().y;
-    float rect_bottom = m_sprite.getPosition().y + m_sprite.getTextureRect().height * m_sprite.getScale().y;
+    float rect_bottom = m_sprite.getPosition().y + m_texture_size.y * m_sprite.getScale().y;
 
     std::vector<sf::Vertex> vertices = m_map->getVertexArray();
 
+    int platform_idx = -1;
     for (int i = 0; i < vertices.size(); i += 4)
     {
         float tile_left = vertices[i].position.x;
@@ -221,12 +236,19 @@ void Hero::move_x(float dx)
 
                 if (rect_left < tile_left && tile_left < rect_right)
                     m_sprite.setPosition(tile_left - m_tileSize, rect_top);
+
+                if (rect_left < tile_right && tile_right < rect_right)
+                    m_sprite.setPosition(tile_right, rect_top);
+
             }
             else if (dx < 0)
             {
 
                 if (rect_left < tile_right && tile_right < rect_right)
                     m_sprite.setPosition(tile_right, rect_top);
+
+                if (rect_left < tile_left && tile_left < rect_right)
+                    m_sprite.setPosition(tile_left - m_tileSize, rect_top);
             }
             else
             {
@@ -243,16 +265,17 @@ void Hero::move_x(float dx)
 
 void Hero::move_y(float dy)
 {
-    if (dy == 0)
+    if (dy == 0) {
         return;
+    }
 
     m_is_jump = true;
     m_sprite.move(0, dy);
 
     float rect_left = m_sprite.getPosition().x;
-    float rect_right = m_sprite.getPosition().x + m_sprite.getTextureRect().width * m_sprite.getScale().x;
+    float rect_right = m_sprite.getPosition().x + m_texture_size.x * m_sprite.getScale().x;
     float rect_top = m_sprite.getPosition().y;
-    float rect_bottom = m_sprite.getPosition().y + m_sprite.getTextureRect().height * m_sprite.getScale().y;
+    float rect_bottom = m_sprite.getPosition().y + m_texture_size.y * m_sprite.getScale().y;
 
     std::vector<sf::Vertex> vertices = m_map->getVertexArray();
     int platform_idx = -1;
@@ -292,6 +315,7 @@ void Hero::move_y(float dy)
         }
     }
     m_idx_platform = platform_idx;
+
 }
 
 bool Hero::isReachFinish()
