@@ -9,7 +9,17 @@ typedef sf::Vector2<float> vector2f;
 class Map : public sf::Drawable, public sf::Transformable
 {
 public:
-    Map();
+    Map(const float, const float);
+
+    Map(sf::RenderWindow &, const size_t, Constants &);
+
+    Map(const Map &) = delete;
+
+    Map(Map &&) noexcept = delete;
+
+    Map &operator=(const Map &) = delete;
+
+    Map &operator=(Map &&) noexcept = delete;
 
     ~Map(){};
 
@@ -22,10 +32,6 @@ public:
     void addTile(int, int, int);
 
     void addPlatform(int, int);
-
-    void setSize(const float);
-
-    void setVelocity(const float);
 
     void update(sf::Time);
 
@@ -49,7 +55,7 @@ private:
     sf::Vector2i m_map_size;
     std::vector<sf::Vertex> m_vertices;
 
-    float m_changes, m_tileSize, m_platform_vel;
+    const float m_tileSize, m_platform_vel;
     std::vector<float> m_platform_vel_arr;
     std::vector<std::pair<float, float>> m_borders;
     bool m_right_border;

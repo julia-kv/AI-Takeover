@@ -9,15 +9,21 @@ typedef sf::Vector2<float> vector2f;
 class Finish : public sf::Drawable, public sf::Transformable
 {
 public:
-    Finish();
+    Finish(const float);
+
+    Finish(const Finish &) = delete;
+
+    Finish(Finish &&) noexcept = delete;
+
+    Finish &operator=(const Finish &) = delete;
+
+    Finish &operator=(Finish &&) noexcept = delete;
 
     ~Finish();
 
     void setPosition(vector2f pos);
 
     sf::Vector2f getPosition();
-
-    void setSize(const float);
 
     void update(sf::Time);
 
@@ -28,10 +34,8 @@ private:
         target.draw(m_sprite);
     }
 
-    float m_tileSize, m_halfTileSize;
+    const float m_tileSize;
 
     sf::Texture m_texture;
     sf::Sprite m_sprite;
-
-    sf::RenderWindow *m_window;
 };
