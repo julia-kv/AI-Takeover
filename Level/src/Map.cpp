@@ -11,7 +11,7 @@ Map::Map(const float tile_size, const float v) : m_tileSize(tile_size),
     if (v == 0)
         throw(std::invalid_argument("Failed const PLATFORM_VEL"));
 
-    if (!m_texture.loadFromFile("texture.png"))
+    if (!m_texture.loadFromFile("../Files/texture.png"))
     {
         std::cout << "Failed to load texture.png file\n";
     }
@@ -19,7 +19,7 @@ Map::Map(const float tile_size, const float v) : m_tileSize(tile_size),
 
 void Map::readMap(const size_t num_of_level)
 {
-    readLevelFile("Level_" + std::to_string(num_of_level) + ".txt");
+    readLevelFile("../Files/Level_" + std::to_string(num_of_level) + ".txt");
 }
 
 void Map::readLevelFile(const std::string &fn)
@@ -42,7 +42,7 @@ void Map::readLevelFile(const std::string &fn)
         size_t num_tiles_x = line.size();
         k = std::max(k, num_tiles_x);
 
-        for (int i = 0; i < num_tiles_x; ++i)
+        for (size_t i = 0; i < num_tiles_x; ++i)
             if (line[i] != ' ')
                 readTile(j, i, line[i]);
 

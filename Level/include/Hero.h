@@ -63,7 +63,7 @@ private:
     sf::Texture m_texture;
     sf::Vector2f m_texture_size;
 
-    const float m_tileSize, m_halfTileSize, m_hero_vel, m_acceleration;
+    const float m_tileSize, m_hero_vel, m_acceleration, m_halfTileSize;
 
     float m_changes;
     bool m_is_jump;

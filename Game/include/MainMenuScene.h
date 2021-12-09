@@ -25,7 +25,6 @@ public:
 
 private:
     sf::RenderWindow &m_window;
-    Gui m_gui;
-    sf::Font m_font;
     Background m_background;
+    Gui m_gui;
 };

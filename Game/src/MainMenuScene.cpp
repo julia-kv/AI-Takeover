@@ -2,7 +2,7 @@
 #include <iostream>
 
 MainMenuScene::MainMenuScene(sf::RenderWindow &w) : m_window(w),
-                                                    m_background("MainMenuBackground.png"),
+                                                    m_background("../Files/MainMenuBackground.png"),
                                                     m_gui(w)
 {
     sf::View view = m_window.getView();

@@ -26,9 +26,8 @@ public:
 private:
     void createButtons();
 
-    Gui m_gui;
     sf::RenderWindow &m_window;
     SceneManager &m_sceneManager;
-    sf::Font m_font;
     Background m_background;
+    Gui m_gui;
 };

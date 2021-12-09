@@ -48,7 +48,7 @@ void Background::loadTexture(const std::string &f_name)
 {
     if (!m_texture.loadFromFile(f_name))
     {
-        std::cout << "Failed to load background texture from file background.png\n";
+        std::cout << "Failed to load background texture from file '" << f_name << "'\n";
     }
 
     float texture_size_x = (float)m_texture.getSize().x;

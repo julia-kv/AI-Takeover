@@ -1,13 +1,14 @@
-project(AI-Takeover-game)
+project(AI-Takeover)
 cmake_minimum_required(VERSION 3.16)
 
+set(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic")
+set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic")
 set(CMAKE_CXX_STANDARD 14)
 
-add_link_options(-lsfml-graphics -lsfml-window -lsfml-system)
+ADD_SUBDIRECTORY( Level )
+ADD_SUBDIRECTORY( Game )
 
-include_directories("include/")
-set(SOURCE src/Gui.cpp src/Button.cpp src/Constants.cpp src/Background.cpp src/ChooseLevelMenuScene.cpp src/Game.cpp src/GameplayScene.cpp src/Level src/Main.cpp src/MainMenuScene.cpp src/PauseScene.cpp src/SceneManager.cpp src/Finish.cpp src/Map.cpp src/Hero.cpp)
+add_executable(main Main.cpp ${SOURCE} ${HEADERS})
 
-add_executable(main ${SOURCE} ${HEADERS})
-
-target_link_libraries(main sfml-graphics sfml-window sfml-system)
+target_link_libraries(main sfml-graphics sfml-window sfml-system Level Game)
+target_include_directories(main PUBLIC "${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/Game/include")

@@ -13,8 +13,11 @@ Game::~Game()
 void Game::run()
 {
     Constants constants;
-    if (!constants.read_file())
+    if (!constants.read_file("../Files/.config"))
+    {
+        std::cerr << "Failed to read constants file\n";
         return;
+    }
 
     sf::RenderWindow window;
     try
@@ -26,7 +29,7 @@ void Game::run()
     }
     catch (const std::out_of_range &)
     {
-        std::cerr << "SCREEN_INITIAL_WIDTH or SCREEN_INITIAL_HEIGHT not found if constants" << '\n';
+        std::cerr << "SCREEN_INITIAL_WIDTH or SCREEN_INITIAL_HEIGHT not found if constants\n";
         return;
     }
     SceneManager sceneManager(window, constants);

@@ -28,10 +28,9 @@ bool Constants::read_file(const std::string &f_name /* =".config" */)
 
 float Constants::at(const std::string &key) const
 {
-    float value;
     try
     {
-        value = m_map.at(key);
+        float value = m_map.at(key);
         return value;
     }
     catch (const std::out_of_range &e)
@@ -45,7 +44,6 @@ void Constants::parse_line(const std::string &line)
 {
     std::istringstream is_line(line);
     std::string key;
-    float value = 0;
     if (std::getline(is_line, key, '='))
     {
         std::string str_value;

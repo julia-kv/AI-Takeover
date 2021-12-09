@@ -3,7 +3,7 @@
 Hero::Hero(const float tile_size, const float v, const float a) : m_tileSize(tile_size),
                                                                   m_hero_vel(v),
                                                                   m_acceleration(a),
-                                                                  m_halfTileSize(a / 2)
+                                                                  m_halfTileSize(tile_size / 2)
 {
     if (tile_size <= 0)
         throw(std::invalid_argument("Failed const TILE_SIZE"));
@@ -14,9 +14,9 @@ Hero::Hero(const float tile_size, const float v, const float a) : m_tileSize(til
     if (a == 0)
         throw(std::invalid_argument("Failed HERO_ACCELERATION"));
 
-    if (!m_texture.loadFromFile("человек.png"))
+    if (!m_texture.loadFromFile("../Files/человек.png"))
     {
-        std::cout << "Failed to read file человек.png\n";
+        std::cout << "Failed to read file ../Files/человек.png\n";
     }
 
     m_sprite.setTexture(m_texture);
@@ -216,8 +216,7 @@ void Hero::move_x(float dx)
 
     std::vector<sf::Vertex> vertices = m_map->getVertexArray();
 
-    int platform_idx = -1;
-    for (int i = 0; i < vertices.size(); i += 4)
+    for (size_t i = 0; i < vertices.size(); i += 4)
     {
         float tile_left = vertices[i].position.x;
         float tile_right = vertices[i + 2].position.x;
@@ -276,9 +275,8 @@ void Hero::move_y(float dy)
     float rect_bottom = m_sprite.getPosition().y + m_texture_size.y * m_sprite.getScale().y;
 
     std::vector<sf::Vertex> vertices = m_map->getVertexArray();
-    int platform_idx = -1;
 
-    for (int i = 0; i < vertices.size(); i += 4)
+    for (size_t i = 0; i < vertices.size(); i += 4)
     {
         float tile_left = vertices[i].position.x;
         float tile_right = vertices[i + 2].position.x;
@@ -297,7 +295,7 @@ void Hero::move_y(float dy)
                 {
                     m_sprite.setPosition(rect_left, tile_top - 2 * m_tileSize);
                     m_is_jump = false;
-                    platform_idx = i / 4;
+                    m_idx_platform = i / 4;
                 }
             }
             else
@@ -307,12 +305,11 @@ void Hero::move_y(float dy)
                 {
                     m_sprite.setPosition(rect_left, tile_bottom);
                     m_vel.y = 0;
-                    platform_idx = i / 4;
+                    m_idx_platform = i / 4;
                 }
             }
         }
     }
-    m_idx_platform = platform_idx;
 }
 
 bool Hero::isReachFinish()

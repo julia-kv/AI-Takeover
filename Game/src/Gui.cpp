@@ -2,14 +2,14 @@
 
 Gui::Gui(const sf::RenderWindow &w) : m_window(w)
 {
-    if (!m_font.loadFromFile("arial.ttf"))
+    if (!m_font.loadFromFile("../Files/arial.ttf"))
     {
-        std::cerr << "Failed to load font from file 'arial.ttf'\n";
+        std::cerr << "Failed to load font from file '../Files/arial.ttf'\n";
     }
 
-    if (!m_texture.loadFromFile("ButtonTexture.png"))
+    if (!m_texture.loadFromFile("../Files/ButtonTexture.png"))
     {
-        std::cerr << "Failed to load texture from file 'ButtonTexture.png'\n";
+        std::cerr << "Failed to load texture from file '../Files/ButtonTexture.png'\n";
     }
 }
 
@@ -49,7 +49,7 @@ void Gui::updatePositions()
 int Gui::getPressedButton()
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
-    for (int i = 0; i < m_buttons.size(); ++i)
+    for (size_t i = 0; i < m_buttons.size(); ++i)
         if (m_buttons[i].isPressed(m_window.mapPixelToCoords(mousePos)))
             return i;
 

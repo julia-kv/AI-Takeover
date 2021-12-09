@@ -9,9 +9,9 @@
 
 SceneManager::SceneManager(sf::RenderWindow &w, const Constants &constants) : m_window(w),
                                                                               m_constants(constants),
+                                                                              m_curScene(SceneType::MAIN_MENU),
                                                                               m_numOfLevel(1)
 {
-    m_curScene = MAIN_MENU;
     m_scenes[MAIN_MENU] = std::make_unique<MainMenuScene>(w);
 }
 

@@ -4,7 +4,7 @@
 ChooseLevelMenuScene::ChooseLevelMenuScene(sf::RenderWindow &w,
                                            SceneManager &sm) : m_window(w),
                                                                m_sceneManager(sm),
-                                                               m_background("MainMenuBackground.png"),
+                                                               m_background("../Files/MainMenuBackground.png"),
                                                                m_gui(w)
 {
     m_gui.addButton("Level 1");

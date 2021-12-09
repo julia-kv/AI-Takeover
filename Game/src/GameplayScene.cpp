@@ -9,7 +9,7 @@ GameplayScene::GameplayScene(sf::RenderWindow &w,
                                                              constants.at("PLATFORM_VELOCITY"),
                                                              constants.at("HERO_VELOCITY"),
                                                              constants.at("HERO_ACCELERATION")),
-                                                     m_background("Background_" + std::to_string(num_of_level) + ".png")
+                                                     m_background("../Files/Background_" + std::to_string(num_of_level) + ".png")
 
 {
 }

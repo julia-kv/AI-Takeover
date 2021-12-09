@@ -3,8 +3,8 @@
 Button::Button(const std::string &str,
                const sf::Font &font,
                const sf::Texture &texture,
-               const unsigned int characterSize /* = 30U */) : m_text(str, font, characterSize),
-                                                               m_sprite(texture)
+               const unsigned int characterSize /* = 30U */) : m_sprite(texture),
+                                                               m_text(str, font, characterSize)
 {
     m_sprite.setScale(2 * m_text.getLocalBounds().width / texture.getSize().x,
                       2 * (float)characterSize / texture.getSize().y);

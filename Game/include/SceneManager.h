@@ -26,7 +26,7 @@ private:
 
     std::array<std::unique_ptr<Scene>, 4> m_scenes;
     sf::RenderWindow &m_window;
+    Constants m_constants;
     SceneType m_curScene;
     size_t m_numOfLevel;
-    Constants m_constants;
 };

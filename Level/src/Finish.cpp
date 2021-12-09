@@ -5,7 +5,7 @@ Finish::Finish(const float tile_size) : m_tileSize(tile_size)
     if (tile_size <= 0)
         throw (std::invalid_argument("Failed const TILE_SIZE"));
 
-    if (!m_texture.loadFromFile("finish.png"))
+    if (!m_texture.loadFromFile("../Files/finish.png"))
     {
         std::cout << "Failed to read file finish.png\n";
     }
