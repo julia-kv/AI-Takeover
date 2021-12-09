@@ -5,19 +5,20 @@
 
 Level::Level(sf::RenderWindow &w,
              const size_t num_of_level,
-             Constants &constants) : m_window(w),
-                                     m_constants(constants),
-                                     m_map(constants.at("TILE_SIZE"),
-                                           constants.at("PLATFORM_VELOCITY")),
-                                     m_hero(constants.at("TILE_SIZE"),
-                                            constants.at("HERO_VELOCITY"),
-                                            constants.at("HERO_ACCELERATION")),
-                                     m_finish(constants.at("TILE_SIZE")),
-                                     m_camera(w, m_hero)
+             const float tile_size,
+             const float v_platform,
+             const float v_hero,
+             const float a_hero) : m_window(w),
+                                   m_map(tile_size,
+                                         v_platform),
+                                   m_hero(tile_size,
+                                          v_hero,
+                                          a_hero),
+                                   m_finish(tile_size),
+                                   m_camera(w, m_hero)
 {
-
-    m_camera.setMaxSize(m_map.getSize().x * m_constants.at("TILE_SIZE"));
     readLevelFile(num_of_level);
+    m_camera.setMaxSize(m_map.getSize().x * tile_size);
 }
 
 Level::~Level()
@@ -41,32 +42,16 @@ void Level::handleEvents(const sf::Event &event)
     }
 }
 
-SceneType Level::handleInput()
+void Level::handleInput()
 {
     m_hero.handleInput();
-    return SceneType::GAMEPLAY;
 }
 
-SceneType Level::update(sf::Time dt)
+void Level::update(sf::Time dt)
 {
     m_map.update(dt);
     m_hero.update(dt);
     m_camera.update();
-    return checkHeroState();
-    ;
-}
-
-SceneType Level::checkHeroState()
-{
-    if (m_hero.isFinished())
-    {
-        return SceneType::MAIN_MENU;
-    }
-    else if (m_hero.isDead())
-    {
-        return SceneType::MAIN_MENU;
-    }
-    return SceneType::GAMEPLAY;
 }
 
 void Level::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -84,8 +69,6 @@ void Level::readLevelFile(const size_t num_of_level)
     m_hero.setInitialPosition(m_map.getHeroPosition());
 
     m_finish.setPosition(m_map.getFinishPosition());
-
-    m_camera.setMaxSize(m_map.getSize().x * m_constants.at("TILE_SIZE"));
 }
 
 Map &Level::getMap()
@@ -101,4 +84,14 @@ Hero &Level::getHero()
 Finish &Level::getFinish()
 {
     return m_finish;
+}
+
+bool Level::isFinished()
+{
+    return m_hero.isFinished();
+}
+
+bool Level::isDead()
+{
+    return m_hero.isDead();
 }
