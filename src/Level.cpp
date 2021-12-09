@@ -7,9 +7,7 @@ Level::Level(sf::RenderWindow &w,
              const size_t num_of_level,
              Constants &constants) : m_window(w),
                                      m_constants(constants),
-                                     m_camera(w, m_hero),
-                                     m_background("Background_" + std::to_string(num_of_level) + ".png")
-
+                                     m_camera(w, m_hero)
 {
     readLevelFile(num_of_level);
 }
@@ -45,7 +43,6 @@ SceneType Level::update(sf::Time dt)
 {
     m_map.update(dt);
     m_hero.update(dt);
-    m_background.update(m_window.getView());
     m_camera.update();
     return checkHeroState();;
 }
@@ -65,7 +62,6 @@ SceneType Level::checkHeroState()
 
 void Level::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(m_background);
     target.draw(m_map);
     target.draw(m_finish);
     target.draw(m_hero);

@@ -35,6 +35,5 @@ private:
     Hero m_hero;
     Finish m_finish;
     Camera<Hero> m_camera;
-    Background m_background;
     Constants &m_constants;
 };

@@ -5,6 +5,7 @@
 #include "SFML/Window.hpp"
 #include <string>
 #include "Constants.h"
+#include "Background.h"
 
 class GameplayScene : public Scene
 {
@@ -24,4 +25,5 @@ public:
 private:
     sf::RenderWindow &m_window;
     Level m_level;
+    Background m_background;
 };
