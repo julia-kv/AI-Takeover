@@ -41,10 +41,8 @@ void Game::startGameLoop(sf::RenderWindow &window, SceneManager &sceneManager)
     {
         sf::Time dt = clock.restart();
         sf::sleep(frameTime - dt);
-
-        sceneManager.handleEvents();
-        sceneManager.handleInput();
-        sceneManager.update(dt);
+        
+        sceneManager.cycle(dt);
 
         window.clear(sf::Color::Black);
         sceneManager.draw();

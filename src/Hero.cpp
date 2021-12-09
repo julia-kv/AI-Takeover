@@ -82,7 +82,7 @@ void Hero::update(sf::Time dt)
     if (m_is_jump)
         m_vel.y += m_acceleration * dt.asSeconds();
 
-    if (m_sprite.getPosition().y > m_window_size.y + 5 * m_tileSize)
+    if (m_sprite.getPosition().y > (m_map->getSize().y + 5) * m_tileSize)
         m_state = State::DIED;
 
     sf::Vector2f del = m_vel * dt.asSeconds();
@@ -331,11 +331,11 @@ bool Hero::isReachFinish()
     float finish_top = m_map->getFinishPosition().y;
     float finish_bottom = finish_top + m_tileSize;
 
-    if (((rect_left >= finish_left && rect_left < finish_right) ||
-         (rect_right <= finish_right && rect_right > finish_left)) &&
-        ((rect_bottom >= finish_bottom && rect_bottom < finish_top) ||
-         (rect_top <= finish_top && rect_top > finish_bottom)))
-    {
+    if (((finish_left <= rect_right && rect_right <= finish_right) || (finish_left <= rect_left && rect_left <= finish_right)))
+        if (((finish_top <= rect_bottom && rect_bottom <= finish_bottom) || (finish_top <= rect_top && rect_top <= finish_bottom)))
+            return true;
+    return false;
+    /*{
         m_sprite.setPosition(m_map->getFinishPosition());
         m_vel.x = 0;
         m_vel.y = 0;
@@ -343,5 +343,5 @@ bool Hero::isReachFinish()
         return true;
     }
     else
-        return false;
+        return false; */
 }

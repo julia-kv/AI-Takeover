@@ -19,6 +19,23 @@ SceneManager::~SceneManager()
 {
 }
 
+void SceneManager::cycle(sf::Time dt)
+{
+    handleEvents();
+    SceneType scn = m_scenes[m_curScene]->handleInput();
+    if (scn != m_curScene)
+    {
+        switchTo(scn);
+        return;
+    }
+    scn = m_scenes[m_curScene]->update(dt);
+    if (scn != m_curScene)
+    {
+        switchTo(scn);
+        return;
+    }
+}
+
 void SceneManager::handleEvents()
 {
     sf::Event event;
@@ -35,7 +52,6 @@ void SceneManager::handleEvents()
             sf::View view = m_window.getView();
             view.setSize(event.size.width, event.size.height);
             m_window.setView(view);
-            m_scenes[m_curScene]->handleEvents(event);
             break;
         }
 
@@ -47,20 +63,6 @@ void SceneManager::handleEvents()
             break;
         }
     }
-}
-
-void SceneManager::handleInput()
-{
-    SceneType scn = m_scenes[m_curScene]->handleInput();
-    if (scn != m_curScene)
-        switchTo(scn);
-}
-
-void SceneManager::update(sf::Time dt)
-{
-    SceneType scn = m_scenes[m_curScene]->update(dt);
-    if (scn != m_curScene)
-        switchTo(scn);
 }
 
 void SceneManager::draw() const

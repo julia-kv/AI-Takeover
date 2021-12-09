@@ -5,6 +5,9 @@ MainMenuScene::MainMenuScene(sf::RenderWindow &w) : m_window(w),
                                                     m_background("MainMenuBackground.png"),
                                                     m_gui(w)
 {
+    sf::View view = m_window.getView();
+    view.setCenter(m_window.getSize().x / 2, m_window.getSize().y / 2);
+    m_window.setView(view);
     m_gui.addButton("Play");
     m_gui.addButton("Exit");
 }
