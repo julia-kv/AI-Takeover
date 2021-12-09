@@ -13,6 +13,10 @@ class MainMenuScene : public Scene
 public:
     MainMenuScene(sf::RenderWindow &);
     ~MainMenuScene();
+    MainMenuScene(const MainMenuScene &) = delete;
+    MainMenuScene(MainMenuScene &&) noexcept = delete;
+    MainMenuScene &operator=(const MainMenuScene &) = delete;
+    MainMenuScene &operator=(MainMenuScene &&) noexcept = delete;
 
     void handleEvents(const sf::Event &event);
     SceneType handleInput();

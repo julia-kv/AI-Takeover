@@ -26,11 +26,6 @@ bool Constants::read_file(const std::string &f_name /* =".config" */)
     return true;
 }
 
-float Constants::operator[](const std::string &key)
-{
-    return m_map[key];
-}
-
 float Constants::at(const std::string &key) const
 {
     float value;

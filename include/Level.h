@@ -33,7 +33,6 @@ public:
     Map &getMap();
     Hero &getHero();
     Finish &getFinish();
-    Camera &getCamera();
 
 private:
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const;
@@ -44,7 +43,6 @@ private:
     Map m_map;
     Hero m_hero;
     Finish m_finish;
-    Camera m_camera;
-    Background m_background;
+    Camera<Hero> m_camera;
     Constants &m_constants;
 };

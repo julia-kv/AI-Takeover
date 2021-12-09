@@ -11,9 +11,12 @@ class Constants
 public:
     Constants();
     ~Constants();
+    Constants(const Constants &) = default;
+    Constants(Constants &&) noexcept = delete;
+    Constants &operator=(const Constants &) = delete;
+    Constants &operator=(Constants &&) noexcept = delete;
 
     bool read_file(const std::string &f_name = ".config");
-    float operator[](const std::string &key);
     float at(const std::string &key) const;
 
 private:

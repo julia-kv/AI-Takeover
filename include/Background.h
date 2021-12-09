@@ -15,6 +15,10 @@ class Background : public sf::Drawable, public sf::Transformable
 public:
     Background(const std::string &);
     ~Background();
+    Background(const Background &) = delete;
+    Background(Background &&) noexcept = delete;
+    Background &operator=(const Background &) = delete;
+    Background &operator=(Background &&) noexcept = delete;
 
     void update(const sf::View &);
 

@@ -11,6 +11,10 @@ class SceneManager
 public:
     SceneManager(sf::RenderWindow &, const Constants &);
     ~SceneManager();
+    SceneManager(const SceneManager &) = delete;
+    SceneManager(SceneManager &&) noexcept = delete;
+    SceneManager &operator=(const SceneManager &) = delete;
+    SceneManager &operator=(SceneManager &&) noexcept = delete;
 
     void cycle(sf::Time);
     void draw() const;

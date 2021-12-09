@@ -9,6 +9,10 @@ class Scene
 public:
     Scene(){};
     virtual ~Scene(){};
+    Scene(const Scene &) = delete;
+    Scene(Scene &&) noexcept = delete;
+    Scene &operator=(const Scene &) = delete;
+    Scene &operator=(Scene &&) noexcept = delete;
 
     virtual void handleEvents(const sf::Event &event) = 0;
     virtual SceneType handleInput() = 0;

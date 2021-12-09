@@ -13,6 +13,10 @@ class ChooseLevelMenuScene : public Scene
 public:
     ChooseLevelMenuScene(sf::RenderWindow &, SceneManager &);
     ~ChooseLevelMenuScene();
+    ChooseLevelMenuScene(const ChooseLevelMenuScene &) = delete;
+    ChooseLevelMenuScene(ChooseLevelMenuScene &&) noexcept = delete;
+    ChooseLevelMenuScene &operator=(const ChooseLevelMenuScene &) = delete;
+    ChooseLevelMenuScene &operator=(ChooseLevelMenuScene &&) noexcept = delete;
 
     void handleEvents(const sf::Event &event);
     SceneType handleInput();

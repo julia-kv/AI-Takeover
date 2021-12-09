@@ -13,9 +13,8 @@ Level::Level(sf::RenderWindow &w,
                                             constants.at("HERO_VELOCITY"),
                                             constants.at("HERO_ACCELERATION")),
                                      m_finish(constants.at("TILE_SIZE")),
-                                     m_camera(w, m_hero, constants.at("TILE_SIZE")),
+                                     m_camera(w, m_hero),
                                      m_background("Background_" + std::to_string(num_of_level) + ".png")
-
 {
 
     m_camera.setMaxSize(m_map.getSize().x * m_constants.at("TILE_SIZE"));
@@ -53,7 +52,6 @@ SceneType Level::update(sf::Time dt)
 {
     m_map.update(dt);
     m_hero.update(dt);
-    m_background.update(m_window.getView());
     m_camera.update();
     return checkHeroState();;
 }
@@ -73,7 +71,6 @@ SceneType Level::checkHeroState()
 
 void Level::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(m_background);
     target.draw(m_map);
     target.draw(m_finish);
     target.draw(m_hero);
@@ -104,9 +101,4 @@ Hero &Level::getHero()
 Finish &Level::getFinish()
 {
     return m_finish;
-}
-
-Camera &Level::getCamera()
-{
-    return m_camera;
 }
