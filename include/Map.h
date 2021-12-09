@@ -11,8 +11,6 @@ class Map : public sf::Drawable, public sf::Transformable
 public:
     Map(const float, const float);
 
-    Map(sf::RenderWindow &, const size_t, Constants &);
-
     Map(const Map &) = delete;
 
     Map(Map &&) noexcept = delete;

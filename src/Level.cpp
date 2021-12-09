@@ -13,8 +13,7 @@ Level::Level(sf::RenderWindow &w,
                                             constants.at("HERO_VELOCITY"),
                                             constants.at("HERO_ACCELERATION")),
                                      m_finish(constants.at("TILE_SIZE")),
-                                     m_camera(w, m_hero),
-                                     m_background("Background_" + std::to_string(num_of_level) + ".png")
+                                     m_camera(w, m_hero)
 {
 
     m_camera.setMaxSize(m_map.getSize().x * m_constants.at("TILE_SIZE"));
@@ -53,18 +52,19 @@ SceneType Level::update(sf::Time dt)
     m_map.update(dt);
     m_hero.update(dt);
     m_camera.update();
-    return checkHeroState();;
+    return checkHeroState();
+    ;
 }
 
 SceneType Level::checkHeroState()
 {
     if (m_hero.isFinished())
     {
-       return SceneType::MAIN_MENU;
+        return SceneType::MAIN_MENU;
     }
     else if (m_hero.isDead())
     {
-       return SceneType::MAIN_MENU;
+        return SceneType::MAIN_MENU;
     }
     return SceneType::GAMEPLAY;
 }

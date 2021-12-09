@@ -31,11 +31,11 @@ public:
 
     sf::Vector2f getPosition();
 
-    void setInitialPosition(sf::Vector2f );
+    void setInitialPosition(sf::Vector2f);
 
     void setMap(Map *);
 
-    void keyReleased(sf::Keyboard::Key );
+    void keyReleased(sf::Keyboard::Key);
 
     void handleInput();
 
@@ -50,7 +50,7 @@ private:
 
     void changeDirection(sf::Time);
 
-    void move(sf::Vector2f );
+    void move(sf::Vector2f);
 
     void move_x(float);
 

@@ -5,7 +5,6 @@
 template <typename T>
 class Camera
 {
-
 public:
     Camera(sf::RenderWindow &w, T &t) : m_window(w),
                                         m_target(t)
@@ -41,7 +40,6 @@ public:
     }
 
 private:
-
     sf::RenderWindow &m_window;
     T &m_target;
     float max_size;

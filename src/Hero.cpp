@@ -14,7 +14,6 @@ Hero::Hero(const float tile_size, const float v, const float a) : m_tileSize(til
     if (a == 0)
         throw(std::invalid_argument("Failed HERO_ACCELERATION"));
 
-
     if (!m_texture.loadFromFile("человек.png"))
     {
         std::cout << "Failed to read file человек.png\n";
@@ -98,7 +97,7 @@ void Hero::update(sf::Time dt)
     move(del);
     changeDirection(dt);
 
-    std::cout << " hero: " << m_idx_platform << "\n";
+    //std::cout << " hero: " << m_idx_platform << "\n";
 
     if (isReachFinish())
     {
@@ -203,7 +202,6 @@ void Hero::move(sf::Vector2f del)
 
     move_x(del.x);
     move_y(del.y);
-
 }
 
 void Hero::move_x(float dx)
@@ -239,7 +237,6 @@ void Hero::move_x(float dx)
 
                 if (rect_left < tile_right && tile_right < rect_right)
                     m_sprite.setPosition(tile_right, rect_top);
-
             }
             else if (dx < 0)
             {
@@ -265,7 +262,8 @@ void Hero::move_x(float dx)
 
 void Hero::move_y(float dy)
 {
-    if (dy == 0) {
+    if (dy == 0)
+    {
         return;
     }
 
@@ -315,7 +313,6 @@ void Hero::move_y(float dy)
         }
     }
     m_idx_platform = platform_idx;
-
 }
 
 bool Hero::isReachFinish()
@@ -335,5 +332,4 @@ bool Hero::isReachFinish()
         if (((finish_top <= rect_bottom && rect_bottom <= finish_bottom) || (finish_top <= rect_top && rect_top <= finish_bottom)))
             return true;
     return false;
-
 }

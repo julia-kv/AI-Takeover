@@ -53,5 +53,6 @@ SceneType ChooseLevelMenuScene::update(sf::Time dt)
 
 void ChooseLevelMenuScene::draw() const
 {
+    m_window.draw(m_background);
     m_window.draw(m_gui);
 }
