@@ -29,7 +29,7 @@ void Game::run()
         std::cerr << "SCREEN_INITIAL_WIDTH or SCREEN_INITIAL_HEIGHT not found if constants" << '\n';
         return;
     }
-    SceneManager sceneManager(window, std::move(constants));
+    SceneManager sceneManager(window, constants);
     startGameLoop(window, sceneManager);
 }
 

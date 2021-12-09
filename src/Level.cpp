@@ -103,8 +103,3 @@ Finish &Level::getFinish()
 {
     return m_finish;
 }
-
-Camera &Level::getCamera()
-{
-    return m_camera;
-}

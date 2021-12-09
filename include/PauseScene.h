@@ -11,6 +11,10 @@ class PauseScene : public Scene
 public:
     PauseScene(sf::RenderWindow &);
     ~PauseScene();
+    PauseScene(const PauseScene &) = delete;
+    PauseScene(PauseScene &&) noexcept = delete;
+    PauseScene &operator=(const PauseScene &) = delete;
+    PauseScene &operator=(PauseScene &&) noexcept = delete;
 
     void handleEvents(const sf::Event &event);
     SceneType handleInput();

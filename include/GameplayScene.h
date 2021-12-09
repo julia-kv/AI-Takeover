@@ -11,6 +11,10 @@ class GameplayScene : public Scene
 public:
     GameplayScene(sf::RenderWindow &, const size_t, Constants &);
     ~GameplayScene();
+    GameplayScene(const GameplayScene &) = delete;
+    GameplayScene(GameplayScene &&) noexcept = delete;
+    GameplayScene &operator=(const GameplayScene &) = delete;
+    GameplayScene &operator=(GameplayScene &&) noexcept = delete;
 
     void handleEvents(const sf::Event &event);
     SceneType handleInput();
