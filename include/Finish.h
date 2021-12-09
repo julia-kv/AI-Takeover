@@ -11,6 +11,14 @@ class Finish : public sf::Drawable, public sf::Transformable
 public:
     Finish(const float);
 
+    Finish(const Finish &) = delete;
+
+    Finish(Finish &&) noexcept = delete;
+
+    Finish &operator=(const Finish &) = delete;
+
+    Finish &operator=(Finish &&) noexcept = delete;
+
     ~Finish();
 
     void setPosition(vector2f pos);

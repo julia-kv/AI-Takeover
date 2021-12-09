@@ -335,13 +335,5 @@ bool Hero::isReachFinish()
         if (((finish_top <= rect_bottom && rect_bottom <= finish_bottom) || (finish_top <= rect_top && rect_top <= finish_bottom)))
             return true;
     return false;
-    /*{
-        m_sprite.setPosition(m_map->getFinishPosition());
-        m_vel.x = 0;
-        m_vel.y = 0;
 
-        return true;
-    }
-    else
-        return false; */
 }

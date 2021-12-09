@@ -15,6 +15,15 @@ class Level : public sf::Drawable, public sf::Transformable
 {
 public:
     Level(sf::RenderWindow &, const size_t, Constants &);
+
+    Level(const Level &) = delete;
+
+    Level(Level &&) noexcept = delete;
+
+    Level &operator=(const Level &) = delete;
+
+    Level &operator=(Level &&) noexcept = delete;
+
     ~Level();
 
     void handleEvents(const sf::Event &event);

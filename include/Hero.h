@@ -19,6 +19,14 @@ class Hero : public sf::Drawable, public sf::Transformable
 public:
     Hero(const float, const float, const float);
 
+    Hero(const Hero &) = delete;
+
+    Hero(Hero &&) noexcept = delete;
+
+    Hero &operator=(const Hero &) = delete;
+
+    Hero &operator=(Hero &&) noexcept = delete;
+
     ~Hero();
 
     sf::Vector2f getPosition();
@@ -63,6 +71,6 @@ private:
 
     int m_idx_platform;
 
-    Map *m_map{};
+    Map *m_map;
     sf::Vector2f m_window_size;
 };
