@@ -14,9 +14,9 @@ Hero::Hero(const float tile_size, const float v, const float a) : m_tileSize(til
     if (a == 0)
         throw(std::invalid_argument("Failed HERO_ACCELERATION"));
 
-    if (!m_texture.loadFromFile("../Files/человек.png"))
+    if (!m_texture.loadFromFile("../Files/robot.png"))
     {
-        std::cout << "Failed to read file ../Files/человек.png\n";
+        std::cout << "Failed to read file ../Files/robot.png\n";
     }
 
     m_sprite.setTexture(m_texture);

@@ -35,7 +35,7 @@ float Constants::at(const std::string &key) const
     }
     catch (const std::out_of_range &e)
     {
-        std::cerr << "Constant " << key << " not found in\n";
+        std::cerr << "Constant " << key << " not found in constants\n";
         throw(e);
     }
 }
