@@ -7,6 +7,7 @@
 #include <vector>
 #include "Background.h"
 #include "Gui.h"
+#include "SceneSwitcher.h"
 
 class ChooseLevelMenuScene : public Scene
 {
@@ -19,8 +20,8 @@ public:
     ChooseLevelMenuScene &operator=(ChooseLevelMenuScene &&) noexcept = delete;
 
     void handleEvents(const sf::Event &event);
-    SceneType handleInput();
-    SceneType update(sf::Time);
+    void handleInput();
+    void update(sf::Time);
     void draw() const;
 
 private:

@@ -17,4 +17,7 @@ public:
 
 private:
     void startGameLoop(sf::RenderWindow &window, SceneManager &sceneManager);
+    bool loop(sf::RenderWindow &window, SceneManager &sceneManager, sf::Time dt);
+
+    const sf::Time frameTime;
 };

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Constants.h"
 
-Game::Game()
+Game::Game() : frameTime(sf::seconds(1.f / 60.f))
 {
 }
 
@@ -29,9 +29,10 @@ void Game::run()
     }
     catch (const std::out_of_range &)
     {
-        std::cerr << "SCREEN_INITIAL_WIDTH or SCREEN_INITIAL_HEIGHT not found if constants\n";
+        std::cerr << "SCREEN_INITIAL_WIDTH or SCREEN_INITIAL_HEIGHT not found in constants\n";
         return;
     }
+
     SceneManager sceneManager(window, constants);
     startGameLoop(window, sceneManager);
 }
@@ -39,16 +40,21 @@ void Game::run()
 void Game::startGameLoop(sf::RenderWindow &window, SceneManager &sceneManager)
 {
     sf::Clock clock;
-    sf::Time frameTime = sf::seconds(1.0f / 60.0f);
-    while (window.isOpen())
+    while (window.isOpen() &&
+           loop(window, sceneManager, clock.restart()))
     {
-        sf::Time dt = clock.restart();
-        sf::sleep(frameTime - dt);
-        
-        sceneManager.cycle(dt);
-
-        window.clear(sf::Color::Black);
-        sceneManager.draw();
-        window.display();
     }
+}
+
+bool Game::loop(sf::RenderWindow &window, SceneManager &sceneManager, sf::Time dt)
+{
+    sf::sleep(frameTime - dt);
+
+    if (sceneManager.cycle(dt))
+        return false;
+    window.clear(sf::Color::Black);
+    sceneManager.draw();
+    window.display();
+
+    return true;
 }

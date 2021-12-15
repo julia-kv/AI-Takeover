@@ -7,11 +7,12 @@
 #include <vector>
 #include "Background.h"
 #include "Gui.h"
+#include "SceneSwitcher.h"
 
 class MainMenuScene : public Scene
 {
 public:
-    MainMenuScene(sf::RenderWindow &);
+    MainMenuScene(sf::RenderWindow &, SceneSwitcher &);
     ~MainMenuScene();
     MainMenuScene(const MainMenuScene &) = delete;
     MainMenuScene(MainMenuScene &&) noexcept = delete;
@@ -19,12 +20,13 @@ public:
     MainMenuScene &operator=(MainMenuScene &&) noexcept = delete;
 
     void handleEvents(const sf::Event &event);
-    SceneType handleInput();
-    SceneType update(sf::Time);
+    void handleInput();
+    void update(sf::Time);
     void draw() const;
 
 private:
     sf::RenderWindow &m_window;
     Background m_background;
     Gui m_gui;
+    SceneSwitcher &m_sceneSwitcher;
 };

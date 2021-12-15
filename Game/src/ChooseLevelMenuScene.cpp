@@ -19,7 +19,7 @@ void ChooseLevelMenuScene::handleEvents(const sf::Event &event)
 {
 }
 
-SceneType ChooseLevelMenuScene::handleInput()
+void ChooseLevelMenuScene::handleInput()
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -28,14 +28,14 @@ SceneType ChooseLevelMenuScene::handleInput()
         case 0:
         {
             m_sceneManager.setLevel(1);
-            return SceneType::GAMEPLAY;
+            m_sceneManager.switchTo(SceneType::GAMEPLAY);
             break;
         }
 
         case 1:
         {
             m_sceneManager.setLevel(2);
-            return SceneType::GAMEPLAY;
+            m_sceneManager.switchTo(SceneType::GAMEPLAY);
             break;
         }
 
@@ -43,12 +43,10 @@ SceneType ChooseLevelMenuScene::handleInput()
             break;
         }
     }
-    return SceneType::CHOOSE_LEVEL_MENU;
 }
 
-SceneType ChooseLevelMenuScene::update(sf::Time dt)
+void ChooseLevelMenuScene::update(sf::Time dt)
 {
-    return SceneType::CHOOSE_LEVEL_MENU;
 }
 
 void ChooseLevelMenuScene::draw() const
