@@ -69,16 +69,22 @@ void Map::readTile(int i, int j, char ch)
         break;
     }
 
+    case 'o':
+    {
+        addCoin(i, j);
+        break;
+    }
+
     case '!':
     {
-        vector2f finish_pos(j * m_tileSize, i * m_tileSize);
+        sf::Vector2f finish_pos(j * m_tileSize, i * m_tileSize);
         m_finish_pos = finish_pos;
         break;
     }
 
     case 'h':
     {
-        vector2f hero_pos(j * m_tileSize, i * m_tileSize);
+        sf::Vector2f hero_pos(j * m_tileSize, i * m_tileSize);
         m_hero_pos = hero_pos;
         break;
     }
@@ -100,10 +106,10 @@ void Map::addTile(int i, int j, int texture_num)
     sf::Vertex vert2(pos2);
     sf::Vertex vert3(pos3);
 
-    vert0.texCoords = sf::Vector2f(0 + texture_num * m_texture.getSize().y, 0);
+    vert0.texCoords = sf::Vector2f(texture_num * m_texture.getSize().y, 0);
     vert1.texCoords = sf::Vector2f(m_texture.getSize().y + texture_num * m_texture.getSize().y, 0);
     vert2.texCoords = sf::Vector2f(m_texture.getSize().y + texture_num * m_texture.getSize().y, m_texture.getSize().y);
-    vert3.texCoords = sf::Vector2f(0 + texture_num * m_texture.getSize().y, m_texture.getSize().y);
+    vert3.texCoords = sf::Vector2f(texture_num * m_texture.getSize().y, m_texture.getSize().y);
 
     m_vertices.push_back(vert0);
     m_vertices.push_back(vert1);
@@ -131,6 +137,13 @@ void Map::addPlatform(int i, int j)
     }
 }
 
+void Map::addCoin(int i, int j) {
+
+    addTile(i, j, 2);
+    m_coins_idx[m_platform_count - 1] = true;
+
+}
+
 void Map::update(sf::Time dt)
 {
     size_t j = 0;
@@ -148,7 +161,7 @@ void Map::update(sf::Time dt)
             m_platform_vel_arr[j] = -1 * m_platform_vel;
         }
 
-        vector2f del(m_platform_vel_arr[j] * dt.asSeconds(), 0);
+        sf::Vector2f del(m_platform_vel_arr[j] * dt.asSeconds(), 0);
 
         m_vertices[it * 4].position += del;
         m_vertices[it * 4 + 1].position += del;
@@ -169,18 +182,38 @@ std::vector<sf::Vertex> &Map::getVertexArray()
     return m_vertices;
 }
 
+
+
+bool Map::isCoin(int coin_idx)
+{
+    if (m_coins_idx.find(coin_idx) != m_coins_idx.end())
+        return true;
+    return false;
+}
+
+bool Map::isCoinReach(int coin_idx)
+{
+    if ((m_coins_idx.find(coin_idx) != m_coins_idx.end()) && m_coins_idx.at(coin_idx))
+        return true;
+    return false;
+}
+
+void Map::coinDel(int coin_idx)
+{
+    m_coins_idx[coin_idx] = false;
+
+    m_vertices[coin_idx * 4].texCoords = sf::Vector2f(3 * m_texture.getSize().y, 0);
+    m_vertices[coin_idx * 4 + 1].texCoords  = sf::Vector2f(m_texture.getSize().y + 3 * m_texture.getSize().y, 0);
+    m_vertices[coin_idx * 4 + 2].texCoords = sf::Vector2f(m_texture.getSize().y + 3 * m_texture.getSize().y, m_texture.getSize().y);
+    m_vertices[coin_idx * 4 + 3].texCoords = sf::Vector2f( 3 * m_texture.getSize().y, m_texture.getSize().y);
+}
+
 bool Map::isPlatformMoving(int platform_idx)
 {
 
     return (std::count(m_platform_idx.begin(),
                        m_platform_idx.end(),
                        platform_idx) != 0);
-}
-
-vector2f Map::getPlatformPosition(int platform_idx)
-{
-    return vector2f(m_vertices[platform_idx * 4].position.x,
-                    m_vertices[platform_idx * 4].position.y - m_tileSize);
 }
 
 float Map::getPlatformVel(int platform_idx)
@@ -201,12 +234,12 @@ float Map::getPlatformVel(int platform_idx)
     }
 }
 
-vector2f Map::getHeroPosition()
+sf::Vector2f Map::getHeroPosition()
 {
     return m_hero_pos;
 }
 
-vector2f Map::getFinishPosition()
+sf::Vector2f Map::getFinishPosition()
 {
     return m_finish_pos;
 }
