@@ -1,7 +1,7 @@
 #include "PauseScene.h"
 #include <iostream>
 
-PauseScene::PauseScene(sf::RenderWindow &w) : m_window(w)
+PauseScene::PauseScene(sf::RenderWindow &w, SceneSwitcher &scn_switcher) : m_window(w), m_sceneSwitcher(scn_switcher)
 {
     createButtons();
 }
@@ -12,14 +12,12 @@ PauseScene::~PauseScene()
 
 void PauseScene::handleEvents(const sf::Event &event) {}
 
-SceneType PauseScene::handleInput()
+void PauseScene::handleInput()
 {
-    return SceneType::PAUSE;
 }
 
-SceneType PauseScene::update(sf::Time dt)
+void PauseScene::update(sf::Time dt)
 {
-    return SceneType::PAUSE;
 }
 
 void PauseScene::draw() const

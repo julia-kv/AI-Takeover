@@ -6,11 +6,12 @@
 #include <string>
 #include "Constants.h"
 #include "Background.h"
+#include "SceneSwitcher.h"
 
 class GameplayScene : public Scene
 {
 public:
-    GameplayScene(sf::RenderWindow &, const size_t, Constants &);
+    GameplayScene(sf::RenderWindow &, const size_t, Constants &, SceneSwitcher &);
     ~GameplayScene();
     GameplayScene(const GameplayScene &) = delete;
     GameplayScene(GameplayScene &&) noexcept = delete;
@@ -18,12 +19,15 @@ public:
     GameplayScene &operator=(GameplayScene &&) noexcept = delete;
 
     void handleEvents(const sf::Event &event);
-    SceneType handleInput();
-    SceneType update(sf::Time);
+    void handleInput();
+    void update(sf::Time);
     void draw() const;
 
 private:
+    void checkLevel();
+
     sf::RenderWindow &m_window;
     Level m_level;
     Background m_background;
+    SceneSwitcher &m_sceneSwitcher;
 };

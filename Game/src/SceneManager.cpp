@@ -7,33 +7,28 @@
 #include "PauseScene.h"
 #include <iostream>
 
-SceneManager::SceneManager(sf::RenderWindow &w, const Constants &constants) : m_window(w),
-                                                                              m_constants(constants),
-                                                                              m_curScene(SceneType::MAIN_MENU),
-                                                                              m_numOfLevel(1)
+SceneManager::SceneManager(sf::RenderWindow &w,
+                           const Constants &constants) : m_window(w),
+                                                         m_constants(constants),
+                                                         m_curScene(SceneType::MAIN_MENU),
+                                                         m_sceneToSwitch(SceneType::MAIN_MENU),
+                                                         m_numOfLevel(1)
 {
-    m_scenes[MAIN_MENU] = std::make_unique<MainMenuScene>(w);
+    m_scenes[SceneType::MAIN_MENU] = std::make_unique<MainMenuScene>(m_window, *this);
 }
 
 SceneManager::~SceneManager()
 {
 }
 
-void SceneManager::cycle(sf::Time dt)
+bool SceneManager::cycle(sf::Time dt)
 {
     handleEvents();
-    SceneType scn = m_scenes[m_curScene]->handleInput();
-    if (scn != m_curScene)
-    {
-        switchTo(scn);
-        return;
-    }
-    scn = m_scenes[m_curScene]->update(dt);
-    if (scn != m_curScene)
-    {
-        switchTo(scn);
-        return;
-    }
+    m_scenes[m_curScene]->handleInput();
+    m_scenes[m_curScene]->update(dt);
+    if (m_curScene != m_sceneToSwitch)
+        changeScene();
+    return false;
 }
 
 void SceneManager::handleEvents()
@@ -70,35 +65,40 @@ void SceneManager::draw() const
     m_scenes[m_curScene]->draw();
 }
 
-void SceneManager::switchTo(SceneType newScene)
+void SceneManager::switchTo(const SceneType scn)
 {
-    switch (newScene)
+    m_sceneToSwitch = scn;
+}
+
+void SceneManager::changeScene()
+{
+    switch (m_sceneToSwitch)
     {
     case SceneType::MAIN_MENU:
-        m_scenes[newScene] = std::make_unique<MainMenuScene>(m_window);
+        m_scenes[m_sceneToSwitch] = std::make_unique<MainMenuScene>(m_window, *this);
         break;
 
     case SceneType::CHOOSE_LEVEL_MENU:
-        m_scenes[newScene] = std::make_unique<ChooseLevelMenuScene>(m_window, *this);
+        m_scenes[m_sceneToSwitch] = std::make_unique<ChooseLevelMenuScene>(m_window, *this);
         break;
 
     case SceneType::GAMEPLAY:
         if (m_curScene != SceneType::PAUSE)
-            m_scenes[newScene] = std::make_unique<GameplayScene>(m_window, m_numOfLevel, m_constants);
+            m_scenes[m_sceneToSwitch] = std::make_unique<GameplayScene>(m_window, m_numOfLevel, m_constants, *this);
         break;
 
     case SceneType::PAUSE:
-        m_scenes[newScene] = std::make_unique<PauseScene>(m_window);
+        m_scenes[m_sceneToSwitch] = std::make_unique<PauseScene>(m_window, *this);
         break;
 
     default:
         break;
     }
 
-    if (m_curScene != SceneType::GAMEPLAY || newScene != SceneType::PAUSE)
+    if (m_curScene != SceneType::GAMEPLAY || m_sceneToSwitch != SceneType::PAUSE)
         m_scenes[m_curScene].reset(nullptr);
 
-    m_curScene = newScene;
+    m_curScene = m_sceneToSwitch;
 }
 
 void SceneManager::setLevel(const size_t lvl)

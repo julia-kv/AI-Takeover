@@ -5,8 +5,9 @@
 #include "Scene.h"
 #include "SceneType.h"
 #include "Constants.h"
+#include "SceneSwitcher.h"
 
-class SceneManager
+class SceneManager : public SceneSwitcher
 {
 public:
     SceneManager(sf::RenderWindow &, const Constants &);
@@ -16,17 +17,18 @@ public:
     SceneManager &operator=(const SceneManager &) = delete;
     SceneManager &operator=(SceneManager &&) noexcept = delete;
 
-    void cycle(sf::Time);
+    bool cycle(sf::Time);
     void draw() const;
     void setLevel(const size_t);
+    void switchTo(const SceneType);
 
 private:
-    void switchTo(SceneType scene_to_switch);
+    void changeScene();
     void handleEvents();
 
     std::array<std::unique_ptr<Scene>, 4> m_scenes;
     sf::RenderWindow &m_window;
     Constants m_constants;
-    SceneType m_curScene;
+    SceneType m_curScene, m_sceneToSwitch;
     size_t m_numOfLevel;
 };

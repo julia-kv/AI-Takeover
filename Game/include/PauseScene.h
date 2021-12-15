@@ -5,11 +5,12 @@
 #include "Button.h"
 #include "SceneType.h"
 #include <vector>
+#include "SceneSwitcher.h"
 
 class PauseScene : public Scene
 {
 public:
-    PauseScene(sf::RenderWindow &);
+    PauseScene(sf::RenderWindow &, SceneSwitcher &);
     ~PauseScene();
     PauseScene(const PauseScene &) = delete;
     PauseScene(PauseScene &&) noexcept = delete;
@@ -17,8 +18,8 @@ public:
     PauseScene &operator=(PauseScene &&) noexcept = delete;
 
     void handleEvents(const sf::Event &event);
-    SceneType handleInput();
-    SceneType update(sf::Time);
+    void handleInput();
+    void update(sf::Time);
     std::vector<Button> &getButtons();
     void draw() const;
 
@@ -27,4 +28,5 @@ private:
 
     sf::RenderWindow &m_window;
     std::vector<Button> m_buttons;
+    SceneSwitcher &m_sceneSwitcher;
 };
