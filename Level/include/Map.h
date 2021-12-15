@@ -1,13 +1,11 @@
 #pragma once
+
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include <iostream>
 #include <fstream>
 
-typedef sf::Vector2<float> vector2f;
-
-class Map : public sf::Drawable, public sf::Transformable
-{
+class Map : public sf::Drawable, public sf::Transformable {
 public:
     Map(const float, const float);
 
@@ -19,7 +17,7 @@ public:
 
     Map &operator=(Map &&) noexcept = delete;
 
-    ~Map(){};
+    ~Map() {};
 
     void readMap(const size_t);
 
@@ -31,21 +29,27 @@ public:
 
     void addPlatform(int, int);
 
+    void addCoin(int, int);
+
     void update(sf::Time);
 
     sf::Vector2i getSize();
 
     std::vector<sf::Vertex> &getVertexArray();
 
-    bool isPlatformMoving(int);
+    bool isCoin(int);
 
-    vector2f getPlatformPosition(int);
+    bool isCoinReach(int );
+
+    void coinDel(int);
+
+    bool isPlatformMoving(int);
 
     float getPlatformVel(int);
 
-    vector2f getHeroPosition();
+    sf::Vector2f getHeroPosition();
 
-    vector2f getFinishPosition();
+    sf::Vector2f getFinishPosition();
 
 private:
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const;
@@ -57,12 +61,13 @@ private:
     std::vector<float> m_platform_vel_arr;
     std::vector<std::pair<float, float>> m_borders;
     bool m_right_border;
-
     int m_platform_count;
     std::vector<int> m_platform_idx;
 
-    vector2f m_finish_pos;
-    vector2f m_hero_pos;
+    std::map<int,bool> m_coins_idx;
+
+    sf::Vector2f m_finish_pos;
+    sf::Vector2f m_hero_pos;
 
     sf::Texture m_texture;
 };

@@ -5,15 +5,13 @@
 #include <iostream>
 #include "Map.h"
 
-enum class State
-{
+enum class State {
     PLAYING,
     DIED,
     FINISHED
 };
 
-class Hero : public sf::Drawable, public sf::Transformable
-{
+class Hero : public sf::Drawable, public sf::Transformable {
     float m_y_koef = 1.5f;
 
 public:
@@ -43,6 +41,10 @@ public:
 
     bool isFinished();
 
+    float getPlayTime();
+
+    int getScore();
+
     bool isDead();
 
 private:
@@ -68,6 +70,8 @@ private:
     float m_changes;
     bool m_is_jump;
     State m_state;
+    int m_score;
+    float m_game_time;
 
     int m_idx_platform;
 
