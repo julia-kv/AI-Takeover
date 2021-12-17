@@ -3,17 +3,23 @@
 Map::Map(const float tile_size, const float v) : m_tileSize(tile_size),
                                                  m_platform_vel(v),
                                                  m_right_border(false),
-                                                 m_platform_count(0)
+                                                 m_platform_count(0),
+                                                 m_score(0),
+                                                 m_game_time(0)
 {
     if (tile_size <= 0)
         throw(std::invalid_argument("Failed const TILE_SIZE"));
 
-    if (v == 0)
+    if (v <= 0)
         throw(std::invalid_argument("Failed const PLATFORM_VEL"));
 
     if (!m_texture.loadFromFile("../Files/texture.png"))
     {
         std::cout << "Failed to load texture.png file\n";
+    }
+    if (!m_font.loadFromFile("../Files/game_score.ttf"))
+    {
+        std::cerr << "Failed to load font from file '../Files/arial.ttf'\n";
     }
 }
 
@@ -170,6 +176,8 @@ void Map::update(sf::Time dt)
 
         ++j;
     }
+
+    m_game_time += dt.asSeconds();
 }
 
 sf::Vector2i Map::getSize()
@@ -181,8 +189,6 @@ std::vector<sf::Vertex> &Map::getVertexArray()
 {
     return m_vertices;
 }
-
-
 
 bool Map::isCoin(int coin_idx)
 {
@@ -200,6 +206,8 @@ bool Map::isCoinReach(int coin_idx)
 
 void Map::coinDel(int coin_idx)
 {
+
+    ++m_score;
     m_coins_idx[coin_idx] = false;
 
     m_vertices[coin_idx * 4].texCoords = sf::Vector2f(3 * m_texture.getSize().y, 0);
@@ -244,9 +252,33 @@ sf::Vector2f Map::getFinishPosition()
     return m_finish_pos;
 }
 
+int Map::getScore() {
+    return m_score;
+}
+
+float Map::getGameTime() {
+    return m_game_time;
+}
+
+
 void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
     states.texture = &m_texture;
     target.draw(m_vertices.data(), m_vertices.size(), sf::Quads, states);
+
+    sf::Text text_score("Score: " + std::to_string(m_score) + " / " + std::to_string(m_coins_idx.size()), m_font);
+    text_score.setStyle(sf::Text::Bold);
+    text_score.setFillColor(sf::Color::Yellow);
+    text_score.setPosition((target.getView().getCenter().x + target.getSize().x / 2 - m_tileSize * 5),
+                     (target.getView().getCenter().y - target.getSize().y / 2 + m_tileSize));
+    target.draw(text_score);
+
+    sf::Text text_time("Time: " + (std::to_string(m_game_time)) , m_font);
+    text_time.setStyle(sf::Text::Bold);
+    text_time.setFillColor(sf::Color::Yellow);
+    text_time.setPosition((target.getView().getCenter().x + target.getSize().x / 2 - m_tileSize * 5),
+                     (target.getView().getCenter().y - target.getSize().y / 2 + 2 * m_tileSize));
+    target.draw(text_time);
+
 }

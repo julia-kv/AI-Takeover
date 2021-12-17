@@ -4,6 +4,8 @@
 #include "SFML/Window.hpp"
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <cmath>
 
 class Map : public sf::Drawable, public sf::Transformable {
 public:
@@ -43,6 +45,10 @@ public:
 
     void coinDel(int);
 
+    int getScore();
+
+    float getGameTime();
+
     bool isPlatformMoving(int);
 
     float getPlatformVel(int);
@@ -70,4 +76,9 @@ private:
     sf::Vector2f m_hero_pos;
 
     sf::Texture m_texture;
+
+    int m_score;
+    float m_game_time;
+
+    sf::Font m_font;
 };

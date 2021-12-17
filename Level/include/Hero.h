@@ -12,7 +12,7 @@ enum class State {
 };
 
 class Hero : public sf::Drawable, public sf::Transformable {
-    float m_y_koef = 1.5f;
+    float m_y_coef = 1.5f;
 
 public:
     Hero(const float, const float, const float);
@@ -41,10 +41,6 @@ public:
 
     bool isFinished();
 
-    float getPlayTime();
-
-    int getScore();
-
     bool isDead();
 
 private:
@@ -70,8 +66,6 @@ private:
     float m_changes;
     bool m_is_jump;
     State m_state;
-    int m_score;
-    float m_game_time;
 
     int m_idx_platform;
 
