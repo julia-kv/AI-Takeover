@@ -95,3 +95,4 @@ bool Level::isDead()
 {
     return m_hero.isDead();
 }
+

@@ -3,16 +3,15 @@
 Hero::Hero(const float tile_size, const float v, const float a) : m_tileSize(tile_size),
                                                                   m_hero_vel(v),
                                                                   m_acceleration(a),
-                                                                  m_halfTileSize(tile_size / 2),
-                                                                  m_score(0),
-                                                                  m_game_time(0) {
+                                                                  m_halfTileSize(tile_size / 2)
+    {
     if (tile_size <= 0)
         throw (std::invalid_argument("Failed const TILE_SIZE"));
 
-    if (v == 0)
+    if (v <= 0)
         throw (std::invalid_argument("Failed const HERO_VEL"));
 
-    if (a == 0)
+    if (a < 0)
         throw (std::invalid_argument("Failed HERO_ACCELERATION"));
 
     if (!m_texture.loadFromFile("../Files/robot.png")) {
@@ -65,7 +64,7 @@ void Hero::handleInput() {
         m_vel.x = -1 * m_hero_vel;
 
     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && !m_is_jump) {
-        m_vel.y = -1 * m_hero_vel * m_y_koef;
+        m_vel.y = -1 * m_hero_vel * m_y_coef;
         m_is_jump = true;
     }
 }
@@ -90,9 +89,6 @@ void Hero::update(sf::Time dt) {
     move(del);
     changeDirection(dt);
 
-    if (m_state == State::PLAYING)
-        m_game_time += dt.asSeconds();
-
     if (isReachFinish()) {
         m_state = State::FINISHED;
     }
@@ -102,13 +98,7 @@ bool Hero::isFinished() {
     return (m_state == State::FINISHED);
 }
 
-float Hero::getPlayTime() {
-    return m_game_time;
-}
 
-int Hero::getScore() {
-    return m_score;
-}
 
 bool Hero::isDead() {
     return (m_state == State::DIED);
@@ -211,7 +201,6 @@ void Hero::move_x(float dx) {
                     if (((tile_top <= rect_bottom && rect_bottom <= tile_bottom) ||
                          (tile_top <= rect_top && rect_top <= tile_bottom))) {
                         m_map->coinDel(i / 4);
-                        ++m_score;
                     }
 
             }
@@ -301,7 +290,6 @@ void Hero::move_y(float dy) {
                     if (((tile_top <= rect_bottom && rect_bottom <= tile_bottom) ||
                          (tile_top <= rect_top && rect_top <= tile_bottom))) {
                         m_map->coinDel(i / 4);
-                        ++m_score;
                     }
             }
             continue;

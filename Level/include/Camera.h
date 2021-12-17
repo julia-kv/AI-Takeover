@@ -34,6 +34,7 @@ public:
         view.setCenter(x_pos, (float)m_window.getSize().y / 2);
         m_window.setView(view);
     }
+
     void setMaxSize(float ms)
     {
         max_size = ms;

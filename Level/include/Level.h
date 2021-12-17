@@ -29,10 +29,13 @@ public:
     ~Level();
 
     void handleEvents(const sf::Event &event);
+
     void handleInput();
+
     void update(sf::Time);
 
     bool isFinished();
+
     bool isDead();
 
     Map &getMap();
@@ -48,4 +51,5 @@ private:
     Hero m_hero;
     Finish m_finish;
     Camera<Hero> m_camera;
+
 };
