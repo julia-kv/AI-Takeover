@@ -15,28 +15,33 @@ PauseScene::~PauseScene()
 {
 }
 
-void PauseScene::handleEvents(const sf::Event &event) {}
+void PauseScene::handleEvents(const sf::Event &event)
+{
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            switch (m_gui.getPressedButton())
+            {
+            case 0:
+                m_sceneSwitcher.switchTo(SceneType::GAMEPLAY);
+                break;
+
+            case 1:
+            {
+                m_window.close();
+                break;
+            }
+
+            default:
+                break;
+            }
+        }
+    }
+}
 
 void PauseScene::handleInput()
 {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        switch (m_gui.getPressedButton())
-        {
-        case 0:
-            m_sceneSwitcher.switchTo(SceneType::GAMEPLAY);
-            break;
-
-        case 1:
-        {
-            m_window.close();
-            break;
-        }
-
-        default:
-            break;
-        }
-    }
 }
 
 void PauseScene::update(sf::Time dt)

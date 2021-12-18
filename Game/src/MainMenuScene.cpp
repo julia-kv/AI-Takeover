@@ -20,28 +20,31 @@ MainMenuScene::~MainMenuScene()
 
 void MainMenuScene::handleEvents(const sf::Event &event)
 {
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            switch (m_gui.getPressedButton())
+            {
+            case 0:
+                m_sceneSwitcher.switchTo(SceneType::CHOOSE_LEVEL_MENU);
+                break;
+
+            case 1:
+            {
+                m_window.close();
+                break;
+            }
+
+            default:
+                break;
+            }
+        }
+    }
 }
 
 void MainMenuScene::handleInput()
 {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        switch (m_gui.getPressedButton())
-        {
-        case 0:
-            m_sceneSwitcher.switchTo(SceneType::CHOOSE_LEVEL_MENU);
-            break;
-
-        case 1:
-        {
-            m_window.close();
-            break;
-        }
-
-        default:
-            break;
-        }
-    }
 }
 
 void MainMenuScene::update(sf::Time dt)
