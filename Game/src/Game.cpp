@@ -10,7 +10,7 @@ Game::~Game()
 {
 }
 
-void Game::run()
+void Game::run() const noexcept
 {
     Constants constants;
     if (!constants.read_file("../Files/.config"))
@@ -38,7 +38,7 @@ void Game::run()
         startGameLoop(window, sceneManager);
 }
 
-void Game::startGameLoop(sf::RenderWindow &window, SceneManager &sceneManager)
+void Game::startGameLoop(sf::RenderWindow &window, SceneManager &sceneManager) const noexcept
 {
     sf::Clock clock;
     while (window.isOpen() &&
@@ -47,15 +47,16 @@ void Game::startGameLoop(sf::RenderWindow &window, SceneManager &sceneManager)
     }
 }
 
-bool Game::loop(sf::RenderWindow &window, SceneManager &sceneManager, sf::Time dt)
+bool Game::loop(sf::RenderWindow &window, SceneManager &sceneManager, const sf::Time dt) const noexcept
 {
+    // true if success
+    // false if error
+
     sf::sleep(frameTime - dt);
 
-    if (sceneManager.cycle(dt))
-        return false;
     window.clear(sf::Color::Black);
     sceneManager.draw();
     window.display();
 
-    return true;
+    return sceneManager.cycle(dt);
 }

@@ -94,13 +94,13 @@ void Hero::update(sf::Time dt) {
     }
 }
 
-bool Hero::isFinished() {
+bool Hero::isFinished() const {
     return (m_state == State::FINISHED);
 }
 
 
 
-bool Hero::isDead() {
+bool Hero::isDead() const{
     return (m_state == State::DIED);
 }
 

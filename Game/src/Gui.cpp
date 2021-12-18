@@ -15,7 +15,7 @@ Gui::Gui(const sf::RenderWindow &w) : m_window(w)
 
 Gui::~Gui() {}
 
-void Gui::addButton(const std::string &str, const unsigned int charSize /* = 30U */)
+void Gui::addButton(const std::string &str, const unsigned int charSize /* = 30U */) noexcept
 {
     m_buttons.push_back(Button(str, m_font, m_texture, charSize));
     auto widestButtonIt = std::max_element(m_buttons.begin(),
@@ -30,7 +30,7 @@ void Gui::addButton(const std::string &str, const unsigned int charSize /* = 30U
     updatePositions();
 }
 
-void Gui::updatePositions()
+void Gui::updatePositions() noexcept
 {
     size_t n = m_buttons.size();
     if (n == 0)
@@ -46,7 +46,7 @@ void Gui::updatePositions()
                                  m_window.getSize().x);
 }
 
-int Gui::getPressedButton()
+int Gui::getPressedButton() const noexcept
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
     for (size_t i = 0; i < m_buttons.size(); ++i)
@@ -56,7 +56,7 @@ int Gui::getPressedButton()
     return -1;
 }
 
-void Gui::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void Gui::draw(sf::RenderTarget &target, sf::RenderStates states) const noexcept
 {
     for (const Button &btn : m_buttons)
         target.draw(btn);

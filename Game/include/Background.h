@@ -10,6 +10,9 @@ enum RelativePosition
     START
 };
 
+constexpr int NUM_BACKGROUNDS = 2;
+constexpr int DOTS_PER_QUAD = 4;
+
 class Background : public sf::Drawable, public sf::Transformable
 {
 public:
@@ -25,9 +28,9 @@ public:
 private:
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const;
     void loadTexture(const std::string &);
-    RelativePosition findPosition(const sf::View &);
+    RelativePosition findPosition(const sf::View &) const;
 
     sf::Texture m_texture;
-    std::array<sf::Vertex, 8> m_vertices;
+    std::array<sf::Vertex, NUM_BACKGROUNDS * DOTS_PER_QUAD> m_vertices;
     RelativePosition m_previousPosition;
 };

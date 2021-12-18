@@ -11,14 +11,13 @@ public:
 
     ~Gui();
 
-    void addButton(const std::string &str, const unsigned int charSize = 30U);
-
-    void updatePositions();
-
-    int getPressedButton();
+    void addButton(const std::string &str, const unsigned int charSize = 30U) noexcept;
+    void updatePositions() noexcept;
+    int getPressedButton() const noexcept;
 
 private:
-    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const noexcept;
+
     std::vector<Button> m_buttons;
     sf::Font m_font;
     sf::Texture m_texture;

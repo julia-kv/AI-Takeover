@@ -30,10 +30,11 @@ SceneManager::~SceneManager()
 {
 }
 
-bool SceneManager::cycle(sf::Time dt)
+bool SceneManager::cycle(const sf::Time dt) noexcept
 {
-    // returns true if error happens
-    // returns false if success
+    // true if success
+    // false if error
+
     handleEvents();
     m_scenes[m_curScene]->handleInput();
     m_scenes[m_curScene]->update(dt);
@@ -46,13 +47,13 @@ bool SceneManager::cycle(sf::Time dt)
         catch (const std::invalid_argument &e)
         {
             std::cerr << e.what() << '\n';
-            return true;
+            return false;
         }
     }
-    return false;
+    return true;
 }
 
-void SceneManager::handleEvents()
+void SceneManager::handleEvents() noexcept
 {
     sf::Event event;
     while (m_window.pollEvent(event))
@@ -78,22 +79,22 @@ void SceneManager::handleEvents()
     }
 }
 
-void SceneManager::draw() const
+void SceneManager::draw() const noexcept
 {
     m_scenes[m_curScene]->draw();
 }
 
-void SceneManager::switchTo(const SceneType scn)
+void SceneManager::switchTo(const SceneType scn) noexcept
 {
     m_sceneToSwitch = scn;
 }
 
-bool SceneManager::successfullyInitialized() const
+bool SceneManager::successfullyInitialized() const noexcept
 {
     return m_initializationSuccess;
 }
 
-void SceneManager::changeScene()
+void SceneManager::changeScene() noexcept
 {
     switch (m_sceneToSwitch)
     {
@@ -108,6 +109,11 @@ void SceneManager::changeScene()
     case SceneType::GAMEPLAY:
         if (m_curScene != SceneType::PAUSE)
             m_scenes[m_sceneToSwitch] = std::make_unique<GameplayScene>(m_window, m_numOfLevel, m_constants, *this);
+        else
+        {
+            GameplayScene *gameplay_ptr = static_cast<GameplayScene *>(m_scenes[m_sceneToSwitch].get());
+            gameplay_ptr->resetView();
+        }
         break;
 
     case SceneType::PAUSE:
@@ -127,7 +133,7 @@ void SceneManager::changeScene()
     m_curScene = m_sceneToSwitch;
 }
 
-void SceneManager::setLevel(const size_t lvl)
+void SceneManager::setLevel(const size_t lvl) noexcept
 {
     m_numOfLevel = lvl;
 }

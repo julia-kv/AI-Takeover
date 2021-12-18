@@ -7,6 +7,10 @@ PauseScene::PauseScene(sf::RenderWindow &w,
                                                       m_gui(w),
                                                       m_sceneSwitcher(scn_switcher)
 {
+    sf::View view = m_window.getView();
+    view.setCenter(sf::Vector2f(m_window.getSize() / 2u));
+    m_window.setView(view);
+
     m_gui.addButton("Continue");
     m_gui.addButton("To Main Menu");
     m_gui.addButton("Exit");
@@ -16,7 +20,7 @@ PauseScene::~PauseScene()
 {
 }
 
-void PauseScene::handleEvents(const sf::Event &event)
+void PauseScene::handleEvents(const sf::Event &event) noexcept
 {
     if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -43,15 +47,15 @@ void PauseScene::handleEvents(const sf::Event &event)
     }
 }
 
-void PauseScene::handleInput()
+void PauseScene::handleInput() noexcept
 {
 }
 
-void PauseScene::update(sf::Time dt)
+void PauseScene::update(const sf::Time dt) noexcept
 {
 }
 
-void PauseScene::draw() const
+void PauseScene::draw() const noexcept
 {
     m_window.draw(m_background);
     m_window.draw(m_gui);

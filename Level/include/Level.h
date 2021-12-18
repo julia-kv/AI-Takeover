@@ -34,9 +34,9 @@ public:
 
     void update(sf::Time);
 
-    bool isFinished();
+    bool isFinished() const;
 
-    bool isDead();
+    bool isDead() const;
 
     Map &getMap();
     Hero &getHero();
