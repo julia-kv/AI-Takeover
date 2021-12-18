@@ -5,8 +5,8 @@ set(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic")
 set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic")
 set(CMAKE_CXX_STANDARD 14)
 
-ADD_SUBDIRECTORY( Level )
-ADD_SUBDIRECTORY( Game )
+add_subdirectory(Level)
+add_subdirectory(Game)
 
 add_executable(main Main.cpp ${SOURCE} ${HEADERS})
 
