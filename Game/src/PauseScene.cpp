@@ -1,9 +1,14 @@
 #include "PauseScene.h"
 #include <iostream>
 
-PauseScene::PauseScene(sf::RenderWindow &w, SceneSwitcher &scn_switcher) : m_window(w), m_sceneSwitcher(scn_switcher)
+PauseScene::PauseScene(sf::RenderWindow &w,
+                       SceneSwitcher &scn_switcher) : m_window(w),
+                                                      m_background("../Files/PauseBackground.png"),
+                                                      m_gui(w),
+                                                      m_sceneSwitcher(scn_switcher)
 {
-    createButtons();
+    m_gui.addButton("Continue");
+    m_gui.addButton("Exit");
 }
 
 PauseScene::~PauseScene()
@@ -14,6 +19,24 @@ void PauseScene::handleEvents(const sf::Event &event) {}
 
 void PauseScene::handleInput()
 {
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        switch (m_gui.getPressedButton())
+        {
+        case 0:
+            m_sceneSwitcher.switchTo(SceneType::GAMEPLAY);
+            break;
+
+        case 1:
+        {
+            m_window.close();
+            break;
+        }
+
+        default:
+            break;
+        }
+    }
 }
 
 void PauseScene::update(sf::Time dt)
@@ -22,11 +45,6 @@ void PauseScene::update(sf::Time dt)
 
 void PauseScene::draw() const
 {
-}
-
-void PauseScene::createButtons() {}
-
-std::vector<Button> &PauseScene::getButtons()
-{
-    return m_buttons;
+    m_window.draw(m_background);
+    m_window.draw(m_gui);
 }

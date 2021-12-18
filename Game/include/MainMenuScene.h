@@ -1,13 +1,12 @@
 #pragma once
 #include "Scene.h"
 #include "Button.h"
-#include "SceneManager.h"
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 #include <vector>
+#include "SceneSwitcher.h"
 #include "Background.h"
 #include "Gui.h"
-#include "SceneSwitcher.h"
 
 class MainMenuScene : public Scene
 {

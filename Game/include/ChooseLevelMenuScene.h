@@ -25,8 +25,6 @@ public:
     void draw() const;
 
 private:
-    void createButtons();
-
     sf::RenderWindow &m_window;
     SceneManager &m_sceneManager;
     Background m_background;

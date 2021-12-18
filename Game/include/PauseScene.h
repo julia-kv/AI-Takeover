@@ -6,6 +6,8 @@
 #include "SceneType.h"
 #include <vector>
 #include "SceneSwitcher.h"
+#include "Background.h"
+#include "Gui.h"
 
 class PauseScene : public Scene
 {
@@ -20,13 +22,11 @@ public:
     void handleEvents(const sf::Event &event);
     void handleInput();
     void update(sf::Time);
-    std::vector<Button> &getButtons();
     void draw() const;
 
 private:
-    void createButtons();
-
     sf::RenderWindow &m_window;
-    std::vector<Button> m_buttons;
+    Background m_background;
+    Gui m_gui;
     SceneSwitcher &m_sceneSwitcher;
 };
