@@ -1,10 +1,11 @@
 #include "MainMenuScene.h"
 #include <iostream>
 
-MainMenuScene::MainMenuScene(sf::RenderWindow &w, SceneSwitcher &scn_switcher) : m_window(w),
-                                                                                 m_background("../Files/MainMenuBackground.png"),
-                                                                                 m_gui(w),
-                                                                                 m_sceneSwitcher(scn_switcher)
+MainMenuScene::MainMenuScene(sf::RenderWindow &w,
+                             SceneSwitcher &scn_switcher) : m_window(w),
+                                                            m_background("../Files/MainMenuBackground.png"),
+                                                            m_gui(w),
+                                                            m_sceneSwitcher(scn_switcher)
 {
     sf::View view = m_window.getView();
     view.setCenter(m_window.getSize().x / 2, m_window.getSize().y / 2);

@@ -27,6 +27,8 @@ void GameplayScene::handleEvents(const sf::Event &event)
 
 void GameplayScene::handleInput()
 {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        m_sceneSwitcher.switchTo(SceneType::PAUSE);
     m_level.handleInput();
 }
 

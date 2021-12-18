@@ -8,7 +8,16 @@ set(CMAKE_CXX_STANDARD 14)
 add_link_options(-lsfml-graphics -lsfml-window -lsfml-system)
 
 include_directories("include/")
-set(SOURCE src/Gui.cpp src/Button.cpp src/Constants.cpp src/Background.cpp src/ChooseLevelMenuScene.cpp src/Game.cpp src/GameplayScene.cpp src/MainMenuScene.cpp src/PauseScene.cpp src/SceneManager.cpp)
+set(SOURCE src/Gui.cpp
+           src/Button.cpp
+           src/Constants.cpp
+           src/Background.cpp
+           src/ChooseLevelMenuScene.cpp
+           src/Game.cpp
+           src/GameplayScene.cpp
+           src/MainMenuScene.cpp
+           src/PauseScene.cpp
+           src/SceneManager.cpp)
 
 add_library(Game STATIC ${SOURCE} ${HEADERS})
 
