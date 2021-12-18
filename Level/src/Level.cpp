@@ -86,12 +86,12 @@ Finish &Level::getFinish()
     return m_finish;
 }
 
-bool Level::isFinished()
+bool Level::isFinished() const
 {
     return m_hero.isFinished();
 }
 
-bool Level::isDead()
+bool Level::isDead() const
 {
     return m_hero.isDead();
 }

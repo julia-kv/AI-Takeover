@@ -18,7 +18,7 @@ MainMenuScene::~MainMenuScene()
 {
 }
 
-void MainMenuScene::handleEvents(const sf::Event &event)
+void MainMenuScene::handleEvents(const sf::Event &event) noexcept
 {
     if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -43,15 +43,15 @@ void MainMenuScene::handleEvents(const sf::Event &event)
     }
 }
 
-void MainMenuScene::handleInput()
+void MainMenuScene::handleInput() noexcept
 {
 }
 
-void MainMenuScene::update(sf::Time dt)
+void MainMenuScene::update(const sf::Time dt) noexcept
 {
 }
 
-void MainMenuScene::draw() const
+void MainMenuScene::draw() const noexcept
 {
     m_window.draw(m_background);
     m_window.draw(m_gui);

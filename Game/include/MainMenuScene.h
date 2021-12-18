@@ -18,10 +18,10 @@ public:
     MainMenuScene &operator=(const MainMenuScene &) = delete;
     MainMenuScene &operator=(MainMenuScene &&) noexcept = delete;
 
-    void handleEvents(const sf::Event &event);
-    void handleInput();
-    void update(sf::Time);
-    void draw() const;
+    void handleEvents(const sf::Event &event) noexcept;
+    void handleInput() noexcept;
+    void update(const sf::Time) noexcept;
+    void draw() const noexcept;
 
 private:
     sf::RenderWindow &m_window;

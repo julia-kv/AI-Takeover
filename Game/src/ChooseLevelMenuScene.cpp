@@ -16,7 +16,7 @@ ChooseLevelMenuScene::~ChooseLevelMenuScene()
 {
 }
 
-void ChooseLevelMenuScene::handleEvents(const sf::Event &event)
+void ChooseLevelMenuScene::handleEvents(const sf::Event &event) noexcept
 {
     if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -45,15 +45,15 @@ void ChooseLevelMenuScene::handleEvents(const sf::Event &event)
     }
 }
 
-void ChooseLevelMenuScene::handleInput()
+void ChooseLevelMenuScene::handleInput() noexcept
 {
 }
 
-void ChooseLevelMenuScene::update(sf::Time dt)
+void ChooseLevelMenuScene::update(const sf::Time dt) noexcept
 {
 }
 
-void ChooseLevelMenuScene::draw() const
+void ChooseLevelMenuScene::draw() const noexcept
 {
     m_window.draw(m_background);
     m_window.draw(m_gui);
