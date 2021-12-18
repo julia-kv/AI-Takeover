@@ -10,11 +10,20 @@
 SceneManager::SceneManager(sf::RenderWindow &w,
                            const Constants &constants) : m_window(w),
                                                          m_constants(constants),
-                                                         m_curScene(SceneType::MAIN_MENU),
+                                                         m_curScene(SceneType::PAUSE),
                                                          m_sceneToSwitch(SceneType::MAIN_MENU),
-                                                         m_numOfLevel(1)
+                                                         m_numOfLevel(1),
+                                                         m_initializationSuccess(true)
 {
-    m_scenes[SceneType::MAIN_MENU] = std::make_unique<MainMenuScene>(m_window, *this);
+    try
+    {
+        changeScene();
+    }
+    catch (const std::invalid_argument &e)
+    {
+        std::cerr << e.what() << '\n';
+        m_initializationSuccess = false;
+    }
 }
 
 SceneManager::~SceneManager()
@@ -23,11 +32,23 @@ SceneManager::~SceneManager()
 
 bool SceneManager::cycle(sf::Time dt)
 {
+    // returns true if error happens
+    // returns false if success
     handleEvents();
     m_scenes[m_curScene]->handleInput();
     m_scenes[m_curScene]->update(dt);
     if (m_curScene != m_sceneToSwitch)
-        changeScene();
+    {
+        try
+        {
+            changeScene();
+        }
+        catch (const std::invalid_argument &e)
+        {
+            std::cerr << e.what() << '\n';
+            return true;
+        }
+    }
     return false;
 }
 
@@ -50,11 +71,8 @@ void SceneManager::handleEvents()
             break;
         }
 
-        case sf::Event::KeyReleased:
-            m_scenes[m_curScene]->handleEvents(event);
-            break;
-
         default:
+            m_scenes[m_curScene]->handleEvents(event);
             break;
         }
     }
@@ -68,6 +86,11 @@ void SceneManager::draw() const
 void SceneManager::switchTo(const SceneType scn)
 {
     m_sceneToSwitch = scn;
+}
+
+bool SceneManager::successfullyInitialized() const
+{
+    return m_initializationSuccess;
 }
 
 void SceneManager::changeScene()
