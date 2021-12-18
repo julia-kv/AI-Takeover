@@ -21,6 +21,7 @@ public:
     void draw() const;
     void setLevel(const size_t);
     void switchTo(const SceneType);
+    bool successfullyInitialized() const;
 
 private:
     void changeScene();
@@ -31,4 +32,5 @@ private:
     Constants m_constants;
     SceneType m_curScene, m_sceneToSwitch;
     size_t m_numOfLevel;
+    bool m_initializationSuccess;
 };

@@ -34,7 +34,8 @@ void Game::run()
     }
 
     SceneManager sceneManager(window, constants);
-    startGameLoop(window, sceneManager);
+    if (sceneManager.successfullyInitialized())
+        startGameLoop(window, sceneManager);
 }
 
 void Game::startGameLoop(sf::RenderWindow &window, SceneManager &sceneManager)
