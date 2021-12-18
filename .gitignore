@@ -6,5 +6,6 @@
 .idea
 /Level/build
 /Game/build
+/test/build
 /Level/cmake-build-debug
 /Game/cmake-build-debug
