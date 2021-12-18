@@ -2,10 +2,14 @@
 #include <iostream>
 
 ChooseLevelMenuScene::ChooseLevelMenuScene(sf::RenderWindow &w,
-                                           SceneManager &sm) : m_window(w),
-                                                               m_sceneManager(sm),
-                                                               m_background("../Files/MainMenuBackground.png"),
-                                                               m_gui(w)
+                                           SceneManager &sm,
+                                           const std::string &file_prefix,
+                                           const std::string &background_file_name,
+                                           const std::string &font_file_name,
+                                           const std::string &button_file_name) : m_window(w),
+                                                                                  m_sceneManager(sm),
+                                                                                  m_background(file_prefix + background_file_name),
+                                                                                  m_gui(w, file_prefix + font_file_name, file_prefix + button_file_name)
 {
     m_gui.addButton("Level 1");
     m_gui.addButton("Level 2");

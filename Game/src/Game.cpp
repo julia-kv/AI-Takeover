@@ -2,7 +2,10 @@
 #include <iostream>
 #include "Constants.h"
 
-Game::Game() : frameTime(sf::seconds(1.f / 60.f))
+Game::Game(const std::string &file_prefix /* = "" */,
+           const std::string &config_file_name /* = ".config" */) : frameTime(sf::seconds(1.f / 60.f)),
+                                                                    m_filePrefix(file_prefix),
+                                                                    m_configFileName(config_file_name)
 {
 }
 
@@ -13,9 +16,9 @@ Game::~Game()
 void Game::run() const noexcept
 {
     Constants constants;
-    if (!constants.read_file("../Files/.config"))
+    if (!constants.read_file(m_filePrefix + m_configFileName))
     {
-        std::cerr << "Failed to read constants file\n";
+        std::cerr << "Failed to read constants file '" << m_filePrefix + m_configFileName << "'\n";
         return;
     }
 
@@ -29,11 +32,10 @@ void Game::run() const noexcept
     }
     catch (const std::out_of_range &)
     {
-        std::cerr << "SCREEN_INITIAL_WIDTH or SCREEN_INITIAL_HEIGHT not found in constants\n";
         return;
     }
 
-    SceneManager sceneManager(window, constants);
+    SceneManager sceneManager(window, constants, m_filePrefix);
     if (sceneManager.successfullyInitialized())
         startGameLoop(window, sceneManager);
 }

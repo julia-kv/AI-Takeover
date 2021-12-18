@@ -1,16 +1,12 @@
 #include "Gui.h"
 
-Gui::Gui(const sf::RenderWindow &w) : m_window(w)
+Gui::Gui(const sf::RenderWindow &w, const std::string &font_file_name, const std::string &texture_file_name) : m_window(w)
 {
-    if (!m_font.loadFromFile("../Files/arial.ttf"))
-    {
-        std::cerr << "Failed to load font from file '../Files/arial.ttf'\n";
-    }
+    if (!m_font.loadFromFile(font_file_name))
+        throw std::invalid_argument("Failed to load font from file '" + font_file_name + "'\n");
 
-    if (!m_texture.loadFromFile("../Files/ButtonTexture.png"))
-    {
-        std::cerr << "Failed to load texture from file '../Files/ButtonTexture.png'\n";
-    }
+    if (!m_texture.loadFromFile(texture_file_name))
+        throw std::invalid_argument("Failed to load texture from file '" + texture_file_name + "'\n");
 }
 
 Gui::~Gui() {}

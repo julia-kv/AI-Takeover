@@ -2,10 +2,14 @@
 #include <iostream>
 
 MainMenuScene::MainMenuScene(sf::RenderWindow &w,
-                             SceneSwitcher &scn_switcher) : m_window(w),
-                                                            m_background("../Files/MainMenuBackground.png"),
-                                                            m_gui(w),
-                                                            m_sceneSwitcher(scn_switcher)
+                             SceneSwitcher &scn_switcher,
+                             const std::string &file_prefix,
+                             const std::string &background_file_name,
+                             const std::string &font_file_name,
+                             const std::string &texture_file_name) : m_window(w),
+                                                                     m_background(file_prefix + background_file_name),
+                                                                     m_gui(w, file_prefix + font_file_name, file_prefix + texture_file_name),
+                                                                     m_sceneSwitcher(scn_switcher)
 {
     sf::View view = m_window.getView();
     view.setCenter(m_window.getSize().x / 2, m_window.getSize().y / 2);

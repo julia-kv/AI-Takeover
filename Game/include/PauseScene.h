@@ -12,7 +12,12 @@
 class PauseScene : public Scene
 {
 public:
-    PauseScene(sf::RenderWindow &, SceneSwitcher &);
+    PauseScene(sf::RenderWindow &,
+               SceneSwitcher &,
+               const std::string &file_prefix = "",
+               const std::string &background_file_name = "PauseBackground.png",
+               const std::string &font_file_name = "arial.ttf",
+               const std::string &texture_file_name = "ButtonTexture.png");
     ~PauseScene();
     PauseScene(const PauseScene &) = delete;
     PauseScene(PauseScene &&) noexcept = delete;

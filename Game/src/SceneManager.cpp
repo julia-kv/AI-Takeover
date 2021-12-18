@@ -8,12 +8,14 @@
 #include <iostream>
 
 SceneManager::SceneManager(sf::RenderWindow &w,
-                           const Constants &constants) : m_window(w),
-                                                         m_constants(constants),
-                                                         m_curScene(SceneType::PAUSE),
-                                                         m_sceneToSwitch(SceneType::MAIN_MENU),
-                                                         m_numOfLevel(1),
-                                                         m_initializationSuccess(true)
+                           const Constants &constants,
+                           const std::string &file_prefix /* = "" */) : m_window(w),
+                                                                        m_constants(constants),
+                                                                        m_curScene(SceneType::PAUSE),
+                                                                        m_sceneToSwitch(SceneType::MAIN_MENU),
+                                                                        m_numOfLevel(1),
+                                                                        m_initializationSuccess(true),
+                                                                        m_filePrefix(file_prefix)
 {
     try
     {
@@ -99,16 +101,16 @@ void SceneManager::changeScene() noexcept
     switch (m_sceneToSwitch)
     {
     case SceneType::MAIN_MENU:
-        m_scenes[m_sceneToSwitch] = std::make_unique<MainMenuScene>(m_window, *this);
+        m_scenes[m_sceneToSwitch] = std::make_unique<MainMenuScene>(m_window, *this, m_filePrefix);
         break;
 
     case SceneType::CHOOSE_LEVEL_MENU:
-        m_scenes[m_sceneToSwitch] = std::make_unique<ChooseLevelMenuScene>(m_window, *this);
+        m_scenes[m_sceneToSwitch] = std::make_unique<ChooseLevelMenuScene>(m_window, *this, m_filePrefix);
         break;
 
     case SceneType::GAMEPLAY:
         if (m_curScene != SceneType::PAUSE)
-            m_scenes[m_sceneToSwitch] = std::make_unique<GameplayScene>(m_window, m_numOfLevel, m_constants, *this);
+            m_scenes[m_sceneToSwitch] = std::make_unique<GameplayScene>(m_window, m_numOfLevel, m_constants, *this, m_filePrefix);
         else
         {
             GameplayScene *gameplay_ptr = static_cast<GameplayScene *>(m_scenes[m_sceneToSwitch].get());
@@ -117,7 +119,7 @@ void SceneManager::changeScene() noexcept
         break;
 
     case SceneType::PAUSE:
-        m_scenes[m_sceneToSwitch] = std::make_unique<PauseScene>(m_window, *this);
+        m_scenes[m_sceneToSwitch] = std::make_unique<PauseScene>(m_window, *this, m_filePrefix);
         break;
 
     default:
