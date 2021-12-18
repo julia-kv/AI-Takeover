@@ -9,6 +9,7 @@ ChooseLevelMenuScene::ChooseLevelMenuScene(sf::RenderWindow &w,
 {
     m_gui.addButton("Level 1");
     m_gui.addButton("Level 2");
+    m_gui.addButton("Back to Main Menu");
 }
 
 ChooseLevelMenuScene::~ChooseLevelMenuScene()
@@ -24,18 +25,18 @@ void ChooseLevelMenuScene::handleEvents(const sf::Event &event)
             switch (m_gui.getPressedButton())
             {
             case 0:
-            {
                 m_sceneManager.setLevel(1);
                 m_sceneManager.switchTo(SceneType::GAMEPLAY);
                 break;
-            }
 
             case 1:
-            {
                 m_sceneManager.setLevel(2);
                 m_sceneManager.switchTo(SceneType::GAMEPLAY);
                 break;
-            }
+
+            case 2:
+                m_sceneManager.switchTo(SceneType::MAIN_MENU);
+                break;
 
             default:
                 break;
