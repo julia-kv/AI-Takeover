@@ -10,14 +10,14 @@ Background::~Background()
 {
 }
 
-void Background::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void Background::draw(sf::RenderTarget &target, sf::RenderStates states) const noexcept
 {
     states.transform *= getTransform();
     states.texture = &m_texture;
     target.draw(m_vertices.data(), m_vertices.size(), sf::Quads, states);
 }
 
-void Background::update(const sf::View &windowView)
+void Background::update(const sf::View &windowView) noexcept
 {
     RelativePosition curPos = findPosition(windowView);
     if (curPos == m_previousPosition)
@@ -42,7 +42,7 @@ void Background::update(const sf::View &windowView)
     m_previousPosition = curPos;
 }
 
-void Background::loadTexture(const std::string &f_name)
+void Background::loadTexture(const std::string &f_name) noexcept
 {
     if (!m_texture.loadFromFile(f_name))
         std::cerr << "Failed to load background texture from file '" << f_name << "'\n";
@@ -65,7 +65,7 @@ void Background::loadTexture(const std::string &f_name)
     }
 }
 
-RelativePosition Background::findPosition(const sf::View &windowView) const
+RelativePosition Background::findPosition(const sf::View &windowView) const noexcept
 {
     float camera_pos = windowView.getCenter().x;
     if (camera_pos < m_vertices[0].position.x || camera_pos > m_vertices[1].position.x)

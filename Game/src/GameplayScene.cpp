@@ -3,16 +3,18 @@
 GameplayScene::GameplayScene(sf::RenderWindow &w,
                              const size_t num_of_level,
                              Constants &constants,
-                             SceneSwitcher &scn_switcher) : m_window(w),
-                                                            m_level(w,
-                                                                    num_of_level,
-                                                                    constants.at("TILE_SIZE"),
-                                                                    constants.at("PLATFORM_VELOCITY"),
-                                                                    constants.at("HERO_VELOCITY"),
-                                                                    constants.at("HERO_ACCELERATION")),
-                                                            m_background("../Files/Background_" + std::to_string(num_of_level) + ".png"),
-                                                            m_sceneSwitcher(scn_switcher),
-                                                            m_view(m_window.getView())
+                             SceneSwitcher &scn_switcher,
+                             const std::string &file_prefix,
+                             const std::string &background_name) : m_window(w),
+                                                                   m_level(w,
+                                                                           num_of_level,
+                                                                           constants.at("TILE_SIZE"),
+                                                                           constants.at("PLATFORM_VELOCITY"),
+                                                                           constants.at("HERO_VELOCITY"),
+                                                                           constants.at("HERO_ACCELERATION")),
+                                                                   m_background(file_prefix + background_name + std::to_string(num_of_level) + ".png"),
+                                                                   m_sceneSwitcher(scn_switcher),
+                                                                   m_view(m_window.getView())
 
 {
 }

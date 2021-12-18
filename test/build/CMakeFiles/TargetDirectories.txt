@@ -1,0 +1,9 @@
+/home/egor/Projects/AI-Takeover/test/build/CMakeFiles/rebuild_cache.dir
+/home/egor/Projects/AI-Takeover/test/build/CMakeFiles/edit_cache.dir
+/home/egor/Projects/AI-Takeover/test/build/CMakeFiles/test.dir
+/home/egor/Projects/AI-Takeover/test/build/gamelib/CMakeFiles/rebuild_cache.dir
+/home/egor/Projects/AI-Takeover/test/build/gamelib/CMakeFiles/edit_cache.dir
+/home/egor/Projects/AI-Takeover/test/build/gamelib/CMakeFiles/Game.dir
+/home/egor/Projects/AI-Takeover/test/build/levellib/CMakeFiles/rebuild_cache.dir
+/home/egor/Projects/AI-Takeover/test/build/levellib/CMakeFiles/edit_cache.dir
+/home/egor/Projects/AI-Takeover/test/build/levellib/CMakeFiles/Level.dir

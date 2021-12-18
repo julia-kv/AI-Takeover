@@ -12,7 +12,12 @@
 class ChooseLevelMenuScene : public Scene
 {
 public:
-    ChooseLevelMenuScene(sf::RenderWindow &, SceneManager &);
+    ChooseLevelMenuScene(sf::RenderWindow &,
+                         SceneManager &,
+                         const std::string &file_prefix = "",
+                         const std::string &background_file_name = "MainMenuBackground.png",
+                         const std::string &font_file_name = "arial.ttf",
+                         const std::string &texture_file_name = "ButtonTexture.png");
     ~ChooseLevelMenuScene();
     ChooseLevelMenuScene(const ChooseLevelMenuScene &) = delete;
     ChooseLevelMenuScene(ChooseLevelMenuScene &&) noexcept = delete;

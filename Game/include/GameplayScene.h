@@ -11,7 +11,12 @@
 class GameplayScene : public Scene
 {
 public:
-    GameplayScene(sf::RenderWindow &, const size_t, Constants &, SceneSwitcher &);
+    GameplayScene(sf::RenderWindow &,
+                  const size_t,
+                  Constants &,
+                  SceneSwitcher &,
+                  const std::string &file_prefix = "",
+                  const std::string &background_name = "Background_");
     ~GameplayScene();
     GameplayScene(const GameplayScene &) = delete;
     GameplayScene(GameplayScene &&) noexcept = delete;

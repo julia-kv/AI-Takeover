@@ -10,7 +10,7 @@
 class SceneManager : public SceneSwitcher
 {
 public:
-    SceneManager(sf::RenderWindow &, const Constants &);
+    SceneManager(sf::RenderWindow &, const Constants &, const std::string &file_prefix = "");
     ~SceneManager();
     SceneManager(const SceneManager &) = delete;
     SceneManager(SceneManager &&) noexcept = delete;
@@ -33,4 +33,5 @@ private:
     SceneType m_curScene, m_sceneToSwitch;
     size_t m_numOfLevel;
     bool m_initializationSuccess;
+    const std::string m_filePrefix;
 };

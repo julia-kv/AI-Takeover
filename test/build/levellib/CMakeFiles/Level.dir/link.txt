@@ -1,0 +1,2 @@
+/usr/bin/ar qc libLevel.a  CMakeFiles/Level.dir/src/Level.cpp.o CMakeFiles/Level.dir/src/Finish.cpp.o CMakeFiles/Level.dir/src/Map.cpp.o CMakeFiles/Level.dir/src/Hero.cpp.o
+/usr/bin/ranlib libLevel.a

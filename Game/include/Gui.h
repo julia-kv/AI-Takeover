@@ -7,7 +7,7 @@
 class Gui : public sf::Drawable, public sf::Transformable
 {
 public:
-    Gui(const sf::RenderWindow &w);
+    Gui(const sf::RenderWindow &w, const std::string &font_file_name, const std::string &texture_file_name);
 
     ~Gui();
 
