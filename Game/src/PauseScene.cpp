@@ -8,6 +8,7 @@ PauseScene::PauseScene(sf::RenderWindow &w,
                                                       m_sceneSwitcher(scn_switcher)
 {
     m_gui.addButton("Continue");
+    m_gui.addButton("To Main Menu");
     m_gui.addButton("Exit");
 }
 
@@ -28,10 +29,12 @@ void PauseScene::handleEvents(const sf::Event &event)
                 break;
 
             case 1:
-            {
+                m_sceneSwitcher.switchTo(SceneType::MAIN_MENU);
+                break;
+
+            case 2:
                 m_window.close();
                 break;
-            }
 
             default:
                 break;

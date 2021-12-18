@@ -121,6 +121,9 @@ void SceneManager::changeScene()
     if (m_curScene != SceneType::GAMEPLAY || m_sceneToSwitch != SceneType::PAUSE)
         m_scenes[m_curScene].reset(nullptr);
 
+    if (m_curScene == SceneType::PAUSE && m_sceneToSwitch == SceneType::MAIN_MENU)
+        m_scenes[SceneType::GAMEPLAY].reset(nullptr);
+
     m_curScene = m_sceneToSwitch;
 }
 
