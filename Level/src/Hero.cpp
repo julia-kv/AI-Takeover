@@ -311,7 +311,7 @@ void Hero::move_y(float dy) {
 
                 if (rect_top < tile_bottom && tile_bottom < rect_bottom) {
                     m_sprite.setPosition(rect_left, tile_bottom);
-                    m_vel.y = m_acceleration;
+                    m_vel.y = 0;
                     platform_idx = i / 4;
                 }
             }

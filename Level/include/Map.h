@@ -19,7 +19,11 @@ public:
 
     Map &operator=(Map &&) noexcept = delete;
 
-    ~Map() {};
+    ~Map();
+
+    void setScore(const int score);
+
+    void setGameTime(const float time);
 
     void readMap(const size_t);
 
@@ -79,6 +83,9 @@ private:
 
     int m_score;
     float m_game_time;
+
+    int m_best_score;
+    float m_best_game_time;
 
     sf::Font m_font;
 };
