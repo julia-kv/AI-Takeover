@@ -234,11 +234,11 @@ sf::Vector2f Map::getFinishPosition() {
     return m_finish_pos;
 }
 
-int Map::getScore() {
+int Map::getScore() const {
     return m_score;
 }
 
-float Map::getGameTime() {
+float Map::getGameTime() const {
     return m_game_time;
 }
 

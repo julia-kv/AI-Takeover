@@ -43,15 +43,15 @@ public:
 
     std::vector<sf::Vertex> &getVertexArray();
 
-    bool isCoin(int);
+    bool isCoin(int) ;
 
     bool isCoinReach(int );
 
     void coinDel(int);
 
-    int getScore();
+    int getScore() const;
 
-    float getGameTime();
+    float getGameTime() const;
 
     bool isPlatformMoving(int);
 

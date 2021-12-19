@@ -24,7 +24,9 @@ Level::Level(sf::RenderWindow &w,
 
 Level::~Level() {
 
-
+    if (m_hero.isFinished()) {
+        changeScore();
+    }
 
 }
 
@@ -121,15 +123,11 @@ Finish &Level::getFinish() {
     return m_finish;
 }
 
-bool Level::isFinished() {
-
-    if (m_hero.isFinished()) {
-        changeScore();
-    }
-    return  m_hero.isFinished();
+bool Level::isFinished() const {
+    return m_hero.isFinished();
 }
 
-bool Level::isDead() {
+bool Level::isDead() const {
     return m_hero.isDead();
 }
 
