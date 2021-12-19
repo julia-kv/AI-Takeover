@@ -248,16 +248,30 @@ void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     states.texture = &m_texture;
     target.draw(m_vertices.data(), m_vertices.size(), sf::Quads, states);
 
-    sf::Text text_score("Score: " + std::to_string(m_score) + " / " + std::to_string(m_coins_idx.size()) +
-                        " (Best: " + std::to_string(m_best_score) + ")", m_font);
+    std::string score;
+
+    if (m_best_score == 0)
+        score = "Score: " + std::to_string(m_score) + " / " + std::to_string(m_coins_idx.size());
+    else
+        score = "Score: " + std::to_string(m_score) + " / " + std::to_string(m_coins_idx.size()) +
+                " (Best: " + std::to_string(m_best_score) + ")";
+
+    sf::Text text_score(score, m_font);
     text_score.setStyle(sf::Text::Bold);
     text_score.setFillColor(sf::Color::Yellow);
     text_score.setPosition((target.getView().getCenter().x + target.getSize().x / 2 - m_tileSize * 8),
                            (target.getView().getCenter().y - target.getSize().y / 2 + m_tileSize));
     target.draw(text_score);
 
-    sf::Text text_time("Time: " + (std::to_string(m_game_time)) + "\n" +
-                       "(Best: " + std::to_string(m_best_game_time) + ")", m_font);
+    std::string time;
+
+    if (m_best_game_time == 0)
+        time = "Time: " + (std::to_string(m_game_time)) + "\n";
+    else
+        time = "Time: " + (std::to_string(m_game_time)) + "\n" +
+               "(Best: " + std::to_string(m_best_game_time) + ")";
+
+    sf::Text text_time(time, m_font);
     text_time.setStyle(sf::Text::Bold);
     text_time.setFillColor(sf::Color::Yellow);
     text_time.setPosition((target.getView().getCenter().x + target.getSize().x / 2 - m_tileSize * 8),

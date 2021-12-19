@@ -73,39 +73,36 @@ void Level::readLevelFile(const size_t num_of_level) {
 }
 
 void Level::readScoreFile(const size_t num_of_level) {
-    std::string line;
-    std::ifstream file("../Files/results.txt");
-    if (!file.is_open())
+    std::ifstream file("../Files/results_" + std::to_string(num_of_level) + ".txt");
+
+    if (!file.is_open()) {
         std::cout << "Failed to read file ../Files/results.txt\n";
+        m_best_score = 0;
+        m_best_game_time = 0.0f;
+        return;
+    }
 
-    bool find_score = false;
-    bool find_time = false;
-
+    std::string line;
     while (std::getline(file, line)) {
 
         std::istringstream is_line(line);
         std::string key;
         std::getline(is_line, key, '=');
 
-        if (key == ("BEST_SCORE_" + std::to_string(num_of_level))) {
+        if (key == ("BEST_SCORE")) {
             std::string str_value;
             is_line >> str_value;
             m_best_score = std::atoi(str_value.c_str());
-            find_score = true;
-        } else if (key == ("BEST_TIME_" + std::to_string(num_of_level))) {
+
+        } else if (key == ("BEST_TIME")) {
             std::string str_value;
             is_line >> str_value;
             m_best_game_time = std::atof(str_value.c_str());
-            find_time = true;
         } else {
             std::string str_value;
             is_line >> str_value;
         }
     }
-    if (!find_score)
-        m_best_score = 0;
-    if (!find_time)
-        m_best_game_time = 0.0f;
 
     file.close();
 }
@@ -133,59 +130,26 @@ bool Level::isDead() const {
 
 void Level::changeScore() {
 
-    if ((m_best_score < m_map.getScore() && m_best_game_time >= m_map.getGameTime()) ||
-        (m_best_game_time == m_map.getScore() && m_best_game_time > m_map.getGameTime())) {
+    std::ofstream new_file("../Files/results_" + std::to_string(m_level_num) + ".txt", std::ofstream::trunc);
 
-        std::string line;
-
-        std::ifstream file("../Files/results.txt");
-        if (!file.is_open())
-            std::cout << "Failed to read file ../Files/results.txt\n";
-
-        std::vector<std::string> all_str;
-
-        while (std::getline(file, line)) {
-
-            std::istringstream is_line(line);
-            std::string key;
-            std::getline(is_line, key, '=');
-
-            if ((key == ("BEST_SCORE_" + std::to_string(m_level_num))) &&
-                m_best_score < m_map.getScore()) {
-                std::string str_value;
-                is_line >> str_value;
-                key += "=";
-                key += std::to_string(m_map.getScore());
-                all_str.push_back(key);
-
-            } else if ((key == ("BEST_TIME_" + std::to_string(m_level_num))) &&
-                       m_best_game_time > m_map.getGameTime()) {
-                std::string str_value;
-                is_line >> str_value;
-                key += "=";
-                key += std::to_string(m_map.getGameTime());
-                all_str.push_back(key);
-
-            } else {
-                std::string str_value;
-                is_line >> str_value;
-                key += "=";
-                key += str_value;
-                all_str.push_back(key);
-            }
-        }
-
-        file.close();
-
-        std::ofstream file_new;
-        file_new.open("../Files/results.txt", std::ofstream::trunc);
-
-        for (auto const &s: all_str) {
-            file_new << s << std::endl;
-        }
-
-        file.close();
-
-        all_str.clear();
+    if (m_best_score == 0 && m_best_game_time == 0) {
+        new_file << ("BEST_SCORE=" + std::to_string(m_map.getScore())) << std::endl;
+        new_file << ("BEST_TIME=" + std::to_string(m_map.getGameTime())) << std::endl;
+        new_file.close();
+        return;
     }
+
+    new_file << ("BEST_SCORE=" +
+                 ((m_best_score <= m_map.getScore()) ? std::to_string(m_map.getScore()) : std::to_string(m_best_score)))
+             << std::endl;
+
+    if (m_best_game_time > m_map.getGameTime() && m_best_score <= m_map.getScore()) {
+        new_file << ("BEST_TIME=" + (std::to_string(m_map.getGameTime()))) << std::endl;
+
+    } else {
+        new_file << ("BEST_TIME=" + (std::to_string(m_best_game_time))) << std::endl;
+    }
+
+    new_file.close();
+
 }
