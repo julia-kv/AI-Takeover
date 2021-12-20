@@ -13,6 +13,9 @@ ChooseLevelMenuScene::ChooseLevelMenuScene(sf::RenderWindow &w,
 {
     m_gui.addButton("Level 1");
     m_gui.addButton("Level 2");
+    m_gui.addButton("Level 3");
+    m_gui.addButton("Level 4");
+    m_gui.addButton("Level 5");
     m_gui.addButton("Back to Main Menu");
 }
 
@@ -22,29 +25,21 @@ ChooseLevelMenuScene::~ChooseLevelMenuScene()
 
 void ChooseLevelMenuScene::handleEvents(const sf::Event &event) noexcept
 {
-    if (event.type == sf::Event::MouseButtonPressed)
+    if (event.type != sf::Event::MouseButtonPressed)
+        return;
+
+    if (event.mouseButton.button != sf::Mouse::Left)
+        return;
+
+    int pressed_btn = m_gui.getPressedButton();
+    if (pressed_btn >= 0)
     {
-        if (event.mouseButton.button == sf::Mouse::Left)
+        if (pressed_btn == 5) // 5 - To Main Menu
+            m_sceneManager.switchTo(SceneType::MAIN_MENU);
+        else
         {
-            switch (m_gui.getPressedButton())
-            {
-            case 0:
-                m_sceneManager.setLevel(1);
-                m_sceneManager.switchTo(SceneType::GAMEPLAY);
-                break;
-
-            case 1:
-                m_sceneManager.setLevel(2);
-                m_sceneManager.switchTo(SceneType::GAMEPLAY);
-                break;
-
-            case 2:
-                m_sceneManager.switchTo(SceneType::MAIN_MENU);
-                break;
-
-            default:
-                break;
-            }
+            m_sceneManager.setLevel(pressed_btn + 1);
+            m_sceneManager.switchTo(SceneType::GAMEPLAY);
         }
     }
 }
