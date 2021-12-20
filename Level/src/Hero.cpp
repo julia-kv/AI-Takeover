@@ -250,13 +250,11 @@ void Hero::move_x(float dx) {
 
     m_idx_platform = platform_idx;
 
-    if (m_idx_platform == - 1 && m_vel.y == 0) {
-        m_vel.y = m_acceleration;
+    if (m_idx_platform == -1 && m_vel.y == 0) {
         m_vel.x = 0;
+        m_is_jump = true;
     }
-
 }
-
 
 void Hero::move_y(float dy) {
     if (dy == 0) {
