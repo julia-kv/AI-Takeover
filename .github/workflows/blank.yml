@@ -33,11 +33,14 @@ jobs:
       
       - name: Install vilgrind
         run: sudo apt update && sudo apt install valgrind
-        
-      - name: cppcheck
-        uses: deep5050/cppcheck-action@main
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN}}
+
+      - name: Install cppcheck
+        run: sudo apt-get install cppcheck
+
+      - name: run cppcheck
+        run: |
+         cppcheck Game
+         cppcheck Level
         
       - name: configure
         run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror" ..
