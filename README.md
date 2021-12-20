@@ -5,4 +5,5 @@
 
 ## Team
 Библиотека Level: Корпусова Юлия https://github.com/julia-kv
-Библиотека Game : Сергеев Егор   https://github.com/egor-sergeev-n
+
+Библиотека Game: Сергеев Егор https://github.com/egor-sergeev-n
