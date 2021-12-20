@@ -7,6 +7,7 @@
 #include "Button.h"
 #include "Game.h"
 #include "SceneManager.h"
+#include "Level.h"
 
 TEST(TEST_GAME, TEST_BACKGROUND)
 {
@@ -132,6 +133,24 @@ TEST(TEST_GAME, TEST_SCENE_MANAGER)
     sf::RenderWindow window(sf::VideoMode(600.f, 800.f), "Window name");
     SceneManager scn_manager(window, c, "../../Files/");
     ASSERT_TRUE(scn_manager.successfullyInitialized());
+}
+
+TEST(TEST_LEVEL, TEST_MAP)
+{
+    EXPECT_ANY_THROW(Map map(-10,10));
+    EXPECT_ANY_THROW(Map map(10,-10));
+}
+
+TEST(TEST_LEVEL, TEST_FINISH)
+{
+    EXPECT_ANY_THROW(Finish finish(-10));
+}
+
+TEST(TEST_LEVEL, TEST_HERO)
+{
+    EXPECT_ANY_THROW(Hero hero(-10,10,10));
+    EXPECT_ANY_THROW(Hero hero(10,-10,10));
+    EXPECT_ANY_THROW(Hero hero(10,10,-10));
 }
 
 int main(int argc, char **argv)
