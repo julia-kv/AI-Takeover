@@ -139,16 +139,13 @@ void Level::changeScore() {
         return;
     }
 
-    new_file << ("BEST_SCORE=" +
-                 ((m_best_score <= m_map.getScore()) ? std::to_string(m_map.getScore()) : std::to_string(m_best_score)))
-             << std::endl;
-
-    if (m_best_game_time > m_map.getGameTime() && m_best_score <= m_map.getScore()) {
-        new_file << ("BEST_TIME=" + (std::to_string(m_map.getGameTime()))) << std::endl;
-
-    } else {
-        new_file << ("BEST_TIME=" + (std::to_string(m_best_game_time))) << std::endl;
-    }
+    if (m_map.getScore() > m_best_score)
+        new_file << "BEST_SCORE=" + std::to_string(m_map.getScore()) + '\n' + "BEST_TIME=" + std::to_string(m_map.getGameTime()) << '\n';
+    else if(m_map.getScore() == m_best_score)
+        new_file << "BEST_SCORE=" + std::to_string(m_map.getScore()) + '\n' + "BEST_TIME="
+        + std::to_string(std::min(m_map.getGameTime(), m_best_game_time)) << '\n';
+    else
+        new_file << "BEST_SCORE=" + std::to_string(m_best_score) + '\n' + "BEST_TIME=" + std::to_string(m_best_game_time) << '\n';
 
     new_file.close();
 
